@@ -99,7 +99,7 @@ function App() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Find Your Dream Property?</h2>
                         <p className="text-blue-100 text-xl max-w-2xl mx-auto mb-10">
-                            Whether you want to buy, sell, or build, our experts are just a call away. Let's make your real estate goals a reality.
+                            Whether you want to buy, sell, rent, or build, our experts are just a call away. Let's make your real estate goals a reality.
                         </p>
                         <a
                             href="#"
