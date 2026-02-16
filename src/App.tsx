@@ -2,7 +2,7 @@
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
-import { Home, Hammer, TrendingUp } from 'lucide-react';
+import { Home, Hammer, Key } from 'lucide-react';
 
 
 function App() {
@@ -44,11 +44,11 @@ function App() {
 
                         <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
                             <div className="bg-green-50 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <TrendingUp className="h-8 w-8 text-green-600" />
+                                <Key className="h-8 w-8 text-green-600" />
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Investment</h3>
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Rent a House</h3>
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                Expert market analysis and investment consultancy to help you maximize returns in Pakistan's dynamic real estate sector.
+                                Find your ideal rental home with ease. We offer a wide range of rental properties to suit your lifestyle and budget.
                             </p>
                         </div>
                     </div>
