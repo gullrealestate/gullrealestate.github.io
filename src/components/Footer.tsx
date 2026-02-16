@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Building2, Facebook, Instagram, Twitter, Phone, Mail, MapPin } from 'lucide-react';
 
 export default function Footer() {
