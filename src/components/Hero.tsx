@@ -1,5 +1,5 @@
 
-import { Search } from 'lucide-react';
+
 
 export default function Hero() {
     return (
@@ -21,19 +21,7 @@ export default function Hero() {
                     Trusted platform for buying, selling, and renting properties.
                 </p>
 
-                <div className="bg-white p-4 rounded-lg shadow-lg  max-w-2xl mx-auto">
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <input
-                            type="text"
-                            placeholder="Search by location, property type..."
-                            className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-                        />
-                        <button className="bg-blue-600 text-white px-8 py-3 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                            <Search className="h-5 w-5" />
-                            Search
-                        </button>
-                    </div>
-                </div>
+
             </div>
         </div>
     );
