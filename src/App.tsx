@@ -2,7 +2,7 @@
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
-import { Building2, Home, Hammer, TrendingUp } from 'lucide-react';
+import { Home, Hammer, TrendingUp } from 'lucide-react';
 
 
 function App() {
