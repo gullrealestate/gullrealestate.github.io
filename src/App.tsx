@@ -102,7 +102,7 @@ function App() {
                             Whether you want to buy, sell, or build, our experts are just a call away. Let's make your real estate goals a reality.
                         </p>
                         <a
-                            href="#contact"
+                            href="#"
                             className="inline-block bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors transform hover:-translate-y-1"
                         >
                             Contact Us Today
