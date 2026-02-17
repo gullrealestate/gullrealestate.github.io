@@ -1,11 +1,14 @@
-
+import { useState } from 'react';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Hero from './components/Hero'
+import ContactModal from './components/ContactModal'
 import { Home, Hammer, Key } from 'lucide-react';
 
 
 function App() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 transition-colors duration-300">
             <Header />
@@ -101,16 +104,20 @@ function App() {
                         <p className="text-blue-100 text-xl max-w-2xl mx-auto mb-10">
                             Whether you want to buy, sell, rent, or build, our experts are just a call away. Let's make your real estate goals a reality.
                         </p>
-                        <a
-                            href="#"
+                        <button
+                            onClick={() => setIsModalOpen(true)}
                             className="inline-block bg-white dark:bg-gray-900 text-blue-600 dark:text-blue-400 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors transform hover:-translate-y-1"
                         >
                             Contact Us Today
-                        </a>
+                        </button>
                     </div>
                 </section>
             </main>
             <Footer />
+            <ContactModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     )
 }

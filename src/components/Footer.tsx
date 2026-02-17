@@ -1,5 +1,5 @@
 
-import { MapPin } from 'lucide-react';
+import { MapPin, Phone, Mail } from 'lucide-react';
 
 export default function Footer() {
     return (
@@ -17,12 +17,28 @@ export default function Footer() {
                     </div>
 
                     <div className="md:text-right">
-                        <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+                        <h3 className="text-lg font-semibold mb-4">Contact Detail</h3>
                         <div className="flex flex-col gap-3 md:items-end">
-                            <div className="flex items-center gap-2 text-gray-400">
+                            <a
+                                href="https://maps.app.goo.gl/n5h9QsixjkC4SAbn7"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors"
+                            >
                                 <MapPin className="h-4 w-4" />
                                 <span>Sheen Gull Plaza, Swabi Road, Mardan, KPK</span>
+                            </a>
+                            <div className="flex items-center gap-2 text-gray-400">
+                                <Phone className="h-4 w-4" />
+                                <a href="tel:0937861777" className="hover:text-blue-400 transition-colors">0937 861777</a>
                             </div>
+                            <a
+                                href="mailto:agul40160@gmail.com"
+                                className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                            >
+                                <Mail className="mr-2 h-4 w-4" />
+                                Email Us
+                            </a>
                         </div>
                     </div>
                 </div>
