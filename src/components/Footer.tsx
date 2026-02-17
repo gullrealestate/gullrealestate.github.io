@@ -3,7 +3,7 @@ import { MapPin, Phone, Mail } from 'lucide-react';
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-900 text-white pt-12 pb-8">
+        <footer className="bg-gruvbox-bg1 border-t border-gruvbox-bg2 text-gruvbox-fg pt-12 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
@@ -11,7 +11,7 @@ export default function Footer() {
                             <img src="/images/logo.png" alt="GULL Real Estate and Builders" className="h-10 w-auto" />
                             <span className="text-xl font-bold">GULL Real Estate and Builders</span>
                         </div>
-                        <p className="text-gray-400 mb-4">
+                        <p className="text-gruvbox-fg/70 mb-4">
                             Your trusted partner in finding the perfect property. Building dreams, one home at a time.
                         </p>
                     </div>
@@ -23,18 +23,18 @@ export default function Footer() {
                                 href="https://maps.app.goo.gl/n5h9QsixjkC4SAbn7"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-gray-400 hover:text-blue-400 transition-colors"
+                                className="flex items-center gap-2 text-gruvbox-fg/70 hover:text-gruvbox-blue transition-colors"
                             >
                                 <MapPin className="h-4 w-4" />
                                 <span>Sheen Gull Plaza, Swabi Road, Mardan, KPK</span>
                             </a>
-                            <div className="flex items-center gap-2 text-gray-400">
+                            <div className="flex items-center gap-2 text-gruvbox-fg/70">
                                 <Phone className="h-4 w-4" />
-                                <a href="tel:0937861777" className="hover:text-blue-400 transition-colors">0937 861777</a>
+                                <a href="tel:0937861777" className="hover:text-gruvbox-blue transition-colors">0937 861777</a>
                             </div>
                             <a
                                 href="mailto:agul40160@gmail.com"
-                                className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                                className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gruvbox-bg0 bg-gruvbox-blue hover:bg-gruvbox-blue/80 transition-colors"
                             >
                                 <Mail className="mr-2 h-4 w-4" />
                                 Email Us
@@ -43,7 +43,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <div className="border-t border-gruvbox-bg2 pt-8 text-center text-gruvbox-gray text-sm">
                     <p>&copy; 2023 - {new Date().getFullYear()} GULL Real Estate and Builders. All rights reserved.</p>
                 </div>
             </div>
