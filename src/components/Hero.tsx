@@ -59,8 +59,11 @@ export default function Hero() {
                         )}
                     </span>
                     {displayText1.length === text1.length && (
-                        <span className="block mt-2">
-                            {displayText2}
+                        <span className="block mt-2 relative">
+                            {displayText2.substring(0, text2.length - 1)}
+                            {displayText2.length === text2.length && (
+                                <span style={{ marginLeft: '0.1mm' }}>.</span>
+                            )}
                             {displayText2.length < text2.length && (
                                 <span className="typewriter-cursor">&nbsp;</span>
                             )}
