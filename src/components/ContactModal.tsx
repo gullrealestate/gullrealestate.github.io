@@ -30,7 +30,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-gruvbox-bg0/80 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-gruvbox-bg1 w-full max-w-6xl max-h-[95vh] rounded-3xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300 flex flex-col">
+            <div className="bg-gruvbox-bg1 w-full max-w-6xl max-h-[95vh] lg:max-h-none rounded-3xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300 flex flex-col">
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 rounded-full bg-gruvbox-bg0/40 hover:bg-gruvbox-bg0/60 transition-colors z-20"
@@ -38,7 +38,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     <X className="h-6 w-6 text-gruvbox-fg" />
                 </button>
 
-                <div className="overflow-y-auto flex-grow">
+                <div className="overflow-y-auto lg:overflow-y-hidden flex-grow">
                     <div className="grid grid-cols-1 md:grid-cols-3">
                         {/* Buy/Sell Section */}
                         <div className="relative group overflow-hidden h-[400px] sm:h-[450px] md:h-[650px]">

@@ -27,7 +27,7 @@ export default function Hero() {
                         setDisplayText2(text2.substring(0, j + 1));
                         j++;
                         type();
-                    }, 1000);
+                    }, 250);
                 } else {
                     setDisplayText2(text2.substring(0, j + 1));
                     j++;
