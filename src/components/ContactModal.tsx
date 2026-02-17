@@ -1,6 +1,6 @@
 
 import { useEffect } from 'react';
-import { X, Home, Key, Building2 } from 'lucide-react';
+import { X, Home, Key, Building2, MessageCircle, PhoneCall } from 'lucide-react';
 
 interface ContactModalProps {
     isOpen: boolean;
@@ -26,6 +26,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
     if (!isOpen) return null;
 
+    const contactButtonClass = "flex items-center justify-center gap-2 bg-gruvbox-fg text-gruvbox-bg0 font-bold py-2.5 px-4 rounded-xl hover:bg-gruvbox-blue hover:text-gruvbox-bg0 transition-all text-sm shadow-md transform active:scale-95";
+
     return (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-gruvbox-bg0/80 backdrop-blur-sm animate-in fade-in duration-300">
             <div className="bg-gruvbox-bg1 w-full max-w-6xl max-h-[95vh] rounded-3xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300 flex flex-col">
@@ -39,7 +41,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 <div className="overflow-y-auto flex-grow">
                     <div className="grid grid-cols-1 md:grid-cols-3">
                         {/* Buy/Sell Section */}
-                        <div className="relative group overflow-hidden h-[300px] sm:h-[400px] md:h-[600px]">
+                        <div className="relative group overflow-hidden h-[400px] sm:h-[450px] md:h-[650px]">
                             <img
                                 src={images.buySell}
                                 alt="Buy or Sell a House"
@@ -51,19 +53,30 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 </div>
                                 <h3 className="text-2xl font-bold text-gruvbox-fg mb-2">Buy/Sell a House</h3>
                                 <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Find your dream home or sell your property at the best market price.</p>
-                                <a
-                                    href="https://wa.me/923000000000"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-gruvbox-fg text-gruvbox-bg0 font-bold py-3 px-6 rounded-xl hover:bg-gruvbox-blue hover:text-gruvbox-bg0 transition-all text-center shadow-lg transform active:scale-95"
-                                >
-                                    Contact Now
-                                </a>
+
+                                <div className="grid grid-cols-1 gap-3">
+                                    <a
+                                        href="https://wa.me/923149393930"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={contactButtonClass}
+                                    >
+                                        <MessageCircle className="h-4 w-4" />
+                                        Speak with CEO
+                                    </a>
+                                    <a
+                                        href="tel:0937861777"
+                                        className={contactButtonClass}
+                                    >
+                                        <PhoneCall className="h-4 w-4" />
+                                        Call Office
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
                         {/* Rent Section */}
-                        <div className="relative group overflow-hidden h-[300px] sm:h-[400px] md:h-[600px] border-t md:border-t-0 md:border-l border-gruvbox-bg2">
+                        <div className="relative group overflow-hidden h-[450px] sm:h-[500px] md:h-[650px] border-t md:border-t-0 md:border-l border-gruvbox-bg2">
                             <img
                                 src={images.rent}
                                 alt="Rent a House"
@@ -75,19 +88,39 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 </div>
                                 <h3 className="text-2xl font-bold text-gruvbox-fg mb-2">Rent a House</h3>
                                 <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Explore premium rental properties that fit your lifestyle and budget.</p>
-                                <a
-                                    href="https://wa.me/923000000000"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-gruvbox-fg text-gruvbox-bg0 font-bold py-3 px-6 rounded-xl hover:bg-gruvbox-orange hover:text-gruvbox-bg0 transition-all text-center shadow-lg transform active:scale-95"
-                                >
-                                    Contact Now
-                                </a>
+
+                                <div className="grid grid-cols-1 gap-3">
+                                    <a
+                                        href="https://wa.me/923142121370"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={contactButtonClass}
+                                    >
+                                        <MessageCircle className="h-4 w-4" />
+                                        Chat with Agent 2
+                                    </a>
+                                    <a
+                                        href="https://wa.me/923149624277"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={contactButtonClass}
+                                    >
+                                        <MessageCircle className="h-4 w-4" />
+                                        Chat with Agent 1
+                                    </a>
+                                    <a
+                                        href="tel:0937861777"
+                                        className={contactButtonClass}
+                                    >
+                                        <PhoneCall className="h-4 w-4" />
+                                        Call Office
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
                         {/* List Section */}
-                        <div className="relative group overflow-hidden h-[300px] sm:h-[400px] md:h-[600px] border-t md:border-t-0 md:border-l border-gruvbox-bg2">
+                        <div className="relative group overflow-hidden h-[500px] sm:h-[550px] md:h-[650px] border-t md:border-t-0 md:border-l border-gruvbox-bg2">
                             <img
                                 src={images.list}
                                 alt="List Your Property"
@@ -99,14 +132,43 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                 </div>
                                 <h3 className="text-2xl font-bold text-gruvbox-fg mb-2">List Your Property</h3>
                                 <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Have a house available for rent? Let us help you find the perfect tenants.</p>
-                                <a
-                                    href="https://wa.me/923000000000"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-gruvbox-fg text-gruvbox-bg0 font-bold py-3 px-6 rounded-xl hover:bg-gruvbox-green hover:text-gruvbox-bg0 transition-all text-center shadow-lg transform active:scale-95"
-                                >
-                                    Contact Now
-                                </a>
+
+                                <div className="grid grid-cols-1 gap-3">
+                                    <a
+                                        href="https://wa.me/923142121370"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={contactButtonClass}
+                                    >
+                                        <MessageCircle className="h-4 w-4" />
+                                        Chat with Agent 2
+                                    </a>
+                                    <a
+                                        href="https://wa.me/923149624277"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={contactButtonClass}
+                                    >
+                                        <MessageCircle className="h-4 w-4" />
+                                        Chat with Agent 1
+                                    </a>
+                                    <a
+                                        href="https://wa.me/923149393930"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={contactButtonClass}
+                                    >
+                                        <MessageCircle className="h-4 w-4" />
+                                        Speak with CEO
+                                    </a>
+                                    <a
+                                        href="tel:0937861777"
+                                        className={contactButtonClass}
+                                    >
+                                        <PhoneCall className="h-4 w-4" />
+                                        Call Office
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
