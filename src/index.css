@@ -18,6 +18,29 @@
     min-height: 100vh;
     @apply bg-gruvbox-bg0 text-gruvbox-fg;
   }
+
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #282828;
+    /* bg0 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #504945;
+    /* bg2 */
+    border-radius: 10px;
+    border: 2px solid #282828;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #458588;
+    /* blue */
+  }
 }
 
 @keyframes blink {
