@@ -36,7 +36,7 @@ export default function Hero() {
             } else if (k < text3.length) {
                 setDisplayText3(text3.substring(0, k + 1));
                 k++;
-                timeoutId = window.setTimeout(type, 30);
+                timeoutId = window.setTimeout(type, 15);
             }
         };
 
