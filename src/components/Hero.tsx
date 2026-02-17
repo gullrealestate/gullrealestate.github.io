@@ -5,12 +5,15 @@ import { useState, useEffect } from 'react';
 export default function Hero() {
     const text1 = "Find Your Dream Property in Pakistan";
     const text2 = "with GULL Real Estate and Builders.";
+    const text3 = "Trusted platform for buying, selling, and renting properties.";
     const [displayText1, setDisplayText1] = useState("");
     const [displayText2, setDisplayText2] = useState("");
+    const [displayText3, setDisplayText3] = useState("");
 
     useEffect(() => {
         let i = 0;
         let j = 0;
+        let k = 0;
         let timeoutId: number;
 
         const type = () => {
@@ -19,7 +22,6 @@ export default function Hero() {
                 i++;
                 timeoutId = window.setTimeout(type, 30);
             } else if (j < text2.length) {
-                // Wait 1 second before the final period
                 if (j === text2.length - 1) {
                     timeoutId = window.setTimeout(() => {
                         setDisplayText2(text2.substring(0, j + 1));
@@ -31,6 +33,10 @@ export default function Hero() {
                     j++;
                     timeoutId = window.setTimeout(type, 30);
                 }
+            } else if (k < text3.length) {
+                setDisplayText3(text3.substring(0, k + 1));
+                k++;
+                timeoutId = window.setTimeout(type, 30);
             }
         };
 
@@ -62,7 +68,7 @@ export default function Hero() {
                         <span className="block mt-2 relative">
                             {displayText2.substring(0, text2.length - 1)}
                             {displayText2.length === text2.length && (
-                                <span style={{ marginLeft: '0.1mm' }}>.</span>
+                                <span style={{ marginLeft: '2mm' }}>.</span>
                             )}
                             {displayText2.length < text2.length && (
                                 <span className="typewriter-cursor">&nbsp;</span>
@@ -70,8 +76,11 @@ export default function Hero() {
                         </span>
                     )}
                 </h1>
-                <p className="text-xl md:text-2xl mb-8 text-gray-200">
-                    Trusted platform for buying, selling, and renting properties.
+                <p className="text-xl md:text-2xl mb-8 text-gray-200 min-h-[1.5em]">
+                    {displayText3}
+                    {displayText2.length === text2.length && displayText3.length < text3.length && (
+                        <span className="typewriter-cursor">&nbsp;</span>
+                    )}
                 </p>
                 <button
                     onClick={() => {
