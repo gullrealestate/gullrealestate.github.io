@@ -4,8 +4,10 @@
 
 @layer base {
   :root {
-    color: #ebdbb2; /* gruvbox.fg */
-    background-color: #282828; /* gruvbox.bg0 */
+    color: #ebdbb2;
+    /* gruvbox.fg */
+    background-color: #282828;
+    /* gruvbox.bg0 */
   }
 
   body {
@@ -16,4 +18,27 @@
     min-height: 100vh;
     @apply bg-gruvbox-bg0 text-gruvbox-fg;
   }
+}
+
+@keyframes blink {
+
+  from,
+  to {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background-color: #ebdbb2;
+  /* Use explicit gruvbox fg color */
+  margin-left: 2px;
+  animation: blink 0.7s steps(1) infinite;
+  vertical-align: middle;
 }
