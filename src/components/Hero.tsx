@@ -20,8 +20,14 @@ export default function Hero() {
                 <p className="text-xl md:text-2xl mb-8 text-gray-200">
                     Trusted platform for buying, selling, and renting properties.
                 </p>
-
-
+                <button
+                    onClick={() => {
+                        document.getElementById('contact-cta')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="bg-gruvbox-blue text-gruvbox-bg0 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gruvbox-orange transition-all transform hover:-translate-y-1"
+                >
+                    Consult Our Experts
+                </button>
             </div>
         </div>
     );
