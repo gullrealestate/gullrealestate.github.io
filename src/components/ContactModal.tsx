@@ -24,13 +24,41 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         preloadImages();
     }, []);
 
+    useEffect(() => {
+        if (!isOpen) {
+            return;
+        }
+
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+
+        const originalOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('keydown', handleEscape);
+
+        return () => {
+            document.body.style.overflow = originalOverflow;
+            window.removeEventListener('keydown', handleEscape);
+        };
+    }, [isOpen, onClose]);
+
     if (!isOpen) return null;
 
     const contactButtonClass = "flex items-center justify-center gap-2 bg-gruvbox-fg text-gruvbox-bg0 font-bold py-2.5 px-4 rounded-xl hover:bg-gruvbox-blue hover:text-gruvbox-bg0 transition-all text-sm shadow-md transform active:scale-95";
 
     return (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-gruvbox-bg0/80 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-gruvbox-bg1 w-full max-w-6xl max-h-[95vh] lg:max-h-none rounded-3xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300 flex flex-col">
+        <div
+            className="fixed inset-0 z-[60] flex items-center justify-center p-2 sm:p-4 bg-gruvbox-bg0/80 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={onClose}
+            role="presentation"
+        >
+            <div
+                className="bg-gruvbox-bg1 w-full max-w-6xl max-h-[95vh] lg:max-h-none rounded-3xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300 flex flex-col"
+                onClick={(event) => event.stopPropagation()}
+            >
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 rounded-full bg-gruvbox-bg0/40 hover:bg-gruvbox-bg0/60 transition-colors z-20"
