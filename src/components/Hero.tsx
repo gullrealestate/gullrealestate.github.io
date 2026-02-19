@@ -1,14 +1,16 @@
-
-
 import { useState, useEffect } from 'react';
 
-export default function Hero() {
-    const text1 = "Find Your Dream Property in Pakistan";
-    const text2 = "with GULL Real Estate and Builders.";
-    const text3 = "Trusted platform for buying, selling, and renting properties.";
-    const [displayText1, setDisplayText1] = useState("");
-    const [displayText2, setDisplayText2] = useState("");
-    const [displayText3, setDisplayText3] = useState("");
+interface HeroProps {
+    onConsultClick: () => void;
+}
+
+export default function Hero({ onConsultClick }: HeroProps) {
+    const text1 = 'Real Estate Consultancy in Mardan';
+    const text2 = 'Speak with CEO & Expert Agents.';
+    const text3 = 'Consult us for buying, selling, renting, or listing a house for rent.';
+    const [displayText1, setDisplayText1] = useState('');
+    const [displayText2, setDisplayText2] = useState('');
+    const [displayText3, setDisplayText3] = useState('');
 
     useEffect(() => {
         let i = 0;
@@ -83,12 +85,10 @@ export default function Hero() {
                     )}
                 </p>
                 <button
-                    onClick={() => {
-                        document.getElementById('contact-cta')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={onConsultClick}
                     className="bg-gruvbox-blue text-gruvbox-bg0 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gruvbox-orange transition-all transform hover:-translate-y-1"
                 >
-                    Consult Our Experts
+                    Book a Consultation
                 </button>
             </div>
         </div>

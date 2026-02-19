@@ -1,4 +1,3 @@
-
 import { MapPin, Phone, Mail } from 'lucide-react';
 
 export default function Footer() {
@@ -12,12 +11,17 @@ export default function Footer() {
                             <span className="text-xl font-bold">GULL Real Estate and Builders</span>
                         </div>
                         <p className="text-gruvbox-fg/70 mb-4">
-                            Your trusted partner in finding the perfect property. Building dreams, one home at a time.
+                            We are a real-estate consultancy helping clients with buy/sell guidance, rental consultation, and
+                            landlord support for tenant placement.
+                        </p>
+                        <p className="text-gruvbox-fg/60 text-sm leading-relaxed">
+                            Consultancy fee applies for advisory and facilitation services. Property transaction payments are
+                            made directly by clients.
                         </p>
                     </div>
 
                     <div className="md:text-right">
-                        <h3 className="text-lg font-semibold mb-4">Contact Detail</h3>
+                        <h3 className="text-lg font-semibold mb-4">Consultation Contact</h3>
                         <div className="flex flex-col gap-3 md:items-end">
                             <a
                                 href="https://maps.app.goo.gl/n5h9QsixjkC4SAbn7"
@@ -37,7 +41,7 @@ export default function Footer() {
                                 className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gruvbox-bg0 bg-gruvbox-blue hover:bg-gruvbox-blue/80 transition-colors"
                             >
                                 <Mail className="mr-2 h-4 w-4" />
-                                Email Us
+                                Email for Consultation
                             </a>
                         </div>
                     </div>
