@@ -80,7 +80,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                     <Home className="h-6 w-6 text-gruvbox-bg0" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-gruvbox-fg mb-2">Buy/Sell a House</h3>
-                                <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Find your dream home or sell your property at the best market price.</p>
+                                <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Get buy/sell consultation from our CEO with practical guidance on pricing, negotiation, and next steps.</p>
 
                                 <div className="grid grid-cols-1 gap-3">
                                     <a
@@ -115,7 +115,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                     <Key className="h-6 w-6 text-gruvbox-bg0" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-gruvbox-fg mb-2">Rent a House</h3>
-                                <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Explore premium rental properties that fit your lifestyle and budget.</p>
+                                <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Consult our agents for rental support and get help shortlisting homes that match your needs and budget.</p>
 
                                 <div className="grid grid-cols-1 gap-3">
                                     <a
@@ -159,7 +159,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                                     <Building2 className="h-6 w-6 text-gruvbox-bg0" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-gruvbox-fg mb-2">List Your Property</h3>
-                                <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Have a house available for rent? Let us help you find the perfect tenants.</p>
+                                <p className="text-gruvbox-fg/80 mb-6 text-sm font-medium leading-relaxed">Have a vacant house for rent? Consult us to list it through our network and connect with suitable tenants.</p>
 
                                 <div className="grid grid-cols-1 gap-3">
                                     <a
