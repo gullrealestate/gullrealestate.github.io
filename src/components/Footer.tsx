@@ -11,11 +11,11 @@ export default function Footer() {
                             <span className="text-xl font-bold">GULL Real Estate and Builders</span>
                         </div>
                         <p className="text-gruvbox-fg/70 mb-4">
-                            We are a real-estate consultancy helping clients with buy/sell guidance, rental consultation, and
+                            We are a real-estate agency helping clients with buy/sell guidance, rental consultation, and
                             landlord support for tenant placement.
                         </p>
                         <p className="text-gruvbox-fg/60 text-sm leading-relaxed">
-                            Consultancy fee applies for advisory and facilitation services. Property transaction payments are
+                            Agency fee applies for advisory and facilitation services. Property transaction payments are
                             made directly by clients.
                         </p>
                     </div>

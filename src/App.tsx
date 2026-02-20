@@ -16,11 +16,11 @@ function App() {
 
                 <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4">Consultancy Services</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4">Agency Services</h2>
                         <div className="w-20 h-1 bg-gruvbox-blue mx-auto rounded-full"></div>
                         <p className="mt-4 text-xl text-gruvbox-fg/80 max-w-3xl mx-auto">
-                            We are a real estate consultancy. We guide your decision, negotiation, and process so you can buy,
-                            sell, rent, or list a house for rent with confidence.
+                            We are a real estate agency. We guide and execute the process so you can buy, sell, rent,
+                            or list a house for rent with confidence.
                         </p>
                     </div>
 
@@ -63,7 +63,7 @@ function App() {
                 <section id="how-it-works" className="bg-gruvbox-bg1/50 py-20 transition-colors duration-300">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4">How Our Consultancy Works</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4">How Our Agency Works</h2>
                             <div className="w-20 h-1 bg-gruvbox-blue mx-auto rounded-full"></div>
                         </div>
 
@@ -85,8 +85,8 @@ function App() {
                                 </div>
                                 <h3 className="text-xl font-bold mb-3 text-gruvbox-fg">2. Expert Guidance</h3>
                                 <p className="text-gruvbox-fg/70 leading-relaxed">
-                                    We provide practical consultancy, negotiation support, and coordination with the right people
-                                    in our network.
+                                    We guide and execute with practical support, negotiation help, and coordination with the right
+                                    people in our network.
                                 </p>
                             </article>
 
@@ -96,7 +96,7 @@ function App() {
                                 </div>
                                 <h3 className="text-xl font-bold mb-3 text-gruvbox-fg">3. Close With Confidence</h3>
                                 <p className="text-gruvbox-fg/70 leading-relaxed">
-                                    You make the final transaction directly. We charge consultancy fees for our professional
+                                    You make the final transaction directly. We charge agency fees for our professional
                                     advisory and facilitation services.
                                 </p>
                             </article>
@@ -107,10 +107,10 @@ function App() {
                 <section id="fees" className="py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="bg-gruvbox-bg1 border border-gruvbox-bg2 rounded-3xl p-8 md:p-10">
-                            <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4 text-center">Consultancy Fee Policy</h2>
+                            <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4 text-center">Agency Fee Policy</h2>
                             <p className="text-gruvbox-fg/75 text-center max-w-3xl mx-auto leading-relaxed">
-                                We are consultants and facilitators. We do not own or directly sell/rent properties on this
-                                website. Clients spend on property transactions separately, while our charges are consultancy
+                                We are an agency that guides and executes services. We do not own or directly sell/rent properties on this
+                                website. Clients spend on property transactions separately, while our charges are agency
                                 fees for guidance, coordination, and deal support.
                             </p>
                         </div>
