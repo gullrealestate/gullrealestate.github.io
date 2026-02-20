@@ -21,7 +21,7 @@ export default function Footer() {
                     </div>
 
                     <div className="md:text-right">
-                        <h3 className="text-lg font-semibold mb-4">Consultation Contact</h3>
+                        <h3 className="text-lg font-semibold mb-4">Agency Information</h3>
                         <div className="flex flex-col gap-3 md:items-end">
                             <a
                                 href="https://maps.app.goo.gl/n5h9QsixjkC4SAbn7"
@@ -41,7 +41,7 @@ export default function Footer() {
                                 className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gruvbox-bg0 bg-gruvbox-blue hover:bg-gruvbox-blue/80 transition-colors"
                             >
                                 <Mail className="mr-2 h-4 w-4" />
-                                Email for Consultation
+                                Report an Issue
                             </a>
                         </div>
                     </div>

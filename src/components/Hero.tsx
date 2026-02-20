@@ -88,7 +88,7 @@ export default function Hero({ onConsultClick }: HeroProps) {
                     onClick={onConsultClick}
                     className="bg-gruvbox-blue text-gruvbox-bg0 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gruvbox-orange transition-all transform hover:-translate-y-1"
                 >
-                    Book a Consultation
+                    Contact Us
                 </button>
             </div>
         </div>

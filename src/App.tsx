@@ -104,22 +104,54 @@ function App() {
                     </div>
                 </section>
 
-                <section id="fees" className="py-20">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="bg-gruvbox-bg1 border border-gruvbox-bg2 rounded-3xl p-8 md:p-10">
-                            <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4 text-center">Agency Fee Policy</h2>
-                            <p className="text-gruvbox-fg/75 text-center max-w-3xl mx-auto leading-relaxed">
-                                We are an agency that guides and executes services. We do not own or directly sell/rent properties on this
-                                website. Clients spend on property transactions separately, while our charges are agency
-                                fees for guidance, coordination, and deal support.
+                <section id="fees" className="py-14 sm:py-16 md:py-20">
+                    <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                        <div className="bg-gruvbox-bg1 border border-gruvbox-bg2 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12">
+
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gruvbox-fg mb-4 sm:mb-6 text-center">
+                                Agency Fee & Liability Policy
+                            </h2>
+
+                            <p className="text-sm sm:text-base md:text-lg text-gruvbox-fg/80 text-center max-w-3xl mx-auto leading-relaxed mb-6 sm:mb-8">
+                                We are a real estate agency providing professional guidance, coordination, negotiation support, and deal execution services. We do not directly sell or rent properties through this website. Property payments are made separately between the concerned parties. Our charges represent agency fees for services rendered.
                             </p>
+
+                            <ul className="text-sm sm:text-base md:text-lg text-gruvbox-fg/80 max-w-3xl mx-auto list-disc list-outside pl-5 sm:pl-6 space-y-3 sm:space-y-4">
+
+                                <li>
+                                    The agency fee is determined based on the size, type, and value of the transaction.
+                                </li>
+
+                                <li>
+                                    If a transaction is cancelled before a formal written agreement is signed between the parties, and the deal is not concluded, any advance agency fee paid will be refunded.
+                                </li>
+
+                                <li>
+                                    Once a transaction is formally concluded through mutual agreement and signing of documents between the concerned parties, the agency fee is considered fully earned for services provided and is non-refundable.
+                                </li>
+
+                                <li>
+                                    Any dispute, change of mind, or cancellation by either party after conclusion of the agreement shall not affect the agency’s earned fee.
+                                </li>
+
+                                <li>
+                                    <strong>Post-Deal Liability:</strong> The agency acts solely as a facilitator. After the deal is concluded and the agency fee is paid, any subsequent transactions, modifications, disputes, or legal actions are strictly between the parties involved. The agency shall not be held responsible, directly or indirectly, for any matter arising after the completion of the agreement.
+                                </li>
+
+                            </ul>
+
+                            <p className="text-xs sm:text-sm text-gruvbox-fg/60 max-w-3xl mx-auto mt-8 text-center leading-relaxed">
+                                We are committed to transparency and fairness in all dealings. If you have any questions regarding our fee structure or liability terms, please feel free to discuss them with us prior to finalizing your transaction.
+                            </p>
+
                         </div>
                     </div>
                 </section>
 
                 <section id="contact-cta" className="py-20 bg-gruvbox-blue transition-colors duration-300">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-bg0 mb-6">Ready to Book Your Consultation?</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-bg0 mb-6">Are you ready to buy, sell, or rent a house?</h2>
                         <p className="text-gruvbox-bg0/90 text-xl max-w-3xl mx-auto mb-10 font-medium">
                             Speak with our CEO for buy/sell consultation or connect with our agents for renting and landlord
                             listing support.
@@ -128,7 +160,7 @@ function App() {
                             onClick={() => setIsModalOpen(true)}
                             className="inline-block bg-gruvbox-bg0 text-gruvbox-fg font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gruvbox-bg1 transition-colors transform hover:-translate-y-1"
                         >
-                            Book Consultation Now
+                            Contact Us To Fulfill Your Housing Needs
                         </button>
                     </div>
                 </section>
