@@ -5,7 +5,7 @@ interface HeroProps {
 }
 
 export default function Hero({ onConsultClick }: HeroProps) {
-    const text1 = 'Real Estate Consultancy in Mardan';
+    const text1 = 'Real Estate Agency in Mardan';
     const text2 = 'Speak with CEO & Expert Agents.';
     const text3 = 'Consult us for buying, selling, renting, or listing a house for rent.';
     const [displayText1, setDisplayText1] = useState('');
