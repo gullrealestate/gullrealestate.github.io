@@ -2,17 +2,28 @@ import { useState, useEffect } from 'react';
 
 interface HeroProps {
     onConsultClick: () => void;
+    isUrdu?: boolean;
+    translations?: {
+        heroTitle: string;
+        heroSub: string;
+        heroBtn: string;
+    };
 }
 
-export default function Hero({ onConsultClick }: HeroProps) {
-    const text1 = 'Real Estate Agency in Mardan';
-    const text2 = 'Speak with CEO & Expert Agents.';
-    const text3 = 'Consult us for buying, selling, renting, or listing a house for rent.';
+export default function Hero({ onConsultClick, isUrdu, translations }: HeroProps) {
+    const text1 = translations?.heroTitle || 'Real Estate Agency in Mardan';
+    const text2 = isUrdu ? 'سی ای او اور ماہر ایجنٹوں سے بات کریں۔' : 'Speak with CEO & Expert Agents.';
+    const text3 = translations?.heroSub || 'Consult us for buying, selling, renting, or listing a property (primarily houses).';
+
     const [displayText1, setDisplayText1] = useState('');
     const [displayText2, setDisplayText2] = useState('');
     const [displayText3, setDisplayText3] = useState('');
 
     useEffect(() => {
+        setDisplayText1('');
+        setDisplayText2('');
+        setDisplayText3('');
+
         let i = 0;
         let j = 0;
         let k = 0;
@@ -45,10 +56,10 @@ export default function Hero({ onConsultClick }: HeroProps) {
         timeoutId = window.setTimeout(type, 30);
 
         return () => clearTimeout(timeoutId);
-    }, []);
+    }, [isUrdu, text1, text2, text3]);
 
     return (
-        <div className="relative h-[600px] flex items-center justify-center text-white">
+        <div className="relative h-[600px] flex items-center justify-center text-white" dir={isUrdu ? "rtl" : "ltr"}>
             <div
                 className="absolute inset-0 bg-cover bg-center z-0"
                 style={{
@@ -68,8 +79,8 @@ export default function Hero({ onConsultClick }: HeroProps) {
                     </span>
                     {displayText1.length === text1.length && (
                         <span className="block mt-2 relative">
-                            {displayText2.substring(0, text2.length - 1)}
-                            {displayText2.length === text2.length && (
+                            {displayText2.substring(0, isUrdu ? text2.length : text2.length - 1)}
+                            {displayText2.length === text2.length && !isUrdu && (
                                 <span style={{ marginLeft: '2mm' }}>.</span>
                             )}
                             {displayText2.length < text2.length && (
@@ -88,7 +99,7 @@ export default function Hero({ onConsultClick }: HeroProps) {
                     onClick={onConsultClick}
                     className="bg-gruvbox-blue text-gruvbox-bg0 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gruvbox-orange transition-all transform hover:-translate-y-1"
                 >
-                    Contact Us
+                    {translations?.heroBtn || 'Contact Us'}
                 </button>
             </div>
         </div>
