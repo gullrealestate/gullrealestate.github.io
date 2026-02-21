@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gullrealestateandbuilders.github.io/sitemap.xml
+Sitemap: https://gullrealestate.github.io/sitemap.xml
