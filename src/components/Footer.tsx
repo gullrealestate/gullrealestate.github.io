@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail } from 'lucide-react';
+
 
 interface FooterProps {
     isUrdu?: boolean;
@@ -41,18 +41,18 @@ export default function Footer({ isUrdu }: FooterProps) {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-gruvbox-fg/70 hover:text-gruvbox-blue transition-colors"
                             >
-                                <MapPin className="h-4 w-4" />
+                                <img src="/images/meet_us.png" alt="Location" width="16" height="16" className="h-4 w-4" />
                                 <span>{isUrdu ? "شین گل پلازہ، صوابی روڈ، مردان، کے پی کے" : "Sheen Gull Plaza, Swabi Road, Mardan, KPK"}</span>
                             </a>
                             <div className="flex items-center gap-2 text-gruvbox-fg/70">
-                                <Phone className="h-4 w-4" />
+                                <img src="/images/call.png" alt="Phone" width="16" height="16" className="h-4 w-4" />
                                 <a href="tel:0937861777" className="hover:text-gruvbox-blue transition-colors" dir="ltr">0937 861777</a>
                             </div>
                             <a
                                 href="mailto:agul40160@gmail.com"
                                 className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-gruvbox-bg0 bg-gruvbox-blue hover:bg-gruvbox-blue/80 transition-colors shadow-sm"
                             >
-                                <Mail className={`h-4 w-4 ${isUrdu ? "ml-2" : "mr-2"}`} />
+                                <img src="/images/email.png" alt="Email" width="16" height="16" className={`h-4 w-4 ${isUrdu ? "ml-2" : "mr-2"}`} />
                                 {isUrdu ? "مسئلے کی اطلاع دیں" : "Report an Issue"}
                             </a>
                         </div>

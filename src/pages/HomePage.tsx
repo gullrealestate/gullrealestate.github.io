@@ -3,9 +3,52 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 
+interface CitySection {
+    id: string;
+    title: string;
+    content: string;
+}
+
+interface PolicyItem {
+    label: string;
+    content: string;
+}
+
+interface Translations {
+    title: string;
+    description: string;
+    items: (string | PolicyItem)[];
+    footer: string;
+    button: string;
+    metaTitle: string;
+    metaDesc: string;
+    heroTitle: string;
+    heroSub: string;
+    heroBtn: string;
+    servicesTitle: string;
+    servicesSub: string;
+    buySellTitle: string;
+    buySellDesc: string;
+    tenantTitle: string;
+    tenantDesc: string;
+    landlordTitle: string;
+    landlordDesc: string;
+    howItWorksTitle: string;
+    step1: string;
+    step1Desc: string;
+    step2: string;
+    step2Desc: string;
+    step3: string;
+    step3Desc: string;
+    citySections: CitySection[];
+    contactCta: string;
+    contactSub: string;
+    contactBtn: string;
+}
+
 interface HomePageProps {
     isUrdu: boolean;
-    t: any;
+    t: Translations;
 }
 
 export default function HomePage({ isUrdu, t }: HomePageProps) {

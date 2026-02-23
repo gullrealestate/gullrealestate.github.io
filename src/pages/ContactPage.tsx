@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Home, Key, Building2, MessageCircle, PhoneCall, ArrowLeft } from 'lucide-react';
+import { Home, Key, Building2, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -12,6 +12,26 @@ const images = {
     rent: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1000",
     list: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1000"
 };
+
+const WhatsAppIcon = ({ className }: { className?: string }) => (
+    <img
+        src="/images/whatsapp.png"
+        alt="WhatsApp"
+        className={className}
+        width="16"
+        height="16"
+    />
+);
+
+const CallIcon = ({ className }: { className?: string }) => (
+    <img
+        src="/images/call.png"
+        alt="Call"
+        className={className}
+        width="16"
+        height="16"
+    />
+);
 
 export default function ContactPage({ isUrdu }: ContactPageProps) {
     const translations = {
@@ -95,11 +115,11 @@ export default function ContactPage({ isUrdu }: ContactPageProps) {
                             <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{t.buySellDesc}</p>
                             <div className="space-y-3 mt-auto">
                                 <a href="https://wa.me/923149393930" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                    <MessageCircle className="h-4 w-4" />
+                                    <WhatsAppIcon className="h-4 w-4" />
                                     {t.speakCeo}
                                 </a>
                                 <a href="tel:0937861777" className={contactButtonClass}>
-                                    <PhoneCall className="h-4 w-4" />
+                                    <CallIcon className="h-4 w-4" />
                                     {t.callOffice}
                                 </a>
                             </div>
@@ -120,15 +140,15 @@ export default function ContactPage({ isUrdu }: ContactPageProps) {
                             <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{t.rentDesc}</p>
                             <div className="space-y-3 mt-auto">
                                 <a href="https://wa.me/923149624277" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                    <MessageCircle className="h-4 w-4" />
+                                    <WhatsAppIcon className="h-4 w-4" />
                                     {t.chatAgent1}
                                 </a>
                                 <a href="https://wa.me/923142121370" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                    <MessageCircle className="h-4 w-4" />
+                                    <WhatsAppIcon className="h-4 w-4" />
                                     {t.chatAgent2}
                                 </a>
                                 <a href="tel:0937861777" className={contactButtonClass}>
-                                    <PhoneCall className="h-4 w-4" />
+                                    <CallIcon className="h-4 w-4" />
                                     {t.callOffice}
                                 </a>
                             </div>
@@ -149,21 +169,21 @@ export default function ContactPage({ isUrdu }: ContactPageProps) {
                             <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{t.listDesc}</p>
                             <div className="space-y-3 mt-auto">
                                 <a href="https://wa.me/923149393930" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                    <MessageCircle className="h-4 w-4" />
+                                    <WhatsAppIcon className="h-4 w-4" />
                                     {t.speakCeo}
                                 </a>
                                 <div className="grid grid-cols-2 gap-3">
                                     <a href="https://wa.me/923149624277" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                        <MessageCircle className="h-4 w-4" />
+                                        <WhatsAppIcon className="h-4 w-4" />
                                         {isUrdu ? "ایجنٹ 1" : "Agent 1"}
                                     </a>
                                     <a href="https://wa.me/923142121370" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                        <MessageCircle className="h-4 w-4" />
+                                        <WhatsAppIcon className="h-4 w-4" />
                                         {isUrdu ? "ایجنٹ 2" : "Agent 2"}
                                     </a>
                                 </div>
                                 <a href="tel:0937861777" className={contactButtonClass}>
-                                    <PhoneCall className="h-4 w-4" />
+                                    <CallIcon className="h-4 w-4" />
                                     {t.callOffice}
                                 </a>
                             </div>
