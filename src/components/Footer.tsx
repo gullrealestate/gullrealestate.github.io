@@ -1,4 +1,5 @@
 
+import { MapPin, Phone } from 'lucide-react';
 
 interface FooterProps {
     isUrdu?: boolean;
@@ -41,11 +42,11 @@ export default function Footer({ isUrdu }: FooterProps) {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-gruvbox-fg/70 hover:text-gruvbox-blue transition-colors"
                             >
-                                <img src="/images/meet_us.png" alt="Location" width="16" height="16" className="h-4 w-4" />
+                                <MapPin className="h-4 w-4" />
                                 <span>{isUrdu ? "شین گل پلازہ، صوابی روڈ، مردان، کے پی کے" : "Sheen Gull Plaza, Swabi Road, Mardan, KPK"}</span>
                             </a>
                             <div className="flex items-center gap-2 text-gruvbox-fg/70">
-                                <img src="/images/call.png" alt="Phone" width="16" height="16" className="h-4 w-4" />
+                                <Phone className="h-4 w-4" />
                                 <a href="tel:0937861777" className="hover:text-gruvbox-blue transition-colors" dir="ltr">0937 861777</a>
                             </div>
                             <a
