@@ -7,6 +7,7 @@ async function prerender() {
     const app = express();
     const port = 3000;
     const distPath = path.join(__dirname, 'dist');
+    const routes = ['/', '/contact'];
 
     app.use(express.static(distPath));
     app.use((req, res) => {
@@ -20,25 +21,32 @@ async function prerender() {
             headless: 'new',
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
-        const page = await browser.newPage();
 
         try {
-            console.log('Navigating to http://localhost:3000...');
-            await page.goto(`http://localhost:${port}`, { waitUntil: 'networkidle0' });
+            for (const route of routes) {
+                const page = await browser.newPage();
+                console.log(`Navigating to http://localhost:${port}${route}...`);
+                await page.goto(`http://localhost:${port}${route}`, { waitUntil: 'networkidle0' });
 
-            // Wait for the app to render content
-            console.log('Waiting for content to render...');
-            await page.waitForSelector('#root > div', { timeout: 10000 });
+                // Wait for the app to render content
+                console.log(`Waiting for content to render for ${route}...`);
+                await page.waitForSelector('#root div', { timeout: 10000 });
 
-            // Wait a bit more for the typewriter effect
-            await new Promise(r => setTimeout(r, 2000));
+                // Wait a bit more for the typewriter effect or animations
+                await new Promise(r => setTimeout(r, 2000));
 
-            const content = await page.content();
+                const content = await page.content();
 
-            const indexPath = path.join(distPath, 'index.html');
-            fs.writeFileSync(indexPath, content);
-            console.log('Successfully pre-rendered index.html');
+                const outputDir = path.join(distPath, route);
+                if (!fs.existsSync(outputDir)) {
+                    fs.mkdirSync(outputDir, { recursive: true });
+                }
 
+                const outputPath = path.join(outputDir, 'index.html');
+                fs.writeFileSync(outputPath, content);
+                console.log(`Successfully pre-rendered ${outputPath}`);
+                await page.close();
+            }
         } catch (err) {
             console.error('Error during pre-rendering:', err);
         } finally {
