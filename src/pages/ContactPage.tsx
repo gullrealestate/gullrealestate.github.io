@@ -38,7 +38,7 @@ export default function ContactPage({ isUrdu }: ContactPageProps) {
         en: {
             title: "Contact Our Agency",
             backHome: "Back to Home",
-            buySellTitle: "Buy/Sell Consultation",
+            buySellTitle: "Buy / Sell",
             buySellDesc: "Get buy/sell consultation from our CEO with practical guidance on pricing, negotiation, and next steps.",
             rentTitle: "Rent a Property",
             rentDesc: "Consult our agents for rental support and get help shortlisting homes that match your needs and budget.",
@@ -52,20 +52,20 @@ export default function ContactPage({ isUrdu }: ContactPageProps) {
             metaDesc: "Get in touch with Gull Real Estate and Builders for property consultation in Mardan and KPK."
         },
         ur: {
-            title: "ہماری ایجنسی سے رابطہ کریں",
-            backHome: "ہوم پیج پر واپس جائیں",
-            buySellTitle: "خرید و فروخت کا مشورہ",
-            buySellDesc: "ہمارے سی ای او سے قیمتوں، مذاکرات اور اگلے مراحل کے بارے میں عملی رہنمائی حاصل کریں۔",
-            rentTitle: "پراپرٹی کرایہ پر لیں",
-            rentDesc: "کرایے کی مدد کے لیے ہمارے ایجنٹوں سے رابطہ کریں اور اپنی ضرورت کے مطابق گھر تلاش کرنے میں مدد لیں۔",
-            listTitle: "اپنی پراپرٹی لسٹ کریں",
-            listDesc: "کرایے کے لیے پراپرٹی موجود ہے؟ اسے ہمارے نیٹ ورک پر لسٹ کرنے کے لیے ہم سے رابطہ کریں۔",
+            title: "ابھی رابطہ کریں",
+            backHome: "واپس جائیں",
+            buySellTitle: "خرید و فروخت",
+            buySellDesc: "سی ای او خود آپ کے ساتھ ہیں۔ بہترین قیمت اور صحیح وقت پر ڈیل کریں۔",
+            rentTitle: "کرایے پر لیں",
+            rentDesc: "مناسب گھر ڈھونڈنا مشکل ہے۔ ہمارے ایجنٹ آپ کی پسند اور بجٹ کے مطابق آپشن لائیں گے۔",
+            listTitle: "پراپرٹی لسٹ کریں",
+            listDesc: "خالی پراپرٹی سے کمائیں۔ ہمارے نیٹ ورک سے صحیح کرایہ دار جلدی ملتا ہے۔",
             speakCeo: "سی ای او سے بات کریں",
-            chatAgent1: "ایجنٹ 1 سے بات کریں",
-            chatAgent2: "ایجنٹ 2 سے بات کریں",
+            chatAgent1: "ایجنٹ ۱ سے بات کریں",
+            chatAgent2: "ایجنٹ ۲ سے بات کریں",
             callOffice: "آفس کال کریں",
             metaTitle: "رابطہ کریں - گل رئیل اسٹیٹ اینڈ بلڈرز",
-            metaDesc: "مردان اور کے پی کے میں پراپرٹی کے مشورے کے لیے گل رئیل اسٹیٹ اینڈ بلڈرز سے رابطہ کریں۔"
+            metaDesc: "مردان میں پراپرٹی خریدیں، بیچیں یا کرایہ پر لیں — گل رئیل اسٹیٹ اینڈ بلڈرز سے آج ہی بات کریں۔"
         }
     };
 
@@ -172,16 +172,14 @@ export default function ContactPage({ isUrdu }: ContactPageProps) {
                                     <WhatsAppIcon className="h-4 w-4" />
                                     {t.speakCeo}
                                 </a>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <a href="https://wa.me/923149624277" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                        <WhatsAppIcon className="h-4 w-4" />
-                                        {isUrdu ? "ایجنٹ 1" : "Agent 1"}
-                                    </a>
-                                    <a href="https://wa.me/923142121370" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
-                                        <WhatsAppIcon className="h-4 w-4" />
-                                        {isUrdu ? "ایجنٹ 2" : "Agent 2"}
-                                    </a>
-                                </div>
+                                <a href="https://wa.me/923149624277" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    <WhatsAppIcon className="h-4 w-4" />
+                                    {t.chatAgent1}
+                                </a>
+                                <a href="https://wa.me/923142121370" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    <WhatsAppIcon className="h-4 w-4" />
+                                    {t.chatAgent2}
+                                </a>
                                 <a href="tel:0937861777" className={contactButtonClass}>
                                     <CallIcon className="h-4 w-4" />
                                     {t.callOffice}
