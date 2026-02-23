@@ -13,11 +13,13 @@ export default function Footer({ isUrdu }: FooterProps) {
                     <div className="text-start">
                         <div className="flex items-center gap-2 mb-4">
                             <img
-                                src="/images/logo.png"
+                                src="/images/logo.webp"
                                 alt={isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز مردان لوگو" : "GULL Real Estate and Builders Mardan Logo"}
                                 className="h-10 w-auto"
                                 width="40"
                                 height="40"
+                                fetchPriority="high"
+                                decoding="sync"
                             />
                             <span className="text-xl font-bold">{isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز" : "GULL Real Estate and Builders"}</span>
                         </div>

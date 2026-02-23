@@ -12,11 +12,13 @@ export default function Header({ isUrdu, setIsUrdu }: HeaderProps) {
                 <div className="flex justify-between items-center h-16">
                     <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                         <img
-                            src="/images/logo.png"
+                            src="/images/logo.webp"
                             alt={isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز مردان" : "GULL Real Estate and Builders Mardan"}
                             className="h-10 w-auto"
                             width="40"
                             height="40"
+                            fetchPriority="high"
+                            decoding="sync"
                         />
                         <span className="text-xl font-bold text-gruvbox-fg">
                             {isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز" : "GULL Real Estate and Builders"}
