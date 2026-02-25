@@ -161,7 +161,7 @@ function Layout() {
             <Header isUrdu={isUrdu} currentPath={location.pathname} />
             <Routes>
                 <Route path="/" element={<HomePage isUrdu={isUrdu} t={t} />} />
-                <Route path="/contact" element={<ContactPage isUrdu={isUrdu} />} />
+                <Route path="/contact" element={<ContactPage isUrdu={isUrdu} t={t} />} />
             </Routes>
             <Footer isUrdu={isUrdu} />
         </div>

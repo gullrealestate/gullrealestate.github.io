@@ -207,7 +207,7 @@ export default function HomePage({ isUrdu, t }: HomePageProps) {
                         {t.contactSub}
                     </p>
                     <Link
-                        to="/contact"
+                        to="contact"
                         className="inline-block bg-gruvbox-bg0 text-gruvbox-fg font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gruvbox-bg1 transition-colors transform hover:-translate-y-1"
                     >
                         {t.contactBtn}
