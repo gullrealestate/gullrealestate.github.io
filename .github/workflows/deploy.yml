@@ -32,10 +32,33 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install Jekyll and SEO Tag
+        run: |
+          gem install jekyll jekyll-seo-tag
+          
+      - name: Jekyll Build (SEO Injection)
+        run: |
+          # Create a minimal Gemfile for Jekyll if it doesn't exist
+          echo "source 'https://rubygems.org'" > dist/Gemfile
+          echo "gem 'jekyll'" >> dist/Gemfile
+          echo "gem 'jekyll-seo-tag'" >> dist/Gemfile
+          # Copy _config.yml to dist for Jekyll to use
+          cp _config.yml dist/
+          # Copy index.html to 404.html for GitHub Pages routing if needed
+          cp dist/index.html dist/404.html
+          # Run jekyll build inside dist
+          cd dist && jekyll build --config _config.yml
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./dist/_site
 
   deploy:
     environment:

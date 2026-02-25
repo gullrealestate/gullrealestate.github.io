@@ -1,0 +1,14 @@
+title: GULL Real Estate and Builders
+description: Based in Mardan, HQ for KPK property investment. Serving Mardan, Peshawar, Swat, and Nowshera.
+url: "https://gullrealestate.github.io"
+author: GULL Real Estate and Builders
+twitter:
+  username: gullrealestate
+  card: summary_large_image
+logo: /images/logo.png
+social:
+  name: GULL Real Estate and Builders
+  links:
+    - https://www.facebook.com/gullrealestate
+plugins:
+  - jekyll-seo-tag
