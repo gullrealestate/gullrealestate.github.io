@@ -1,24 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Home, Key, Building2, ArrowLeft, ShieldCheck, Info } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-
-interface PolicyItem {
-    label: string;
-    content: string;
-}
-
-interface ContactPageProps {
-    isUrdu?: boolean;
-    t: {
-        title: string;
-        description: string;
-        items: (string | PolicyItem)[];
-        footer: string;
-        metaTitle: string;
-        metaDesc: string;
-    };
-}
+import { Link, useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
+import { useTranslation } from '../lib/i18n/useTranslation';
 
 const images = {
     buySell: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=1000",
@@ -46,41 +30,43 @@ const CallIcon = ({ className }: { className?: string }) => (
     />
 );
 
-export default function ContactPage({ isUrdu, t }: ContactPageProps) {
+export default function ContactPage() {
+    const { t, isUrdu, lang } = useTranslation();
+    const navigate = useNavigate();
     const [hasAcceptedPolicy, setHasAcceptedPolicy] = useState(false);
 
     const translations = {
         en: {
-            pageTitle: "Contact Our Agency",
+            pageTitle: "Ready to Execute Your Deal?",
             backHome: "Back to Home",
-            buySellTitle: "Buy / Sell",
-            buySellDesc: "Get buy/sell consultation from our CEO with practical guidance on pricing, negotiation, and next steps.",
+            buySellTitle: "Buy / sell",
+            buySellDesc: "Speak directly with our CEO to finalize your purchase or sale strategy. We handle the professional execution and negotiation for you.",
             rentTitle: "Rent a Property",
-            rentDesc: "Consult our agents for rental support and get help shortlisting homes that match your needs and budget.",
-            listTitle: "List Your Property",
-            listDesc: "Have a vacant property for rent? Consult us to list it through our network and connect with suitable tenants.",
+            rentDesc: "Our dedicated agents help you find and secure the perfect rental property through professional coordination and deal management.",
+            listTitle: "List & Sell/Rent",
+            listDesc: "List your property with our company. We find verified parties and execute the entire transaction professionally for you.",
             speakCeo: "Speak with CEO",
             chatAgent1: "Chat with Agent 1",
             chatAgent2: "Chat with Agent 2",
             callOffice: "Call Office",
             agreeBtn: "I Have Carefully Read the Agency Policy",
-            policyHeader: "Agency Fee & Liability Policy"
+            policyHeader: "Property Deal & Agency Policy"
         },
         ur: {
-            pageTitle: "ابھی رابطہ کریں",
+            pageTitle: "کیا آپ ڈیل کے لیے تیار ہیں؟",
             backHome: "واپس جائیں",
             buySellTitle: "خرید و فروخت",
-            buySellDesc: "سی ای او خود آپ کے ساتھ ہیں۔ بہترین قیمت اور صحیح وقت پر ڈیل کریں۔",
+            buySellDesc: "خرید و فروخت کی ڈیل فائنل کرنے کے لیے براہ راست سی ای او سے رابطہ کریں۔ ہم آپ کے لیے مکمل ڈیل اور مذاکرات پیشہ ورانہ طریقے سے کریں گے۔",
             rentTitle: "کرایے پر لیں",
-            rentDesc: "مناسب گھر ڈھونڈنا مشکل ہے۔ ہمارے ایجنٹ آپ کی پسند اور بجٹ کے مطابق آپشن لائیں گے۔",
-            listTitle: "پراپرٹی لسٹ کریں",
-            listDesc: "خالی پراپرٹی سے کمائیں۔ ہمارے نیٹ ورک سے صحیح کرایہ دار جلدی ملتا ہے۔",
+            rentDesc: "ہمارے سپیشل ایجنٹس آپ کی پسند کا گھر تلاش کرنے اور ڈیل مکمل کرنے میں آپ کی مکمل مدد کریں گے۔",
+            listTitle: "لسٹ اور سیل/رینٹ",
+            listDesc: "اپنی پراپرٹی ہماری کمپنی کے ساتھ لسٹ کریں۔ ہم تصدیق شدہ فریقین تلاش کرتے ہیں اور تمام معاملات کو پروفیشنل طریقے سے مکمل کرتے ہیں۔",
             speakCeo: "سی ای او سے بات کریں",
             chatAgent1: "ایجنٹ ۱ سے بات کریں",
             chatAgent2: "ایجنٹ ۲ سے بات کریں",
             callOffice: "آفس کال کریں",
             agreeBtn: "میں نے ایجنسی کی پالیسی کو غور سے پڑھ لیا ہے",
-            policyHeader: "ایجنسی فیس اور ذمہ داری کی پالیسی"
+            policyHeader: "پراپرٹی ڈیل اور ایجنسی پالیسی"
         }
     };
 
@@ -96,18 +82,26 @@ export default function ContactPage({ isUrdu, t }: ContactPageProps) {
 
     const contactButtonClass = "flex items-center justify-center gap-2 bg-gruvbox-fg text-gruvbox-bg0 font-bold py-3 px-6 rounded-xl hover:bg-gruvbox-blue hover:text-gruvbox-bg0 transition-all text-sm shadow-md transform active:scale-95 w-full";
 
+    const navigateToRequirements = (intent: string, agent: string) => {
+        const query = (intent === 'rent' || intent === 'list') ? `?agent=${agent}` : '';
+        navigate(`/${lang}/contact/requirements${query}`, { state: { intent } });
+    };
+
     return (
         <div className="min-h-screen bg-gruvbox-bg0 pt-24 sm:pt-32 pb-12 sm:pb-20" dir={isUrdu ? "rtl" : "ltr"}>
-            <Helmet>
-                <title>{t.metaTitle}</title>
-                <meta name="description" content={t.metaDesc} />
-            </Helmet>
+            <SEO
+                title={t.metaTitle}
+                description={t.metaDesc}
+                lang={lang}
+                isUrdu={isUrdu}
+                canonical="/contact"
+            />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gruvbox-fg">{contactT.pageTitle}</h1>
                     <Link
-                        to={isUrdu ? "/ur" : "/en"}
+                        to={`/${lang}`}
                         className="flex items-center gap-2 text-gruvbox-blue hover:text-gruvbox-blue/80 transition-colors font-medium whitespace-nowrap"
                     >
                         {isUrdu ? <ArrowLeft className="h-4 w-4 rotate-180" /> : <ArrowLeft className="h-4 w-4" />}
@@ -138,7 +132,7 @@ export default function ContactPage({ isUrdu, t }: ContactPageProps) {
                                     </p>
 
                                     <ul className="space-y-4 list-none">
-                                        {t.items.map((item: any, index: number) => (
+                                        {t.items.map((item, index) => (
                                             <li key={index} className="flex gap-4 items-start">
                                                 <div className="mt-1.5 h-2 w-2 rounded-full bg-gruvbox-blue flex-shrink-0" />
                                                 <div className="text-gruvbox-fg/80 leading-relaxed">
@@ -189,10 +183,10 @@ export default function ContactPage({ isUrdu, t }: ContactPageProps) {
                                 <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{contactT.buySellTitle}</h2>
                                 <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{contactT.buySellDesc}</p>
                                 <div className="space-y-3 mt-auto">
-                                    <a href="https://wa.me/923149393930" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    <button onClick={() => navigateToRequirements('buy', 'ceo')} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.speakCeo}
-                                    </a>
+                                    </button>
                                     <a href="tel:0937861777" className={contactButtonClass}>
                                         <CallIcon className="h-4 w-4" />
                                         {contactT.callOffice}
@@ -214,14 +208,14 @@ export default function ContactPage({ isUrdu, t }: ContactPageProps) {
                                 <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{contactT.rentTitle}</h2>
                                 <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{contactT.rentDesc}</p>
                                 <div className="space-y-3 mt-auto">
-                                    <a href="https://wa.me/923149624277" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    <button onClick={() => navigateToRequirements('rent', 'agent1')} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent1}
-                                    </a>
-                                    <a href="https://wa.me/923142121370" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    </button>
+                                    <button onClick={() => navigateToRequirements('rent', 'agent2')} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent2}
-                                    </a>
+                                    </button>
                                     <a href="tel:0937861777" className={contactButtonClass}>
                                         <CallIcon className="h-4 w-4" />
                                         {contactT.callOffice}
@@ -243,18 +237,18 @@ export default function ContactPage({ isUrdu, t }: ContactPageProps) {
                                 <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{contactT.listTitle}</h2>
                                 <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{contactT.listDesc}</p>
                                 <div className="space-y-3 mt-auto">
-                                    <a href="https://wa.me/923149393930" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    <button onClick={() => navigateToRequirements('list', 'ceo')} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.speakCeo}
-                                    </a>
-                                    <a href="https://wa.me/923149624277" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    </button>
+                                    <button onClick={() => navigateToRequirements('list', 'agent1')} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent1}
-                                    </a>
-                                    <a href="https://wa.me/923142121370" target="_blank" rel="noopener noreferrer" className={contactButtonClass}>
+                                    </button>
+                                    <button onClick={() => navigateToRequirements('list', 'agent2')} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent2}
-                                    </a>
+                                    </button>
                                     <a href="tel:0937861777" className={contactButtonClass}>
                                         <CallIcon className="h-4 w-4" />
                                         {contactT.callOffice}
@@ -268,3 +262,4 @@ export default function ContactPage({ isUrdu, t }: ContactPageProps) {
         </div>
     );
 }
+

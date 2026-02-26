@@ -2,56 +2,11 @@ import { Home, Key, Briefcase, BadgeDollarSign, ClipboardCheck, Handshake } from
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
+import { useTranslation } from '../lib/i18n/useTranslation';
 
-interface CitySection {
-    id: string;
-    title: string;
-    content: string;
-}
+export default function HomePage() {
+    const { t, isUrdu, lang } = useTranslation();
 
-interface PolicyItem {
-    label: string;
-    content: string;
-}
-
-interface Translations {
-    title: string;
-    description: string;
-    items: (string | PolicyItem)[];
-    footer: string;
-    button: string;
-    metaTitle: string;
-    metaDesc: string;
-    heroTitle: string;
-    heroSub: string;
-    heroBtn: string;
-    servicesTitle: string;
-    servicesSub: string;
-    buySellTitle: string;
-    buySellDesc: string;
-    tenantTitle: string;
-    tenantDesc: string;
-    landlordTitle: string;
-    landlordDesc: string;
-    howItWorksTitle: string;
-    step1: string;
-    step1Desc: string;
-    step2: string;
-    step2Desc: string;
-    step3: string;
-    step3Desc: string;
-    citySections: CitySection[];
-    contactCta: string;
-    contactSub: string;
-    contactBtn: string;
-}
-
-interface HomePageProps {
-    isUrdu: boolean;
-    t: Translations;
-}
-
-export default function HomePage({ isUrdu, t }: HomePageProps) {
     return (
         <main className="flex-grow pt-16">
             <Helmet>
@@ -158,7 +113,7 @@ export default function HomePage({ isUrdu, t }: HomePageProps) {
 
             {/* Geographic SEO Sections (Hidden from visible UI to avoid false claims) */}
             <div id="locations" className="hidden" aria-hidden="true">
-                {t.citySections.map((city: any) => (
+                {t.citySections.map((city) => (
                     <div key={city.id} id={city.id}>
                         <h2>{city.title}</h2>
                         <p>{city.content}</p>
@@ -179,7 +134,7 @@ export default function HomePage({ isUrdu, t }: HomePageProps) {
                             </p>
 
                             <ul className="text-sm sm:text-base md:text-lg text-gruvbox-fg/80 max-w-3xl mx-auto list-disc list-outside pl-5 pr-5 sm:pl-6 sm:pr-6 space-y-3 sm:space-y-4">
-                                {t.items.map((item: any, index: number) => (
+                                {t.items.map((item, index) => (
                                     <li key={index}>
                                         {typeof item === 'string' ? (
                                             item
@@ -207,7 +162,7 @@ export default function HomePage({ isUrdu, t }: HomePageProps) {
                         {t.contactSub}
                     </p>
                     <Link
-                        to="contact"
+                        to={`/${lang}/contact`}
                         className="inline-block bg-gruvbox-bg0 text-gruvbox-fg font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gruvbox-bg1 transition-colors transform hover:-translate-y-1"
                     >
                         {t.contactBtn}
@@ -217,3 +172,4 @@ export default function HomePage({ isUrdu, t }: HomePageProps) {
         </main>
     );
 }
+

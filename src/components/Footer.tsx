@@ -43,13 +43,14 @@ export default function Footer({ isUrdu }: FooterProps) {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 text-gruvbox-fg/70 hover:text-gruvbox-blue transition-colors"
+                                aria-label={isUrdu ? "گوگل میپس پر لوکیشن دیکھیں" : "View location on Google Maps"}
                             >
                                 <MapPin className="h-4 w-4" />
                                 <span>{isUrdu ? "شین گل پلازہ، صوابی روڈ، مردان، کے پی کے" : "Sheen Gull Plaza, Swabi Road, Mardan, KPK"}</span>
                             </a>
                             <div className="flex items-center gap-2 text-gruvbox-fg/70">
                                 <Phone className="h-4 w-4" />
-                                <a href="tel:0937861777" className="hover:text-gruvbox-blue transition-colors" dir="ltr">0937 861777</a>
+                                <a href="tel:0937861777" className="hover:text-gruvbox-blue transition-colors" dir="ltr" aria-label={isUrdu ? "ایجنسی کو کال کریں" : "Call the agency"}>0937 861777</a>
                             </div>
                             <a
                                 href="mailto:agul40160@gmail.com"

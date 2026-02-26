@@ -35,6 +35,7 @@ export default function Hero({ onConsultClick, isUrdu, translations }: HeroProps
                 <button
                     onClick={onConsultClick}
                     className="bg-gruvbox-blue text-gruvbox-bg0 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gruvbox-orange transition-all transform hover:-translate-y-1"
+                    aria-label={isUrdu ? "مفت مشورہ حاصل کریں" : "Get Free Consultation"}
                 >
                     {translations?.heroBtn || 'Contact Us'}
                 </button>
