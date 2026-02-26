@@ -35,13 +35,15 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={toggleLanguage}
-                            className="px-3 py-1.5 bg-gruvbox-bg2 text-gruvbox-fg text-sm font-medium rounded-lg hover:bg-gruvbox-bg3 transition-colors border border-gruvbox-bg3 shadow-sm"
-                            aria-label={isUrdu ? "زبان تبدیل کریں" : "Toggle Language"}
-                        >
-                            {isUrdu ? "English" : "اردو"}
-                        </button>
+                        {!currentPath.endsWith('/requirements') && (
+                            <button
+                                onClick={toggleLanguage}
+                                className="px-3 py-1.5 bg-gruvbox-bg2 text-gruvbox-fg text-sm font-medium rounded-lg hover:bg-gruvbox-bg3 transition-colors border border-gruvbox-bg3 shadow-sm"
+                                aria-label={isUrdu ? "زبان تبدیل کریں" : "Toggle Language"}
+                            >
+                                {isUrdu ? "English" : "اردو"}
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
