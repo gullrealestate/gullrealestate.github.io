@@ -17,7 +17,7 @@ export const en = {
     metaDesc: "Based in Mardan, Gull Real Estate and Builders offers expert consultation for Mardan, Peshawar, Swat, and across KPK. Trusted local property agency.",
     heroTitle: "Expert Property Agency Physically Based in Mardan",
     heroSub: "Direct CEO Access & Full Transparency. We guide you through every step of buying, selling, or renting with verified local expertise.",
-    heroBtn: "Free Consultation",
+    heroBtn: "Start Professional Finalization",
     servicesTitle: "Professional Deal Execution",
     servicesSub: "We are a real estate agency based in Mardan. We provide professional execution and coordination support for your property deals.",
     buySellTitle: "Buy / Sell Deal Finalization",
@@ -67,5 +67,41 @@ export const en = {
     ],
     contactCta: "Are you ready to buy, sell, or rent a property?",
     contactSub: "Speak with our CEO and our expert agents for personalized real estate strategy in Mardan and across KPK.",
-    contactBtn: "Contact Us To Fulfill Your Property Needs"
+    contactBtn: "Contact Us To Fulfill Your Property Needs",
+
+    // New Contact Page Translations
+    contactFormTitle: "Finalize Your Deal",
+    contactFormSub: "Provide details so we can execute your deal professionally.",
+    fullName: "Full Name",
+    namePlaceholder: "e.g. Ali Khan",
+    gender: "Gender",
+    male: "Male",
+    female: "Female",
+    whatsappNumber: "WhatsApp Number",
+    phonePlaceholder: "e.g. 03001234567",
+    propertyType: "Property Type",
+    selectType: "Select Type",
+    house: "House",
+    plot: "Plot",
+    commercial: "Commercial",
+    budget: "Budget / Asking Price",
+    budgetPlaceholder: "e.g. 5M or as per market",
+    location: "City / Location",
+    locationPlaceholder: "e.g. Mardan City",
+    demands: "Specific Demands",
+    demandsPlaceholder: "e.g. 3 rooms, 2 washrooms, double story",
+    submitForm: "Finalize & Execute Deal",
+    privacyNote: "Your data is secure and used for deal execution only.",
+    backToContact: "Back to Contact options",
+
+    // Agent Specific Roles/Titles
+    ceoTitle: "CEO - Consultation & Strategy",
+    agent1Title: "Agent 1 - Rental & Listings",
+    agent2Title: "Agent 2 - Plot Sales Specialist",
+
+    // Call Error Modal
+    callErrorTitle: "Notice: Phone Line Unavailable",
+    callErrorMsg: "We apologize, but our office phone line is currently unavailable due to technical maintenance (pending bill settlement).",
+    callErrorAction: "Please reach out to us via WhatsApp for immediate assistance or visit our office physically.",
+    close: "Close"
 };

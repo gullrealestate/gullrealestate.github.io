@@ -10,9 +10,8 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
 
     const toggleLanguage = () => {
         const newLang = isUrdu ? 'en' : 'ur';
-        // Replace the language part of the path and force reload
-        const newPath = currentPath.replace(/^\/(en|ur)/, `/${newLang}`);
-        window.location.href = newPath;
+        // Redirect to homepage in the new language and force reload
+        window.location.href = `/${newLang}`;
     };
 
     return (

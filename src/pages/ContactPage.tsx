@@ -3,6 +3,8 @@ import { Home, Key, Building2, ArrowLeft, ShieldCheck, Info } from 'lucide-react
 import { Link, useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { useTranslation } from '../lib/i18n/useTranslation';
+import { useCallError } from '../App';
+import { AGENTS } from '../config/contacts';
 
 const images = {
     buySell: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=1000",
@@ -33,6 +35,7 @@ const CallIcon = ({ className }: { className?: string }) => (
 export default function ContactPage() {
     const { t, isUrdu, lang } = useTranslation();
     const navigate = useNavigate();
+    const { showCallError } = useCallError();
     const [hasAcceptedPolicy, setHasAcceptedPolicy] = useState(false);
 
     const translations = {
@@ -45,9 +48,9 @@ export default function ContactPage() {
             rentDesc: "Our dedicated agents help you find and secure the perfect rental property through professional coordination and deal management.",
             listTitle: "List & Sell/Rent",
             listDesc: "List your property with our company. We find verified parties and execute the entire transaction professionally for you.",
-            speakCeo: "Speak with CEO",
-            chatAgent1: "Chat with Agent 1",
-            chatAgent2: "Chat with Agent 2",
+            speakCeo: `Speak with ${AGENTS.ceo.name.en}`,
+            chatAgent1: `Chat with ${AGENTS.agent1.name.en}`,
+            chatAgent2: `Chat with ${AGENTS.agent2.name.en}`,
             callOffice: "Call Office",
             agreeBtn: "I Have Carefully Read the Agency Policy",
             policyHeader: "Property Deal & Agency Policy"
@@ -61,9 +64,9 @@ export default function ContactPage() {
             rentDesc: "ہمارے سپیشل ایجنٹس آپ کی پسند کا گھر تلاش کرنے اور ڈیل مکمل کرنے میں آپ کی مکمل مدد کریں گے۔",
             listTitle: "لسٹ اور سیل/رینٹ",
             listDesc: "اپنی پراپرٹی ہماری کمپنی کے ساتھ لسٹ کریں۔ ہم تصدیق شدہ فریقین تلاش کرتے ہیں اور تمام معاملات کو پروفیشنل طریقے سے مکمل کرتے ہیں۔",
-            speakCeo: "سی ای او سے بات کریں",
-            chatAgent1: "ایجنٹ ۱ سے بات کریں",
-            chatAgent2: "ایجنٹ ۲ سے بات کریں",
+            speakCeo: `${AGENTS.ceo.name.ur} سے بات کریں`,
+            chatAgent1: `${AGENTS.agent1.name.ur} سے بات کریں`,
+            chatAgent2: `${AGENTS.agent2.name.ur} سے بات کریں`,
             callOffice: "آفس کال کریں",
             agreeBtn: "میں نے ایجنسی کی پالیسی کو غور سے پڑھ لیا ہے",
             policyHeader: "پراپرٹی ڈیل اور ایجنسی پالیسی"
@@ -81,11 +84,6 @@ export default function ContactPage() {
     }, []);
 
     const contactButtonClass = "flex items-center justify-center gap-2 bg-gruvbox-fg text-gruvbox-bg0 font-bold py-3 px-6 rounded-xl hover:bg-gruvbox-blue hover:text-gruvbox-bg0 transition-all text-sm shadow-md transform active:scale-95 w-full";
-
-    const navigateToRequirements = (intent: string, agent: string) => {
-        const query = (intent === 'rent' || intent === 'list') ? `?agent=${agent}` : '';
-        navigate(`/${lang}/contact/requirements${query}`, { state: { intent } });
-    };
 
     return (
         <div className="min-h-screen bg-gruvbox-bg0 pt-24 sm:pt-32 pb-12 sm:pb-20" dir={isUrdu ? "rtl" : "ltr"}>
@@ -183,14 +181,14 @@ export default function ContactPage() {
                                 <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{contactT.buySellTitle}</h2>
                                 <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{contactT.buySellDesc}</p>
                                 <div className="space-y-3 mt-auto">
-                                    <button onClick={() => navigateToRequirements('buy', 'ceo')} className={contactButtonClass}>
+                                    <button onClick={() => navigate(`/${lang}/contactCEO`)} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.speakCeo}
                                     </button>
-                                    <a href="tel:0937861777" className={contactButtonClass}>
+                                    <button onClick={showCallError} className={contactButtonClass}>
                                         <CallIcon className="h-4 w-4" />
                                         {contactT.callOffice}
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -208,18 +206,18 @@ export default function ContactPage() {
                                 <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{contactT.rentTitle}</h2>
                                 <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{contactT.rentDesc}</p>
                                 <div className="space-y-3 mt-auto">
-                                    <button onClick={() => navigateToRequirements('rent', 'agent1')} className={contactButtonClass}>
+                                    <button onClick={() => navigate(`/${lang}/contactAgentA`)} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent1}
                                     </button>
-                                    <button onClick={() => navigateToRequirements('rent', 'agent2')} className={contactButtonClass}>
+                                    <button onClick={() => navigate(`/${lang}/contactAgentB`)} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent2}
                                     </button>
-                                    <a href="tel:0937861777" className={contactButtonClass}>
+                                    <button onClick={showCallError} className={contactButtonClass}>
                                         <CallIcon className="h-4 w-4" />
                                         {contactT.callOffice}
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -237,22 +235,22 @@ export default function ContactPage() {
                                 <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{contactT.listTitle}</h2>
                                 <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{contactT.listDesc}</p>
                                 <div className="space-y-3 mt-auto">
-                                    <button onClick={() => navigateToRequirements('list', 'ceo')} className={contactButtonClass}>
+                                    <button onClick={() => navigate(`/${lang}/contactCEO`)} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.speakCeo}
                                     </button>
-                                    <button onClick={() => navigateToRequirements('list', 'agent1')} className={contactButtonClass}>
+                                    <button onClick={() => navigate(`/${lang}/contactAgentA`)} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent1}
                                     </button>
-                                    <button onClick={() => navigateToRequirements('list', 'agent2')} className={contactButtonClass}>
+                                    <button onClick={() => navigate(`/${lang}/contactAgentB`)} className={contactButtonClass}>
                                         <WhatsAppIcon className="h-4 w-4" />
                                         {contactT.chatAgent2}
                                     </button>
-                                    <a href="tel:0937861777" className={contactButtonClass}>
+                                    <button onClick={showCallError} className={contactButtonClass}>
                                         <CallIcon className="h-4 w-4" />
                                         {contactT.callOffice}
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>

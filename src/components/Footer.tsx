@@ -1,11 +1,12 @@
-
 import { MapPin, Phone } from 'lucide-react';
+import { useCallError } from '../App';
 
 interface FooterProps {
     isUrdu?: boolean;
 }
 
 export default function Footer({ isUrdu }: FooterProps) {
+    const { showCallError } = useCallError();
     return (
         <footer className="bg-gruvbox-bg1 border-t border-gruvbox-bg2 text-gruvbox-fg pt-12 pb-8" dir={isUrdu ? "rtl" : "ltr"}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,7 +51,14 @@ export default function Footer({ isUrdu }: FooterProps) {
                             </a>
                             <div className="flex items-center gap-2 text-gruvbox-fg/70">
                                 <Phone className="h-4 w-4" />
-                                <a href="tel:0937861777" className="hover:text-gruvbox-blue transition-colors" dir="ltr" aria-label={isUrdu ? "ایجنسی کو کال کریں" : "Call the agency"}>0937 861777</a>
+                                <button
+                                    onClick={showCallError}
+                                    className="hover:text-gruvbox-red transition-colors font-medium underline decoration-dotted underline-offset-4"
+                                    dir="ltr"
+                                    aria-label={isUrdu ? "ایجنسی کو کال کریں" : "Call the agency"}
+                                >
+                                    0937 861777
+                                </button>
                             </div>
                             <a
                                 href="mailto:agul40160@gmail.com"

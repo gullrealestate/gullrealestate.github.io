@@ -1,11 +1,12 @@
 import { Home, Key, Briefcase, BadgeDollarSign, ClipboardCheck, Handshake } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import { useTranslation } from '../lib/i18n/useTranslation';
 
 export default function HomePage() {
     const { t, isUrdu, lang } = useTranslation();
+    const navigate = useNavigate();
 
     return (
         <main className="flex-grow pt-16">
@@ -17,8 +18,7 @@ export default function HomePage() {
 
             <Hero
                 onConsultClick={() => {
-                    const contactSection = document.getElementById('contact-cta');
-                    contactSection?.scrollIntoView({ behavior: 'smooth' });
+                    navigate(`/${lang}/contact`);
                 }}
                 isUrdu={isUrdu}
                 translations={{
@@ -154,22 +154,20 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
-
             <section id="contact-cta" className="py-20 bg-gruvbox-blue transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-gruvbox-bg0 mb-6">{t.contactCta}</h2>
                     <p className="text-gruvbox-bg0/90 text-xl max-w-3xl mx-auto mb-10 font-medium">
                         {t.contactSub}
                     </p>
-                    <Link
-                        to={`/${lang}/contact`}
+                    <button
+                        onClick={() => navigate(`/${lang}/contact`)}
                         className="inline-block bg-gruvbox-bg0 text-gruvbox-fg font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gruvbox-bg1 transition-colors transform hover:-translate-y-1"
                     >
                         {t.contactBtn}
-                    </Link>
+                    </button>
                 </div>
             </section>
         </main>
     );
 }
-

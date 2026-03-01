@@ -1,6 +1,9 @@
 export interface Agent {
     id: string;
-    name: string;
+    name: {
+        en: string;
+        ur: string;
+    };
     role: string;
     whatsapp: string;
     email?: string;
@@ -9,19 +12,28 @@ export interface Agent {
 export const AGENTS: Record<string, Agent> = {
     ceo: {
         id: 'ceo',
-        name: 'Gull CEO',
+        name: {
+            en: 'Asif Gull',
+            ur: 'آصف گل'
+        },
         role: 'Consultation & Strategy',
         whatsapp: '923149393930',
     },
     agent1: {
         id: 'agent1',
-        name: 'Mardan Office Agent',
+        name: {
+            en: 'Mian Atiq ur Rahman',
+            ur: 'میاں عتیق الرحمن'
+        },
         role: 'Rental & Listings',
         whatsapp: '923149624277',
     },
     agent2: {
         id: 'agent2',
-        name: 'Peshawar Coordinator',
+        name: {
+            en: 'Mian Abdul Haq',
+            ur: 'میاں عبدالحق'
+        },
         role: 'Plot Sales',
         whatsapp: '923142121370',
     }
