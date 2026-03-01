@@ -7,12 +7,10 @@ import ContactPage from './pages/ContactPage';
 import UniversalContactForm from './features/contact/UniversalContactForm';
 import { useTranslation } from './lib/i18n/useTranslation';
 import CallErrorModal from './components/CallErrorModal';
-import { useState, createContext, useContext } from 'react';
+import { useState } from 'react';
 import { AGENTS } from './config/contacts';
+import { CallErrorContext } from './context/CallErrorContext';
 
-// Simple context for call error modal
-const CallErrorContext = createContext<{ showCallError: () => void }>({ showCallError: () => { } });
-export const useCallError = () => useContext(CallErrorContext);
 
 function Layout() {
     const { isUrdu, lang } = useTranslation();

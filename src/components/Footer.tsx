@@ -1,5 +1,5 @@
 import { MapPin, Phone } from 'lucide-react';
-import { useCallError } from '../App';
+import { useCallError } from '../context/CallErrorContext';
 
 interface FooterProps {
     isUrdu?: boolean;

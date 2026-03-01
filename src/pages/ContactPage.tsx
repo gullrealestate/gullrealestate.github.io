@@ -3,7 +3,7 @@ import { Home, Key, Building2, ArrowLeft, ShieldCheck, Info } from 'lucide-react
 import { Link, useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { useTranslation } from '../lib/i18n/useTranslation';
-import { useCallError } from '../App';
+import { useCallError } from '../context/CallErrorContext';
 import { AGENTS } from '../config/contacts';
 
 const images = {
