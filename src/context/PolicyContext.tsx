@@ -30,6 +30,7 @@ export const PolicyProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePolicy = () => {
     const context = useContext(PolicyContext);
     if (!context) {

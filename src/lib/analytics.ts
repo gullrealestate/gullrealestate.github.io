@@ -30,6 +30,6 @@ export function trackEvent(eventName: string, params?: EventParams): void {
 
     // Development fallback
     if (import.meta.env.DEV) {
-        console.debug(`[Analytics] ${eventName}`, params || '');
+        console.warn(`[Analytics] ${eventName}`, params || '');
     }
 }
