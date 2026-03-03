@@ -1,6 +1,6 @@
 import { Home, Key, Briefcase, BadgeDollarSign, ClipboardCheck, Handshake, Award, CheckCircle, MapPin, ChevronDown, MessageSquare } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+
 import Hero from '../components/Hero';
 import { useTranslation } from '../lib/i18n/useTranslation';
 import { useState, useEffect } from 'react';
@@ -8,7 +8,6 @@ import { trackEvent, trackFunnel } from '../lib/analytics';
 
 export default function HomePage() {
     const { t, isUrdu, lang } = useTranslation();
-    const navigate = useNavigate();
     const [openFaq, setOpenFaq] = useState<number | null>(null);
 
     useEffect(() => {
@@ -18,7 +17,10 @@ export default function HomePage() {
     const handleConsultClick = () => {
         trackEvent('cta_click', { category: 'conversion', action: 'hero_cta', label: 'contact' });
         trackFunnel('cta');
-        navigate(`/${lang}/contact`);
+        // Always show the policy page when navigating from hero
+        sessionStorage.removeItem('gull_policy_accepted');
+        // Force a full navigation so PolicyProvider re-reads sessionStorage
+        window.location.href = `/${lang}/contact`;
     };
 
     return (
