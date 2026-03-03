@@ -18,7 +18,7 @@ const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const UniversalContactForm = React.lazy(() => import('./features/contact/UniversalContactForm'));
 
 function Layout() {
-    const { isUrdu, lang } = useTranslation();
+    const { isUrdu } = useTranslation();
     const location = useLocation();
     const [isCallModalOpen, setIsCallModalOpen] = useState(false);
 
@@ -29,7 +29,7 @@ function Layout() {
             <CallErrorContext.Provider value={{ showCallError }}>
                 <div className="min-h-screen flex flex-col bg-gruvbox-bg0 transition-colors duration-300" dir={isUrdu ? "rtl" : "ltr"}>
                     <Header isUrdu={isUrdu} currentPath={location.pathname} />
-                    <main className="flex-grow">
+                    <main className="flex-grow" id="main-content">
                         <Suspense fallback={<LoadingSpinner />}>
                             <Routes>
                                 <Route path="/" element={<HomePage />} />
@@ -66,9 +66,6 @@ function Layout() {
                                         />
                                     </PolicyGate>
                                 } />
-
-                                {/* Redirect old requirements route to contact page */}
-                                <Route path="contact/requirements" element={<Navigate to={`/${lang}/contact`} replace />} />
                             </Routes>
                         </Suspense>
                     </main>

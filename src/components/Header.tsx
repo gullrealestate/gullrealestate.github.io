@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { trackEvent, trackFunnel } from '../lib/analytics';
 
 interface HeaderProps {
     isUrdu?: boolean;
@@ -10,14 +11,17 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
 
     const toggleLanguage = () => {
         const newLang = isUrdu ? 'en' : 'ur';
+        trackEvent('language_switch', { category: 'navigation', action: 'language_switch', label: newLang });
         window.location.href = `/${newLang}`;
     };
 
     return (
-        <header className="fixed top-0 w-full bg-gruvbox-bg1/95 backdrop-blur-sm z-50 border-b border-gruvbox-bg2 transition-colors duration-300" dir={isUrdu ? "rtl" : "ltr"}>
+        <header className="fixed top-0 w-full bg-gruvbox-bg1/95 backdrop-blur-sm z-50 border-b border-gruvbox-bg2 transition-colors duration-300" dir={isUrdu ? "rtl" : "ltr"} role="banner">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    <Link to={langPrefix} className="flex items-center gap-2 hover:opacity-80 transition-opacity" aria-label={isUrdu ? "گل رئیل اسٹیٹ ہوم پیج" : "GULL Real Estate Home"}>
+                    <Link to={langPrefix} className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                        aria-label={isUrdu ? "گل رئیل اسٹیٹ ہوم پیج" : "GULL Real Estate Home"}
+                        onClick={() => trackFunnel('landing')}>
                         <img
                             src="/images/logo.webp"
                             alt={isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز مردان" : "GULL Real Estate and Builders Mardan"}
@@ -32,7 +36,7 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
                         </span>
                     </Link>
 
-                    <div className="flex items-center gap-2 sm:gap-4">
+                    <nav className="flex items-center gap-2 sm:gap-4" aria-label={isUrdu ? "نیویگیشن" : "Navigation"}>
                         {!currentPath.endsWith('/requirements') && (
                             <button
                                 onClick={toggleLanguage}
@@ -42,7 +46,7 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
                                 {isUrdu ? "English" : "اردو"}
                             </button>
                         )}
-                    </div>
+                    </nav>
                 </div>
             </div>
         </header>

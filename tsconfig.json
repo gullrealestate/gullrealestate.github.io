@@ -16,6 +16,31 @@
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
+        /* Path aliases */
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@features/*": [
+                "src/features/*"
+            ],
+            "@lib/*": [
+                "src/lib/*"
+            ],
+            "@config/*": [
+                "src/config/*"
+            ],
+            "@locales/*": [
+                "src/locales/*"
+            ],
+            "@context/*": [
+                "src/context/*"
+            ]
+        },
         /* Linting */
         "strict": true,
         "noUnusedLocals": true,

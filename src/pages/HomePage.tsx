@@ -3,12 +3,23 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import { useTranslation } from '../lib/i18n/useTranslation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { trackEvent, trackFunnel } from '../lib/analytics';
 
 export default function HomePage() {
     const { t, isUrdu, lang } = useTranslation();
     const navigate = useNavigate();
     const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+    useEffect(() => {
+        trackFunnel('landing');
+    }, []);
+
+    const handleConsultClick = () => {
+        trackEvent('cta_click', { category: 'conversion', action: 'hero_cta', label: 'contact' });
+        trackFunnel('cta');
+        navigate(`/${lang}/contact`);
+    };
 
     return (
         <main className="flex-grow pt-16">
@@ -19,9 +30,7 @@ export default function HomePage() {
             </Helmet>
 
             <Hero
-                onConsultClick={() => {
-                    navigate(`/${lang}/contact`);
-                }}
+                onConsultClick={handleConsultClick}
                 isUrdu={isUrdu}
                 translations={{
                     heroTitle: t.heroTitle,
@@ -254,7 +263,7 @@ export default function HomePage() {
                         {t.contactSub}
                     </p>
                     <button
-                        onClick={() => navigate(`/${lang}/contact`)}
+                        onClick={handleConsultClick}
                         className="inline-block bg-gruvbox-bg0 text-gruvbox-fg font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:bg-gruvbox-bg1 transition-colors transform hover:-translate-y-1"
                     >
                         {t.contactBtn}

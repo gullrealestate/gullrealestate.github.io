@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline - Gull Real Estate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #282828;
+            color: #ebdbb2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 420px;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #ebdbb2cc;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        button {
+            background: #458588;
+            color: #282828;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 0.75rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #689d6a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>You're Offline</h1>
+        <p>It looks like you've lost your internet connection. Please check your connection and try again.</p>
+        <button onclick="window.location.reload()">Try Again</button>
+    </div>
+</body>
+
+</html>
