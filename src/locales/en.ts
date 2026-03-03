@@ -93,6 +93,35 @@ export const en = {
     submitForm: "Finalize & Execute Deal",
     privacyNote: "Your data is secure and used for deal execution only.",
     backToContact: "Back to Contact options",
+    buy: "Buy",
+    sell: "Sell",
+    askingPrice: "Asking Price",
+    budgetLabel: "Budget",
+    marlas: "Number of Marlas",
+    marlasPlaceholder: "e.g. 5 or 10",
+    utilities: "Utilities Available",
+    electricity: "Electricity",
+    elecGas: "Electricity and Gas",
+    transactionType: "Transaction Type",
+    rent: "Rent",
+    list: "List for Sale/Rent",
+    bedrooms: "Bedrooms",
+    bathrooms: "Bathrooms",
+    furnished: "Furnished",
+    unfurnished: "Unfurnished",
+    occupancyDate: "Target Occupancy Date",
+    plotCategory: "Plot Category",
+    corner: "Corner Plot",
+    parkFacing: "Park Facing",
+    mainRoad: "Main Road",
+    installment: "Installments",
+    cash: "Full Cash",
+    occupancyLabel: "Occupancy",
+    furnishingLabel: "Furnishing Status",
+    categoryLabel: "Category",
+    paymentLabel: "Payment Plan",
+    ownershipType: "Ownership Type",
+    streetWidth: "Street Width (ft)",
 
     // Agent Specific Roles/Titles
     ceoTitle: "CEO - Consultation & Strategy",
@@ -101,7 +130,84 @@ export const en = {
 
     // Call Error Modal
     callErrorTitle: "Notice: Phone Line Unavailable",
-    callErrorMsg: "We apologize, but our office phone line is currently unavailable due to technical maintenance (pending bill settlement).",
+    callErrorMsg: "We apologize, but our office phone line is currently unavailable due to technical maintenance.",
     callErrorAction: "Please reach out to us via WhatsApp for immediate assistance or visit our office physically.",
-    close: "Close"
+    close: "Close",
+
+    // Production-Grade Additions
+    metricsTitle: "Authority & Trust",
+    metricsYears: "10+ Years Experience",
+    metricsDeals: "500+ Deals Successfully Executed",
+    metricsHQ: "Mardan Physical HQ",
+    serviceAreaTitle: "Our Service Reach",
+    serviceAreaMain: "Mardan (Primary Base)",
+    serviceAreaKPK: "Across KPK (On Request)",
+    faqTitle: "Frequently Asked Questions",
+    faqs: [
+        {
+            q: "What are your agency fees?",
+            a: "Our standard agency fee is 1% to 2% depending on the deal size and complexity, ensuring professional facilitation."
+        },
+        {
+            q: "Do you operate outside Mardan?",
+            a: "While our HQ is in Mardan, we coordinate property transactions across all of KPK including Peshawar, Swat, and Nowshera."
+        },
+        {
+            q: "How do I list my property?",
+            a: "Simply click 'Contact Us' and select 'List for Professional Sale/Rent' to connect with our listings agents."
+        }
+    ],
+    ceoMessageTitle: "Message from our CEO",
+    ceoMessageText: "Transparency is the foundation of every deal. At Gull Real Estate, we don't just facilitate transactions; we build long-term relationships based on credibility and professional excellence in the Mardan property market.",
+    ceoSignature: "Asif Gull, CEO",
+
+    // Form Review & Compliance
+    policyAgree: "I acknowledge the Agency Policy regarding 1% to 2% facilitation fees and legal terms.",
+    reviewTitle: "Review Your Details",
+    reviewSub: "Please confirm the information below is correct before we connect you on WhatsApp.",
+    confirmAndSend: "Confirm & Open WhatsApp",
+    editDetails: "Edit Details",
+
+    // 3-Step Form Navigation
+    stepUserInfo: "Your Info",
+    stepPropertyInfo: "Property Details",
+    stepReview: "Review",
+    nextStep: "Next Step",
+    previousStep: "Previous Step",
+
+    // ContactPage Strings
+    contactPageTitle: "Ready to Execute Your Deal?",
+    contactBackHome: "Back to Home",
+    contactBuySellTitle: "Buy / Sell",
+    contactBuySellDesc: "Speak directly with our CEO to finalize your purchase or sale strategy. We handle the professional execution and negotiation for you.",
+    contactRentTitle: "Rent a Property",
+    contactRentDesc: "Our dedicated agents help you find and secure the perfect rental property through professional coordination and deal management.",
+    contactListTitle: "List & Sell/Rent",
+    contactListDesc: "List your property with our company. We find verified parties and execute the entire transaction professionally for you.",
+    contactSpeakCeo: "Speak with CEO",
+    contactChatAgent1: "Chat with Agent 1",
+    contactChatAgent2: "Chat with Agent 2",
+    contactCallOffice: "Call Office",
+
+    // CSV Lead Export
+    exportLeads: "Export Leads (CSV)",
+    noLeadsToExport: "No leads to export yet.",
+    landmarks: [
+        "Mardan City",
+        "Sheikh Maltoon Town",
+        "Baghdada",
+        "Takht Bhai",
+        "Par Hoti",
+        "Shamsi Road",
+        "Swabi Road",
+        "Nowshera Road",
+        "Katlang",
+        "Rustam",
+        "Sharif Abad",
+        "Mia Gull Kali",
+        "Nary Baja",
+        "Other"
+    ],
+    rentBudgetLabel: "Monthly Rent Budget",
+    rentBudgetPlaceholder: "e.g. 15k or according to need"
 };

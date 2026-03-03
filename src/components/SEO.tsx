@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from '../lib/i18n/useTranslation';
 
 interface SEOProps {
     title: string;
@@ -10,17 +11,20 @@ interface SEOProps {
 }
 
 export default function SEO({ title, description, lang, isUrdu, canonical, type = 'website' }: SEOProps) {
+    const { t } = useTranslation();
     const siteName = "Gull Real Estate & Builders";
     const fullTitle = `${title} | ${siteName}`;
     const url = `https://gullrealestate.github.io/${lang}${canonical || ''}`;
 
-    const structuredData = {
+    // Base RealEstateAgent Schema
+    const baseSchema = {
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
         "name": "Gull Real Estate & Builders",
         "image": "https://gullrealestate.github.io/images/logo.webp",
         "url": "https://gullrealestate.github.io",
         "telephone": "+923149393930",
+        "priceRange": "$$",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Mardan City",
@@ -32,20 +36,78 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
             "@type": "GeoCoordinates",
             "latitude": 34.1989,
             "longitude": 72.0442
-        },
-        "openingHoursSpecification": {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday"
-            ],
-            "opens": "09:00",
-            "closes": "18:00"
         }
+    };
+
+    // FAQ Schema
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": t.faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.q,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.a
+            }
+        }))
+    };
+
+    // HowTo Schema
+    const howToSchema = {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": t.howItWorksTitle,
+        "step": [
+            {
+                "@type": "HowToStep",
+                "name": t.step1,
+                "text": t.step1Desc
+            },
+            {
+                "@type": "HowToStep",
+                "name": t.step2,
+                "text": t.step2Desc
+            },
+            {
+                "@type": "HowToStep",
+                "name": t.step3,
+                "text": t.step3Desc
+            }
+        ]
+    };
+
+    // OfferCatalog Schema
+    const offerCatalogSchema = {
+        "@context": "https://schema.org",
+        "@type": "OfferCatalog",
+        "name": "Gull Real Estate Services",
+        "itemListElement": [
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": t.buySellTitle,
+                    "description": t.buySellDesc
+                }
+            },
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": t.tenantTitle,
+                    "description": t.tenantDesc
+                }
+            },
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": t.landlordTitle,
+                    "description": t.landlordDesc
+                }
+            }
+        ]
     };
 
     return (
@@ -70,7 +132,16 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
 
             {/* Structured Data */}
             <script type="application/ld+json">
-                {JSON.stringify(structuredData)}
+                {JSON.stringify(baseSchema)}
+            </script>
+            <script type="application/ld+json">
+                {JSON.stringify(faqSchema)}
+            </script>
+            <script type="application/ld+json">
+                {JSON.stringify(howToSchema)}
+            </script>
+            <script type="application/ld+json">
+                {JSON.stringify(offerCatalogSchema)}
             </script>
         </Helmet>
     );

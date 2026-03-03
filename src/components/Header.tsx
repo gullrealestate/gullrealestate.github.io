@@ -10,7 +10,6 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
 
     const toggleLanguage = () => {
         const newLang = isUrdu ? 'en' : 'ur';
-        // Redirect to homepage in the new language and force reload
         window.location.href = `/${newLang}`;
     };
 
@@ -28,12 +27,12 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
                             fetchPriority="high"
                             decoding="sync"
                         />
-                        <span className="text-xl font-bold text-gruvbox-fg">
+                        <span className="text-xl font-bold text-gruvbox-fg hidden sm:inline">
                             {isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز" : "GULL Real Estate and Builders"}
                         </span>
                     </Link>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 sm:gap-4">
                         {!currentPath.endsWith('/requirements') && (
                             <button
                                 onClick={toggleLanguage}

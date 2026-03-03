@@ -4,10 +4,19 @@
 
 @layer base {
   :root {
-    color: #ebdbb2;
-    /* gruvbox.fg */
-    background-color: #282828;
-    /* gruvbox.bg0 */
+    --gruvbox-bg0: #282828;
+    --gruvbox-bg1: #3c3836;
+    --gruvbox-bg2: #504945;
+    --gruvbox-fg: #ebdbb2;
+    color: var(--gruvbox-fg);
+    background-color: var(--gruvbox-bg0);
+  }
+
+  .light {
+    --gruvbox-bg0: #fbf1c7;
+    --gruvbox-bg1: #ebdbb2;
+    --gruvbox-bg2: #d5c4a1;
+    --gruvbox-fg: #3c3836;
   }
 
   body {
@@ -30,19 +39,52 @@
   }
 
   [dir="rtl"],
-  [dir="rtl"] * {
+  [dir="rtl"] p,
+  [dir="rtl"] span,
+  [dir="rtl"] li,
+  [dir="rtl"] a,
+  [dir="rtl"] button,
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] h5,
+  [dir="rtl"] h6,
+  [dir="rtl"] input,
+  [dir="rtl"] select,
+  [dir="rtl"] textarea {
     font-family: "Noto Nastaliq Urdu", serif !important;
     font-optical-sizing: auto !important;
-    line-height: 2.2 !important;
-    /* Force large line-height to prevent overlap */
-    text-underline-offset: 0.5em;
+  }
+
+  [dir="rtl"] input,
+  [dir="rtl"] select,
+  [dir="rtl"] textarea {
+    padding-top: 1rem !important;
+    padding-bottom: 0.75rem !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    min-height: 3.5rem !important;
+    line-height: normal !important;
+    font-size: 1.1rem !important;
+  }
+
+  [dir="rtl"] select {
+    background-position: left 0.75rem center !important;
+  }
+
+  [dir="rtl"] label {
+    margin-bottom: 0.5rem !important;
+    padding-top: 0.25rem !important;
+    padding-right: 0.25rem !important;
+    line-height: normal !important;
   }
 
   [dir="rtl"] p,
-  [dir="rtl"] li,
-  [dir="rtl"] div {
-    margin-bottom: 2.5rem !important;
-    /* Significant vertical separation */
+  [dir="rtl"] li {
+    line-height: 2.5 !important;
+    margin-bottom: 1.5rem !important;
+    padding-inline: 0.75rem !important;
   }
 
   [dir="rtl"] h1,
@@ -51,9 +93,9 @@
   [dir="rtl"] h4,
   [dir="rtl"] h5,
   [dir="rtl"] h6 {
-    line-height: 2 !important;
-    margin-bottom: 2rem !important;
-    padding-top: 1rem !important;
+    line-height: 2.2 !important;
+    margin-bottom: 1rem !important;
+    padding-top: 0.5rem !important;
   }
 
   /* Custom Scrollbar Styles */

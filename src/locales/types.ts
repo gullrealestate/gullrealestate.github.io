@@ -57,6 +57,35 @@ export type TranslationSchema = {
     submitForm: string;
     privacyNote: string;
     backToContact: string;
+    buy: string;
+    sell: string;
+    askingPrice: string;
+    budgetLabel: string;
+    marlas: string;
+    marlasPlaceholder: string;
+    utilities: string;
+    electricity: string;
+    elecGas: string;
+    transactionType: string;
+    rent: string;
+    list: string;
+    bedrooms: string;
+    bathrooms: string;
+    furnished: string;
+    unfurnished: string;
+    occupancyDate: string;
+    plotCategory: string;
+    corner: string;
+    parkFacing: string;
+    mainRoad: string;
+    installment: string;
+    cash: string;
+    occupancyLabel: string;
+    furnishingLabel: string;
+    categoryLabel: string;
+    paymentLabel: string;
+    ownershipType: string;
+    streetWidth: string;
 
     // Agent Specific Roles/Titles
     ceoTitle: string;
@@ -68,4 +97,53 @@ export type TranslationSchema = {
     callErrorMsg: string;
     callErrorAction: string;
     close: string;
+
+    // Production-Grade Additions
+    metricsTitle: string;
+    metricsYears: string;
+    metricsDeals: string;
+    metricsHQ: string;
+    serviceAreaTitle: string;
+    serviceAreaMain: string;
+    serviceAreaKPK: string;
+    faqTitle: string;
+    faqs: { q: string; a: string }[];
+    ceoMessageTitle: string;
+    ceoMessageText: string;
+    ceoSignature: string;
+
+    // Form Review & Compliance
+    policyAgree: string;
+    reviewTitle: string;
+    reviewSub: string;
+    confirmAndSend: string;
+    editDetails: string;
+
+    // 3-Step Form Navigation
+    stepUserInfo: string;
+    stepPropertyInfo: string;
+    stepReview: string;
+    nextStep: string;
+    previousStep: string;
+
+    // ContactPage Strings
+    contactPageTitle: string;
+    contactBackHome: string;
+    contactBuySellTitle: string;
+    contactBuySellDesc: string;
+    contactRentTitle: string;
+    contactRentDesc: string;
+    contactListTitle: string;
+    contactListDesc: string;
+    contactSpeakCeo: string;
+    contactChatAgent1: string;
+    contactChatAgent2: string;
+    contactCallOffice: string;
+
+    // CSV Lead Export
+    exportLeads: string;
+    noLeadsToExport: string;
+    landmarks: string[];
+    rentBudgetLabel: string;
+    rentBudgetPlaceholder: string;
 };

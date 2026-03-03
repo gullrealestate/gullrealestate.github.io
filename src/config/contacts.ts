@@ -22,8 +22,8 @@ export const AGENTS: Record<string, Agent> = {
     agent1: {
         id: 'agent1',
         name: {
-            en: 'Mian Atiq ur Rahman',
-            ur: 'میاں عتیق الرحمن'
+            en: 'Syed Ateeq ur Rahman',
+            ur: 'سید عتیق الرحمن'
         },
         role: 'Rental & Listings',
         whatsapp: '923149624277',
