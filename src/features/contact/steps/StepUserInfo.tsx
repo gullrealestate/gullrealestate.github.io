@@ -25,7 +25,7 @@ export default function StepUserInfo({
 }: StepUserInfoProps) {
     return (
         <form onSubmit={onSubmit} className="space-y-6 relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-500" noValidate>
-            {contactType === 'ceo' && (
+            {contactType === 'ceo' && formData.intent !== 'list' && (
                 <div>
                     <label className={labelClass} id="transaction-type-label">{t.transactionType}</label>
                     <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-labelledby="transaction-type-label">

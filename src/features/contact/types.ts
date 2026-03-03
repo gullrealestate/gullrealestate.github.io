@@ -18,6 +18,7 @@ export interface LeadData {
     streetWidth: string;
     occupancyDate: string;
     ownershipType: string;
+    onMainRoad: boolean;
 }
 
 export type ContactType = 'ceo' | 'agent1' | 'agent2';

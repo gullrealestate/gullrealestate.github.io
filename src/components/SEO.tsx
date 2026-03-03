@@ -12,10 +12,10 @@ interface SEOProps {
 
 export default function SEO({ title, description, lang, isUrdu, canonical, type = 'website' }: SEOProps) {
     const { t } = useTranslation();
-    const siteName = "Gull Real Estate & Builders";
+    const siteName = isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز | +15 سالہ تجربہ" : "Gull Real Estate & Builders | 15+ Years";
     const fullTitle = `${title} | ${siteName}`;
     const url = `https://gullrealestate.github.io/${lang}${canonical || ''}`;
-    const ogImage = `https://gullrealestate.github.io/images/logo.webp`;
+    const ogImage = `https://gullrealestate.github.io/images/og-${lang}.png`;
 
     // Base RealEstateAgent Schema with geo
     const baseSchema = {

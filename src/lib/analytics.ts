@@ -47,52 +47,81 @@ export function trackEvent(eventName: string, params?: TrackEventParams | EventP
 
 // ---------- Scroll Depth Tracking ----------
 
+const SCROLL_SESSION_KEY = 'gull_scroll_fired';
 const scrollThresholds = [50, 90] as const;
-const firedThresholds = new Set<number>();
+
+let scrollTimeout: number | null = null;
+
+function getFiredThresholds(): Set<number> {
+    try {
+        const stored = sessionStorage.getItem(SCROLL_SESSION_KEY);
+        return new Set(stored ? JSON.parse(stored) : []);
+    } catch {
+        return new Set();
+    }
+}
+
+function saveFiredThresholds(thresholds: Set<number>): void {
+    try {
+        sessionStorage.setItem(SCROLL_SESSION_KEY, JSON.stringify(Array.from(thresholds)));
+    } catch {
+        // no-op
+    }
+}
 
 function handleScroll(): void {
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollHeight <= 0) return;
-    const pct = Math.round((window.scrollY / scrollHeight) * 100);
+    // Throttle: don't run more than once per 100ms
+    if (scrollTimeout) return;
 
-    for (const threshold of scrollThresholds) {
-        if (pct >= threshold && !firedThresholds.has(threshold)) {
-            firedThresholds.add(threshold);
-            trackEvent('scroll_depth', { category: 'engagement', action: 'scroll', label: `${threshold}%`, value: threshold });
+    scrollTimeout = window.setTimeout(() => {
+        scrollTimeout = null;
+
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollHeight <= 0) return;
+
+        const pct = Math.round((window.scrollY / scrollHeight) * 100);
+        const fired = getFiredThresholds();
+        let changed = false;
+
+        for (const threshold of scrollThresholds) {
+            if (pct >= threshold && !fired.has(threshold)) {
+                fired.add(threshold);
+                changed = true;
+
+                trackEvent('ScrollDepth', {
+                    category: 'Engagement',
+                    action: 'ScrollDepth',
+                    label: `${threshold}%`,
+                    value: threshold
+                });
+            }
         }
-    }
+
+        if (changed) {
+            saveFiredThresholds(fired);
+        }
+    }, 150);
 }
 
-/** Call once on app init to start scroll depth tracking */
-export function initScrollTracking(): void {
-    if (typeof window === 'undefined') return;
-    window.addEventListener('scroll', handleScroll, { passive: true });
-}
-
-// ---------- Funnel Tracking ----------
-
-const FUNNEL_KEY = 'gull_funnel';
-
-type FunnelStage = 'landing' | 'cta' | 'form_start' | 'step2' | 'review' | 'whatsapp';
-
-const FUNNEL_ORDER: FunnelStage[] = ['landing', 'cta', 'form_start', 'step2', 'review', 'whatsapp'];
-
-/**
- * Track anonymous funnel progression.
- * Only advances forward (no regressions). Stores drop-off stage locally.
- * No identity data is stored.
+/** 
+ * Call once on app init to start scroll depth tracking.
+ * Includes listener cleanup logic.
  */
-export function trackFunnel(stage: FunnelStage): void {
-    try {
-        const current = localStorage.getItem(FUNNEL_KEY);
-        const currentIndex = current ? FUNNEL_ORDER.indexOf(current as FunnelStage) : -1;
-        const newIndex = FUNNEL_ORDER.indexOf(stage);
+export function initScrollTracking(): () => void {
+    if (typeof window === 'undefined') return () => { };
 
-        if (newIndex > currentIndex) {
-            localStorage.setItem(FUNNEL_KEY, stage);
-            trackEvent('funnel_progress', { category: 'funnel', action: stage, value: newIndex });
-        }
-    } catch {
-        // localStorage unavailable — no-op
+    // Disable in dev unless VITE_ENABLE_ANALYTICS is set
+    if (import.meta.env.DEV && !import.meta.env.VITE_ENABLE_ANALYTICS) {
+        return () => { };
     }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+        if (scrollTimeout) {
+            window.clearTimeout(scrollTimeout);
+            scrollTimeout = null;
+        }
+    };
 }
+

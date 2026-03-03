@@ -1,22 +1,25 @@
-import { Home, Key, Briefcase, BadgeDollarSign, ClipboardCheck, Handshake, Award, CheckCircle, MapPin, ChevronDown, MessageSquare } from 'lucide-react';
+import { Home, Key, Briefcase, BadgeDollarSign, ClipboardCheck, Handshake, MapPin, ChevronDown, MessageSquare, Award, CheckCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
 import Hero from '../components/Hero';
 import { useTranslation } from '../lib/i18n/useTranslation';
 import { useState, useEffect } from 'react';
-import { trackEvent, trackFunnel } from '../lib/analytics';
+import { useLocation } from 'react-router-dom';
+import { trackEvent } from '../lib/analytics';
+import { setFunnelStage } from '../lib/funnelTracker';
 
 export default function HomePage() {
     const { t, isUrdu, lang } = useTranslation();
+    const location = useLocation();
     const [openFaq, setOpenFaq] = useState<number | null>(null);
 
     useEffect(() => {
-        trackFunnel('landing');
-    }, []);
+        setFunnelStage('landing', { lang, route: location.pathname });
+    }, [lang, location.pathname]);
 
     const handleConsultClick = () => {
         trackEvent('cta_click', { category: 'conversion', action: 'hero_cta', label: 'contact' });
-        trackFunnel('cta');
+        setFunnelStage('cta_clicked', { lang, route: location.pathname });
         window.location.href = `/${lang}/contact`;
     };
 
@@ -38,31 +41,46 @@ export default function HomePage() {
                 }}
             />
 
-            {/* Authority Metrics Section */}
-            <section className="bg-gruvbox-bg1 border-y border-gruvbox-bg2 py-12">
+            {/* Trust Bar Section */}
+            <section className="bg-gruvbox-bg1 border-y border-gruvbox-bg2 py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="flex items-center justify-center gap-4 text-center md:text-left">
-                            <Award className="h-10 w-10 text-gruvbox-blue flex-shrink-0" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                        <div className="flex items-center justify-center space-x-4 md:justify-start">
+                            <div className="bg-gruvbox-blue/10 p-2 sm:p-3 rounded-xl">
+                                <Award className="h-6 w-6 sm:h-7 sm:w-7 text-gruvbox-blue" aria-hidden="true" />
+                            </div>
                             <div>
-                                <div className="text-2xl font-bold text-gruvbox-fg">{t.metricsYears}</div>
+                                <p className="text-base sm:text-lg font-bold text-gruvbox-fg leading-tight">
+                                    {t.trustYears}
+                                </p>
                             </div>
                         </div>
-                        <div className="flex items-center justify-center gap-4 text-center md:text-left">
-                            <CheckCircle className="h-10 w-10 text-gruvbox-green flex-shrink-0" />
+
+                        <div className="flex items-center justify-center space-x-4 md:justify-center">
+                            <div className="bg-gruvbox-green/10 p-2 sm:p-3 rounded-xl">
+                                <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 text-gruvbox-green" aria-hidden="true" />
+                            </div>
                             <div>
-                                <div className="text-2xl font-bold text-gruvbox-fg">{t.metricsDeals}</div>
+                                <p className="text-base sm:text-lg font-bold text-gruvbox-fg leading-tight">
+                                    {t.trustDeals}
+                                </p>
                             </div>
                         </div>
-                        <div className="flex items-center justify-center gap-4 text-center md:text-left">
-                            <MapPin className="h-10 w-10 text-gruvbox-orange flex-shrink-0" />
+
+                        <div className="flex items-center justify-center space-x-4 md:justify-end">
+                            <div className="bg-gruvbox-orange/10 p-2 sm:p-3 rounded-xl">
+                                <MapPin className="h-6 w-6 sm:h-7 sm:w-7 text-gruvbox-orange" aria-hidden="true" />
+                            </div>
                             <div>
-                                <div className="text-2xl font-bold text-gruvbox-fg">{t.metricsHQ}</div>
+                                <p className="text-base sm:text-lg font-bold text-gruvbox-fg leading-tight">
+                                    {t.trustHQ}
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
 
             <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="text-center mb-16">

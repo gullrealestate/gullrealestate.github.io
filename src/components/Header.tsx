@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { trackEvent, trackFunnel } from '../lib/analytics';
+import { trackEvent } from '../lib/analytics';
 
 interface HeaderProps {
     isUrdu?: boolean;
@@ -20,8 +20,7 @@ export default function Header({ isUrdu, currentPath }: HeaderProps) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <Link to={langPrefix} className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-                        aria-label={isUrdu ? "گل رئیل اسٹیٹ ہوم پیج" : "GULL Real Estate Home"}
-                        onClick={() => trackFunnel('landing')}>
+                        aria-label={isUrdu ? "گل رئیل اسٹیٹ ہوم پیج" : "GULL Real Estate Home"}>
                         <img
                             src="/images/logo.webp"
                             alt={isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز مردان" : "GULL Real Estate and Builders Mardan"}

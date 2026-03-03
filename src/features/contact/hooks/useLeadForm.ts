@@ -4,6 +4,8 @@ import { buildWhatsAppMessage, generateLeadId, buildWhatsAppUrl } from '../utils
 import { saveLead } from '../../../lib/leadPersistence';
 import { trackEvent } from '../../../lib/analytics';
 import { type TranslationSchema } from '../../../locales/types';
+import { setFunnelStage } from '../../../lib/funnelTracker';
+import { useLocation } from 'react-router-dom';
 
 const DRAFT_KEY = 'gull_form_draft';
 
@@ -48,6 +50,7 @@ export function getDefaultFormData(t: TranslationSchema, initialIntent: string |
         streetWidth: '',
         occupancyDate: '',
         ownershipType: 'registry',
+        onMainRoad: false,
     };
 }
 
@@ -63,6 +66,7 @@ interface UseLeadFormOptions {
 
 export function useLeadForm(options: UseLeadFormOptions) {
     const { contactType, agentName, agentWhatsApp, isUrdu, lang, t, initialIntent } = options;
+    const location = useLocation();
 
     const [step, setStep] = useState(1);
     const [hasAcceptedFormPolicy, setHasAcceptedFormPolicy] = useState(false);
@@ -89,14 +93,15 @@ export function useLeadForm(options: UseLeadFormOptions) {
     // Track form opened
     useEffect(() => {
         trackEvent('form_started', { category: 'form', action: 'opened', label: contactType });
-    }, [contactType]);
+        setFunnelStage('form_started', { lang, route: location.pathname });
+    }, [contactType, lang, location.pathname]);
 
     // Persist draft on every change
     useEffect(() => {
         persistDraft(formData);
     }, [formData]);
 
-    const updateField = useCallback((name: keyof LeadData, value: string) => {
+    const updateField = useCallback((name: keyof LeadData, value: string | boolean) => {
         setFormData(prev => ({ ...prev, [name]: value }));
         // Clear error for this field when user edits
         setErrors(prev => {
@@ -149,7 +154,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
         if (formData.intent === 'rent' && !formData.occupancyDate) {
             newErrors.occupancyDate = isUrdu ? 'قبضے کی تاریخ ضروری ہے' : 'Occupancy date is required';
         }
-        if (formData.intent === 'list' && !formData.streetWidth.trim()) {
+        if (formData.intent === 'list' && !formData.onMainRoad && !formData.streetWidth.trim()) {
             newErrors.streetWidth = isUrdu ? 'گلی کی چوڑائی ضروری ہے' : 'Street width is required';
         }
         setErrors(newErrors);
@@ -164,17 +169,19 @@ export function useLeadForm(options: UseLeadFormOptions) {
         e.preventDefault();
         if (validateStep1()) {
             trackEvent('step_completed', { category: 'form', action: 'step_1_completed', label: contactType });
+            setFunnelStage('step_2', { lang, route: location.pathname });
             setStep(2);
         }
-    }, [validateStep1, contactType]);
+    }, [validateStep1, contactType, lang, location.pathname]);
 
     const submitStep2 = useCallback((e: React.FormEvent) => {
         e.preventDefault();
         if (validateStep2()) {
             trackEvent('step_completed', { category: 'form', action: 'step_2_completed', label: contactType });
+            setFunnelStage('review', { lang, route: location.pathname });
             setStep(3);
         }
-    }, [validateStep2, contactType]);
+    }, [validateStep2, contactType, lang, location.pathname]);
 
     const confirmAndSend = useCallback(() => {
         const leadId = generateLeadId();
@@ -184,6 +191,8 @@ export function useLeadForm(options: UseLeadFormOptions) {
             action: 'whatsapp_send',
             label: `${contactType}_${agentName}`,
         });
+
+        setFunnelStage('whatsapp_clicked', { lang, route: location.pathname });
 
         // Persist lead
         saveLead({
@@ -216,6 +225,11 @@ export function useLeadForm(options: UseLeadFormOptions) {
                 cash: t.cash,
                 installment: t.installment,
                 plot: t.plot,
+                registry: t.registry,
+                inteqal: t.inteqal,
+                allotment: t.allotment,
+                powerOfAttorney: t.powerOfAttorney,
+                mainRoadLabel: t.mainRoadLabel,
             },
         });
 
@@ -226,7 +240,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
         // Open WhatsApp — this MUST always work regardless of persistence outcome
         window.open(url, '_blank');
-    }, [formData, contactType, agentName, agentWhatsApp, isUrdu, lang, t]);
+    }, [formData, contactType, agentName, agentWhatsApp, isUrdu, lang, t, location.pathname]);
 
     return {
         step,

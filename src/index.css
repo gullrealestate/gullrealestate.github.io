@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+  :focus-visible {
+    @apply outline-none ring-2 ring-gruvbox-blue ring-offset-2;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-gruvbox-blue focus:text-white focus:rounded-md focus:shadow-lg;
+  }
+
+  .urdu-policy-text {
+    line-height: 2.2 !important;
+  }
+
   :root {
     --gruvbox-bg0: #282828;
     --gruvbox-bg1: #3c3836;
@@ -74,10 +86,11 @@
   }
 
   [dir="rtl"] label {
-    margin-bottom: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
     padding-top: 0.25rem !important;
     padding-right: 0.25rem !important;
-    line-height: normal !important;
+    line-height: 1.8 !important;
+    font-weight: 600 !important;
   }
 
   [dir="rtl"] p,

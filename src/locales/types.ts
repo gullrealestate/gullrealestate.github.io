@@ -9,6 +9,9 @@ export type TranslationSchema = {
     heroTitle: string;
     heroSub: string;
     heroBtn: string;
+    trustYears: string;
+    trustDeals: string;
+    trustHQ: string;
     servicesTitle: string;
     servicesSub: string;
     buySellTitle: string;
@@ -85,7 +88,12 @@ export type TranslationSchema = {
     categoryLabel: string;
     paymentLabel: string;
     ownershipType: string;
-    streetWidth: string;
+    streetWidthLabel: string;
+    mainRoadLabel: string;
+    registry: string;
+    inteqal: string;
+    allotment: string;
+    powerOfAttorney: string;
 
     // Agent Specific Roles/Titles
     ceoTitle: string;
@@ -99,10 +107,6 @@ export type TranslationSchema = {
     close: string;
 
     // Production-Grade Additions
-    metricsTitle: string;
-    metricsYears: string;
-    metricsDeals: string;
-    metricsHQ: string;
     serviceAreaTitle: string;
     serviceAreaMain: string;
     serviceAreaKPK: string;

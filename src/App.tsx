@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -12,6 +12,7 @@ import { PolicyProvider } from './context/PolicyContext';
 import PolicyGate from './components/PolicyGate';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
+import { initScrollTracking } from './lib/analytics';
 
 // Lazy-loaded heavy components
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
@@ -22,12 +23,26 @@ function Layout() {
     const location = useLocation();
     const [isCallModalOpen, setIsCallModalOpen] = useState(false);
 
+    // Scroll depth tracking lifecycle
+    useEffect(() => {
+        const cleanup = initScrollTracking();
+        return cleanup;
+    }, []);
+
+    // Scroll to top on route change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
+
     const showCallError = () => setIsCallModalOpen(true);
 
     return (
         <PolicyProvider>
             <CallErrorContext.Provider value={{ showCallError }}>
                 <div className="min-h-screen flex flex-col bg-gruvbox-bg0 transition-colors duration-300" dir={isUrdu ? "rtl" : "ltr"}>
+                    <a href="#main-content" className="skip-link">
+                        {isUrdu ? 'مواد پر جائیں' : 'Skip to content'}
+                    </a>
                     <Header isUrdu={isUrdu} currentPath={location.pathname} />
                     <main className="flex-grow" id="main-content">
                         <Suspense fallback={<LoadingSpinner />}>

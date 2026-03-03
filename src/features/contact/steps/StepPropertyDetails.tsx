@@ -8,7 +8,7 @@ interface StepPropertyDetailsProps {
     isUrdu: boolean;
     t: TranslationSchema;
     errors: ValidationErrors;
-    onFieldChange: (name: keyof LeadData, value: string) => void;
+    onFieldChange: (name: keyof LeadData, value: string | boolean) => void;
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
     onSubmit: (e: React.FormEvent) => void;
 }
@@ -130,19 +130,36 @@ export default function StepPropertyDetails({
                         <label htmlFor="ownershipType" className={labelClass}>{t.ownershipType}</label>
                         <select id="ownershipType" name="ownershipType" required value={formData.ownershipType}
                             onChange={onInputChange} className={inputClass}>
-                            <option value="registry">Registry</option>
-                            <option value="inteqal">Inteqal</option>
-                            <option value="allotment">Allotment / File</option>
-                            <option value="powerOfAttorney">Power of Attorney</option>
+                            <option value="registry">{t.registry}</option>
+                            <option value="inteqal">{t.inteqal}</option>
+                            <option value="allotment">{t.allotment}</option>
+                            <option value="powerOfAttorney">{t.powerOfAttorney}</option>
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="streetWidth" className={labelClass}>{t.streetWidth}</label>
-                        <input type="text" id="streetWidth" name="streetWidth" required value={formData.streetWidth}
-                            onChange={onInputChange} className={inputClass} placeholder="e.g. 30"
-                            aria-invalid={!!errors.streetWidth} aria-describedby={errors.streetWidth ? 'sw-error' : undefined} />
-                        {errors.streetWidth && <p id="sw-error" className="text-gruvbox-red text-xs mt-1" role="alert">{errors.streetWidth}</p>}
+                        <div className="flex items-center gap-3 mb-4 h-full pt-6">
+                            <label className="flex items-center gap-2 cursor-pointer group">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.onMainRoad}
+                                    onChange={(e) => onFieldChange('onMainRoad', e.target.checked)}
+                                    className="w-5 h-5 rounded border-gruvbox-bg3 bg-gruvbox-bg2 text-gruvbox-blue focus:ring-gruvbox-blue transition-all"
+                                />
+                                <span className="text-sm font-semibold text-gruvbox-fg/70 group-hover:text-gruvbox-fg transition-colors">
+                                    {t.mainRoadLabel}
+                                </span>
+                            </label>
+                        </div>
                     </div>
+                    {!formData.onMainRoad && (
+                        <div>
+                            <label htmlFor="streetWidth" className={labelClass}>{t.streetWidthLabel}</label>
+                            <input type="text" id="streetWidth" name="streetWidth" required={!formData.onMainRoad} value={formData.streetWidth}
+                                onChange={onInputChange} className={inputClass} placeholder="e.g. 30"
+                                aria-invalid={!!errors.streetWidth} aria-describedby={errors.streetWidth ? 'sw-error' : undefined} />
+                            {errors.streetWidth && <p id="sw-error" className="text-gruvbox-red text-xs mt-1" role="alert">{errors.streetWidth}</p>}
+                        </div>
+                    )}
                     <div>
                         <label className={labelClass} id="category-label">{t.categoryLabel}</label>
                         <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-labelledby="category-label">

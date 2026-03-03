@@ -47,6 +47,9 @@ describe('leadPersistence', () => {
     beforeEach(() => {
         localStorageMock.clear();
         vi.clearAllMocks();
+        vi.unstubAllGlobals();
+        vi.unstubAllEnvs();
+        vi.stubGlobal('fetch', vi.fn(() => Promise.resolve({ ok: true })));
     });
 
     describe('saveLead', () => {
@@ -57,11 +60,13 @@ describe('leadPersistence', () => {
             expect(leads[0].id).toBe('GRE-260301-120000');
         });
 
-        it('accumulates multiple leads', async () => {
+        it('attempts to POST to backend when endpoint is set', async () => {
+            // Use stubEnv for VITE variables
+            vi.stubEnv('VITE_LEAD_ENDPOINT', 'https://api.test/leads');
+
             await saveLead(mockLead);
-            await saveLead({ ...mockLead, id: 'GRE-260301-120001' });
-            const leads = getStoredLeads();
-            expect(leads).toHaveLength(2);
+
+            expect(globalThis.fetch).toHaveBeenCalledWith('https://api.test/leads', expect.any(Object));
         });
 
         it('does not throw when localStorage setItem throws', async () => {

@@ -11,7 +11,13 @@ interface WhatsAppConfig {
         ceoTitle: string;
         agent1Title: string;
         agent2Title: string;
+        plot: string;
         commercial: string;
+        registry: string;
+        inteqal: string;
+        allotment: string;
+        powerOfAttorney: string;
+        mainRoadLabel: string;
         budgetLabel: string;
         rentBudgetLabel: string;
         askingPrice: string;
@@ -19,7 +25,6 @@ interface WhatsAppConfig {
         unfurnished: string;
         cash: string;
         installment: string;
-        plot: string;
     };
 }
 
@@ -29,7 +34,7 @@ interface WhatsAppConfig {
  */
 export function buildWhatsAppMessage(config: WhatsAppConfig): string {
     const { formData, contactType, agentName, isUrdu, leadId, lang, translations: t } = config;
-    const { name, phone, budget, location, propertyType, demands, gender, intent, marlas, utilities } = formData;
+    const { name, phone, budget, location, propertyType, demands, gender, intent, marlas, utilities, onMainRoad, ownershipType } = formData;
 
     const brand = isUrdu
         ? '*گل رئیل اسٹیٹ اینڈ بلڈرز، مردان*'
@@ -43,40 +48,46 @@ export function buildWhatsAppMessage(config: WhatsAppConfig): string {
     if (isUrdu) {
         const actionSuffix = gender === 'female' ? 'رہی' : 'رہا';
         const wantSuffix = gender === 'female' ? 'چاہتی' : 'چاہتا';
-        const intentText = contactType === 'ceo'
+        const intentText = (contactType === 'ceo' && intent !== 'list')
             ? (intent === 'buy' ? 'خریدنے' : 'بیچنے')
             : (intent === 'rent' ? 'کرایہ پر لینے' : 'لسٹنگ کروانے');
 
-        message += `جناب *${agentName}* (${agentRole})، میں *${name}* بات کر ${actionSuffix} ہوں۔ میں آپ کی کمپنی کے ذریعے ${intentText} میں دلچسپی ${wantSuffix} ہوں۔ میری تفصیلات درج ذیل ہیں:\n\n`;
-        message += `📍 *مقام:* ${location}\n`;
-        message += `🏠 *نوعیت:* ${propertyType || 'کوئی بھی'}\n`;
-        message += `📐 *رقبہ:* ${marlas} مرلے\n`;
+        const rlm = '\u200F';
+        message += `${rlm}جناب *${agentName}* (${agentRole})، میں *${name}* بات کر ${actionSuffix} ہوں۔ میں آپ کی کمپنی کے ذریعے ${intentText} میں دلچسپی ${wantSuffix} ہوں۔ میری تفصیلات درج ذیل ہیں:\n\n`;
+        message += `${rlm}📍 *مقام:* ${location}\n`;
+        message += `${rlm}🏠 *نوعیت:* ${propertyType || 'کوئی بھی'}\n`;
+        message += `${rlm}📐 *رقبہ:* ${marlas} مرلے\n`;
 
         if (intent === 'rent') {
-            message += `🛏️ *کمرے:* ${formData.bedrooms}\n`;
-            message += `🚿 *باتھ روم:* ${formData.bathrooms}\n`;
-            message += `🛋️ *فرنیچر:* ${formData.furnishing === 'furnished' ? t.furnished : t.unfurnished}\n`;
-            message += `📅 *قبضہ درکار:* ${formData.occupancyDate}\n`;
+            message += `${rlm}🛏️ *کمرے:* ${formData.bedrooms}\n`;
+            message += `${rlm}🚿 *باتھ روم:* ${formData.bathrooms}\n`;
+            message += `${rlm}🛋️ *فرنیچر:* ${formData.furnishing === 'furnished' ? t.furnished : t.unfurnished}\n`;
+            message += `${rlm}📅 *قبضہ درکار:* ${formData.occupancyDate}\n`;
         } else if (intent === 'list') {
-            message += `🏷️ *کیٹیگری:* ${formData.plotCategory === 'residential' ? t.plot : t.commercial}\n`;
-            message += `📜 *ملکیت:* ${formData.ownershipType}\n`;
-            message += `🛣️ *گلی:* ${formData.streetWidth} فٹ\n`;
-            message += `💳 *ادائیگی:* ${formData.paymentMethod === 'cash' ? t.cash : t.installment}\n`;
-        } else if (contactType === 'ceo') {
+            const ownText = ownershipType === 'registry' ? t.registry : (ownershipType === 'inteqal' ? t.inteqal : (ownershipType === 'allotment' ? t.allotment : t.powerOfAttorney));
+            message += `${rlm}🏷️ *کیٹیگری:* ${formData.plotCategory === 'residential' ? t.plot : t.commercial}\n`;
+            message += `${rlm}📜 *ملکیت:* ${ownText}\n`;
+            if (onMainRoad) {
+                message += `${rlm}🛣️ *روڈ:* ${t.mainRoadLabel}\n`;
+            } else {
+                message += `${rlm}🛣️ *گلی:* ${formData.streetWidth} فٹ\n`;
+            }
+            message += `${rlm}💳 *ادائیگی:* ${formData.paymentMethod === 'cash' ? t.cash : t.installment}\n`;
+        } else if (contactType === 'ceo' || intent === 'buy' || intent === 'sell') {
             if (propertyType !== t.commercial) {
-                message += `⚡ *سہولیات:* ${utilities === 'electricity' ? 'بجلی' : 'بجلی اور گیس'}\n`;
+                message += `${rlm}⚡ *سہولیات:* ${utilities === 'electricity' ? 'بجلی' : 'بجلی اور گیس'}\n`;
             }
         }
 
         const priceLabel = intent === 'buy' ? t.budgetLabel : (intent === 'rent' ? t.rentBudgetLabel : t.askingPrice);
-        message += `💰 *${priceLabel}:* ${budget}\n`;
-        message += `📝 *مطالبات:* ${demands}\n`;
-        message += `📞 *رابطہ نمبر:* ${phone}\n`;
-        message += `🆔 *ریفرنس:* ${leadId}\n`;
-        message += `🌐 *زبان:* ${lang === 'ur' ? 'اردو' : 'English'}\n\n`;
-        message += `براہ کرم اس معاملے میں میری مدد کریں۔ شکریہ!`;
+        message += `${rlm}💰 *${priceLabel}:* ${budget}\n`;
+        message += `${rlm}📝 *مطالبات:* ${demands}\n`;
+        message += `${rlm}📞 *رابطہ نمبر:* ${phone}\n`;
+        message += `${rlm}🆔 *ریفرنس:* ${leadId}\n`;
+        message += `${rlm}🌐 *زبان:* ${lang === 'ur' ? 'اردو' : 'English'}\n\n`;
+        message += `${rlm}براہ کرم اس معاملے میں میری مدد کریں۔ شکریہ!`;
     } else {
-        const intentText = contactType === 'ceo'
+        const intentText = (contactType === 'ceo' && intent !== 'list')
             ? (intent === 'buy' ? 'buy' : 'sell')
             : (intent === 'rent' ? 'rent' : 'list');
 
@@ -91,11 +102,17 @@ export function buildWhatsAppMessage(config: WhatsAppConfig): string {
             message += `🛋️ *Furnishing:* ${formData.furnishing}\n`;
             message += `📅 *Occupancy Date:* ${formData.occupancyDate}\n`;
         } else if (intent === 'list') {
-            message += `🏷️ *Category:* ${formData.plotCategory}\n`;
-            message += `📜 *Ownership:* ${formData.ownershipType}\n`;
-            message += `🛣️ *Street Width:* ${formData.streetWidth} ft\n`;
-            message += `💳 *Payment:* ${formData.paymentMethod}\n`;
-        } else if (contactType === 'ceo') {
+            const catText = formData.plotCategory === 'residential' ? t.plot : t.commercial;
+            const ownText = ownershipType === 'registry' ? t.registry : (ownershipType === 'inteqal' ? t.inteqal : (ownershipType === 'allotment' ? t.allotment : t.powerOfAttorney));
+            message += `🏷️ *Category:* ${catText}\n`;
+            message += `📜 *Ownership:* ${ownText}\n`;
+            if (onMainRoad) {
+                message += `🛣️ *Road:* ${t.mainRoadLabel}\n`;
+            } else {
+                message += `🛣️ *Street Width:* ${formData.streetWidth} ft\n`;
+            }
+            message += `💳 *Payment:* ${formData.paymentMethod === 'cash' ? t.cash : t.installment}\n`;
+        } else if (contactType === 'ceo' || intent === 'buy' || intent === 'sell') {
             if (propertyType !== t.commercial) {
                 message += `⚡ *Utilities:* ${utilities === 'electricity' ? 'Electricity' : 'Elec & Gas'}\n`;
             }

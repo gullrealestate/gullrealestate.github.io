@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { Home, Key, Building2, ArrowLeft } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { useTranslation } from '../lib/i18n/useTranslation';
 import { useCallError } from '../context/CallErrorContext';
-import { trackEvent, trackFunnel } from '../lib/analytics';
+import { trackEvent } from '../lib/analytics';
+import { setFunnelStage } from '../lib/funnelTracker';
 
 const images = {
     buySell: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=1000",
@@ -24,6 +25,7 @@ export default function ContactPage() {
     const { t, isUrdu, lang } = useTranslation();
     const navigate = useNavigate();
     const { showCallError } = useCallError();
+    const location = useLocation();
 
     useEffect(() => {
         Object.values(images).forEach((src) => {
@@ -31,12 +33,12 @@ export default function ContactPage() {
             img.src = src;
         });
         window.scrollTo(0, 0);
-        trackFunnel('cta');
-    }, []);
+        setFunnelStage('cta_clicked', { lang, route: location.pathname });
+    }, [lang, location.pathname]);
 
     const handleCTA = (route: string, label: string) => {
         trackEvent('cta_click', { category: 'conversion', action: 'cta_click', label });
-        trackFunnel('form_start');
+        // Funnel will be set by the target page (form_started)
         navigate(route);
     };
 
@@ -129,7 +131,7 @@ export default function ContactPage() {
                             <h2 className="text-xl sm:text-2xl font-bold text-gruvbox-fg mb-3">{t.contactListTitle}</h2>
                             <p className="text-gruvbox-fg/70 mb-8 text-sm sm:text-base leading-relaxed flex-grow">{t.contactListDesc}</p>
                             <div className="space-y-3 mt-auto">
-                                <button onClick={() => handleCTA(`/${lang}/contactCEO?intent=sell`, 'sell_ceo')} className={contactButtonClass}>
+                                <button onClick={() => handleCTA(`/${lang}/contactCEO?intent=list`, 'list_ceo')} className={contactButtonClass}>
                                     <WhatsAppIcon className="h-4 w-4" />
                                     {t.contactSpeakCeo}
                                 </button>

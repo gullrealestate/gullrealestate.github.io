@@ -21,6 +21,7 @@ const baseFormData: LeadData = {
     streetWidth: '',
     occupancyDate: '',
     ownershipType: 'registry',
+    onMainRoad: false,
 };
 
 const translations = {
@@ -36,6 +37,11 @@ const translations = {
     cash: 'Cash',
     installment: 'Installment',
     plot: 'Plot',
+    registry: 'Registry',
+    inteqal: 'Inteqal',
+    allotment: 'Allotment',
+    powerOfAttorney: 'Power of Attorney',
+    mainRoadLabel: 'Main Road',
 };
 
 describe('buildWhatsAppMessage', () => {
@@ -111,10 +117,39 @@ describe('buildWhatsAppMessage', () => {
             translations,
         });
 
-        expect(msg).toContain('*Category:* commercial');
+        expect(msg).toContain('*Category:* Commercial');
         expect(msg).toContain('*Street Width:* 30 ft');
-        expect(msg).toContain('*Ownership:* registry');
-        expect(msg).toContain('*Payment:* cash');
+        expect(msg).toContain('*Ownership:* Registry');
+        expect(msg).toContain('*Payment:* Cash');
+    });
+
+    it('handles main road listing', () => {
+        const msg = buildWhatsAppMessage({
+            formData: { ...baseFormData, intent: 'list', onMainRoad: true, ownershipType: 'inteqal' },
+            contactType: 'ceo',
+            agentName: 'CEO',
+            isUrdu: false,
+            leadId: 'GRE-123',
+            lang: 'en',
+            translations,
+        });
+
+        expect(msg).toContain('*Road:* Main Road');
+        expect(msg).toContain('*Ownership:* Inteqal');
+        expect(msg).not.toContain('*Street Width:*');
+    });
+
+    it('handles CEO listing intent', () => {
+        const msg = buildWhatsAppMessage({
+            formData: { ...baseFormData, intent: 'list' },
+            contactType: 'ceo',
+            agentName: 'Asif Gull',
+            isUrdu: false,
+            leadId: 'GRE-123',
+            lang: 'en',
+            translations,
+        });
+        expect(msg).toContain('list property');
     });
 
     it('does not include utilities for commercial property', () => {
@@ -145,6 +180,80 @@ describe('buildWhatsAppMessage', () => {
         const msg1 = buildWhatsAppMessage(config);
         const msg2 = buildWhatsAppMessage(config);
         expect(msg1).toBe(msg2);
+    });
+
+    it('handles Urdu rent intent coverage', () => {
+        const rlm = '\u200F';
+        const msg = buildWhatsAppMessage({
+            formData: { ...baseFormData, intent: 'rent', occupancyDate: '2026-01-01', bedrooms: '2', bathrooms: '1' },
+            contactType: 'agent1',
+            agentName: 'ٹیسٹ ایجنٹ',
+            isUrdu: true,
+            leadId: 'GRE-123',
+            lang: 'ur',
+            translations,
+        });
+        expect(msg).toContain('کرایہ پر لینے');
+        expect(msg).toContain(`${rlm}🛏️ *کمرے:* 2`);
+        expect(msg).toContain(`${rlm}📅 *قبضہ درکار:* 2026-01-01`);
+    });
+
+    it('handles Urdu list intent coverage', () => {
+        const rlm = '\u200F';
+        const msg = buildWhatsAppMessage({
+            formData: { ...baseFormData, intent: 'list', propertyType: 'Plot', streetWidth: '30', plotCategory: 'residential' },
+            contactType: 'agent1',
+            agentName: 'ٹیسٹ ایجنٹ',
+            isUrdu: true,
+            leadId: 'GRE-123',
+            lang: 'ur',
+            translations,
+        });
+        expect(msg).toContain('لسٹنگ کروانے');
+        expect(msg).toContain(`${rlm}🏷️ *کیٹیگری:* Plot`); // from translations.plot
+        expect(msg).toContain(`${rlm}🛣️ *گلی:* 30 فٹ`);
+        expect(msg).toContain(`${rlm}💳 *ادائیگی:* Cash`);
+    });
+
+    it('handles Urdu main road listing', () => {
+        const rlm = '\u200F';
+        const msg = buildWhatsAppMessage({
+            formData: { ...baseFormData, intent: 'list', onMainRoad: true, ownershipType: 'powerOfAttorney' },
+            contactType: 'agent1',
+            agentName: 'ٹیسٹ ایجنٹ',
+            isUrdu: true,
+            leadId: 'GRE-123',
+            lang: 'ur',
+            translations,
+        });
+        expect(msg).toContain(`${rlm}🛣️ *روڈ:* Main Road`);
+        expect(msg).toContain(`${rlm}📜 *ملکیت:* Power of Attorney`);
+    });
+
+    it('matches stable baseline snapshots (Regression Check)', () => {
+        // EN Snapshot
+        const msgEn = buildWhatsAppMessage({
+            formData: baseFormData,
+            contactType: 'ceo',
+            agentName: 'Asif Gull',
+            isUrdu: false,
+            leadId: 'GRE-260301-120000',
+            lang: 'en',
+            translations,
+        });
+        expect(msgEn).toMatchSnapshot('en-whatsapp');
+
+        // UR Snapshot
+        const msgUr = buildWhatsAppMessage({
+            formData: baseFormData,
+            contactType: 'ceo',
+            agentName: 'آصف گل',
+            isUrdu: true,
+            leadId: 'GRE-260301-120000',
+            lang: 'ur',
+            translations,
+        });
+        expect(msgUr).toMatchSnapshot('ur-whatsapp');
     });
 });
 

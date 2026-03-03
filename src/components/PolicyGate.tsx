@@ -55,7 +55,7 @@ export default function PolicyGate({ children }: { children: React.ReactNode }) 
                             </h2>
                         </header>
 
-                        <div className={`space-y-6 ${isUrdu ? "text-right" : "text-left"}`}>
+                        <div className={`space-y-6 ${isUrdu ? "text-right urdu-policy-text" : "text-left"}`}>
                             <p className="text-lg text-gruvbox-fg/90 leading-relaxed font-medium">
                                 {t.description}
                             </p>

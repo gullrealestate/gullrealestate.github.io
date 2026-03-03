@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildWhatsAppMessage > matches stable baseline snapshots (Regression Check) > en-whatsapp 1`] = `
+"Assalam-o-Alaikum!
+*Gull Real Estate & Builders, Mardan*
+
+Dear *Asif Gull* (CEO), my name is *Ahmad Khan*. I am looking to buy property through your company. Here are my details:
+
+📍 *Location:* Shamsi Road
+🏠 *Property Type:* House
+📐 *Area:* 10 Marlas
+⚡ *Utilities:* Electricity
+💰 *Budget:* 50 Lac
+📝 *Demands:* Corner house with garden
+📞 *Contact Number:* 03001234567
+🆔 *Reference:* GRE-260301-120000
+🌐 *Language:* English
+
+Please assist me in this regard. Thank you!"
+`;
+
+exports[`buildWhatsAppMessage > matches stable baseline snapshots (Regression Check) > ur-whatsapp 1`] = `
+"Assalam-o-Alaikum!
+*گل رئیل اسٹیٹ اینڈ بلڈرز، مردان*
+
+‏جناب *آصف گل* (CEO)، میں *Ahmad Khan* بات کر رہا ہوں۔ میں آپ کی کمپنی کے ذریعے خریدنے میں دلچسپی چاہتا ہوں۔ میری تفصیلات درج ذیل ہیں:
+
+‏📍 *مقام:* Shamsi Road
+‏🏠 *نوعیت:* House
+‏📐 *رقبہ:* 10 مرلے
+‏⚡ *سہولیات:* بجلی
+‏💰 *Budget:* 50 Lac
+‏📝 *مطالبات:* Corner house with garden
+‏📞 *رابطہ نمبر:* 03001234567
+‏🆔 *ریفرنس:* GRE-260301-120000
+‏🌐 *زبان:* اردو
+
+‏براہ کرم اس معاملے میں میری مدد کریں۔ شکریہ!"
+`;
