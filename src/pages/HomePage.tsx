@@ -17,9 +17,6 @@ export default function HomePage() {
     const handleConsultClick = () => {
         trackEvent('cta_click', { category: 'conversion', action: 'hero_cta', label: 'contact' });
         trackFunnel('cta');
-        // Always show the policy page when navigating from hero
-        sessionStorage.removeItem('gull_policy_accepted');
-        // Force a full navigation so PolicyProvider re-reads sessionStorage
         window.location.href = `/${lang}/contact`;
     };
 
