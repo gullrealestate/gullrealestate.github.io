@@ -17,7 +17,7 @@ export const en = {
     metaDesc: "Based in Mardan, Gull Real Estate and Builders offers expert consultation for Mardan, Peshawar, Swat, and across KPK. Trusted local property agency.",
     heroTitle: "Expert Property Agency Physically Based in Mardan",
     heroSub: "Direct CEO Access & Full Transparency. We guide you through every step of buying, selling, or renting with verified local expertise.",
-    heroBtn: "Start Professional Finalization",
+    heroBtn: "Read Agency Policy & Contact",
     servicesTitle: "Professional Deal Execution",
     servicesSub: "We are a real estate agency based in Mardan. We provide professional execution and coordination support for your property deals.",
     buySellTitle: "Buy / Sell Deal Finalization",
