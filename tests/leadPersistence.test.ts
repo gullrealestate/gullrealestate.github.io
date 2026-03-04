@@ -41,6 +41,10 @@ const mockLead: PersistedLead = {
     timestamp: '2026-03-01T12:00:00.000Z',
     lang: 'en',
     source: '/en/contactCEO',
+    status: 'sent',
+    attempts: 1,
+    messageSnapshot: 'Test message snapshot',
+    onMainRoad: false,
 };
 
 describe('leadPersistence', () => {

@@ -21,11 +21,28 @@ declare global {
 }
 
 /**
+ * PII blocklist — these keys are silently stripped before dispatch.
+ * Defense-in-depth: prevents accidental PII leakage to GA4/Plausible.
+ */
+const PII_BLOCKLIST = new Set(['phone', 'name', 'email', 'fullname', 'whatsapp']);
+
+function scrubPII(params: EventParams): EventParams {
+    const clean: EventParams = {};
+    for (const [key, value] of Object.entries(params)) {
+        if (!PII_BLOCKLIST.has(key.toLowerCase())) {
+            clean[key] = value;
+        }
+    }
+    return clean;
+}
+
+/**
  * Track a structured analytics event.
  * Supports both simplified string-based calls and structured calls.
+ * PII keys are automatically stripped before dispatch.
  */
 export function trackEvent(eventName: string, params?: TrackEventParams | EventParams): void {
-    const flatParams: EventParams = params ? { ...params } : {};
+    const flatParams: EventParams = params ? scrubPII({ ...params }) : {};
 
     // GA4
     if (typeof window.gtag === 'function') {

@@ -142,7 +142,47 @@ export function generateLeadId(): string {
     return `GRE-${y}${m}${d}-${h}${min}${s}`;
 }
 
-/** Build the full WhatsApp URL */
+/**
+ * Encode a message for use in a wa.me ?text= parameter.
+ *
+ * Strategy: character-by-character encoding.
+ * - ASCII (code point ≤ 127): apply encodeURIComponent() — correctly encodes
+ *   spaces, &, =, #, *, and other structurally significant URL characters.
+ * - Non-ASCII (code point > 127): leave as raw literal — wa.me handles
+ *   literal Unicode (emoji, Urdu, Arabic) correctly and renders them in the
+ *   pre-filled message. encodeURIComponent() would convert these to percent
+ *   sequences that many WhatsApp clients fail to decode.
+ *
+ * Do NOT use encodeURI() — it leaves &, =, +, #, ? unencoded, which breaks
+ * the URL structure.
+ */
+function encodeWhatsAppText(message: string): string {
+    return [...message]
+        .map(char => {
+            const code = char.codePointAt(0);
+            if (code !== undefined && code <= 127) {
+                return encodeURIComponent(char);
+            }
+            return char;
+        })
+        .join('');
+}
+
+/** Detect mobile devices via userAgent */
+function isMobile(): boolean {
+    if (typeof navigator === 'undefined') return false;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+/**
+ * Build the full WhatsApp URL.
+ * - Mobile: whatsapp://send protocol for native app deep-link
+ * - Desktop: web.whatsapp.com/send for WhatsApp Web (handles emoji correctly)
+ */
 export function buildWhatsAppUrl(whatsappNumber: string, message: string): string {
-    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    const encoded = encodeWhatsAppText(message);
+    if (isMobile()) {
+        return `whatsapp://send?phone=${whatsappNumber}&text=${encoded}`;
+    }
+    return `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${encoded}`;
 }

@@ -272,8 +272,49 @@ describe('generateLeadId', () => {
 });
 
 describe('buildWhatsAppUrl', () => {
-    it('returns a valid wa.me URL with encoded message', () => {
+    it('returns web.whatsapp.com URL on desktop', () => {
         const url = buildWhatsAppUrl('923001234567', 'Hello World');
-        expect(url).toBe('https://wa.me/923001234567?text=Hello%20World');
+        expect(url).toBe('https://web.whatsapp.com/send?phone=923001234567&text=Hello%20World');
+    });
+
+    it('returns whatsapp:// protocol on mobile', () => {
+        const originalUA = navigator.userAgent;
+        Object.defineProperty(navigator, 'userAgent', {
+            value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X)',
+            configurable: true,
+        });
+
+        const url = buildWhatsAppUrl('923001234567', 'Hello World');
+        expect(url).toBe('whatsapp://send?phone=923001234567&text=Hello%20World');
+
+        Object.defineProperty(navigator, 'userAgent', {
+            value: originalUA,
+            configurable: true,
+        });
+    });
+
+    it('preserves emoji as literal Unicode and encodes ASCII specials', () => {
+        const msg = '📍 *Location:* مردان\n🏠 House & 💰 50 Lac';
+        const url = buildWhatsAppUrl('923001234567', msg);
+
+        // Emoji must appear as literal Unicode, NOT percent-encoded
+        expect(url).toContain('📍');
+        expect(url).toContain('🏠');
+        expect(url).toContain('💰');
+
+        // Urdu text must appear as literal Unicode
+        expect(url).toContain('مردان');
+
+        // ASCII specials must be percent-encoded
+        expect(url).toContain('%20');   // space
+        expect(url).toContain('%26');   // ampersand &
+        expect(url).toContain('%0A');   // newline \n
+        // Asterisk * is RFC 3986 unreserved — stays literal (correct for WhatsApp bold)
+        expect(url).toContain('*');
+
+        // Must NOT contain percent-encoded emoji sequences
+        expect(url).not.toContain('%F0%9F%93%8D'); // 📍
+        expect(url).not.toContain('%F0%9F%8F%A0'); // 🏠
+        expect(url).not.toContain('%F0%9F%92%B0'); // 💰
     });
 });

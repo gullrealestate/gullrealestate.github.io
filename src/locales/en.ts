@@ -193,9 +193,6 @@ export const en = {
     contactChatAgent2: "Chat with Agent 2",
     contactCallOffice: "Call Office",
 
-    // CSV Lead Export
-    exportLeads: "Export Leads (CSV)",
-    noLeadsToExport: "No leads to export yet.",
     landmarks: [
         "Mardan City",
         "Sheikh Maltoon Town",

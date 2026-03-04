@@ -7,6 +7,7 @@ import { useLeadForm } from './hooks/useLeadForm';
 import StepUserInfo from './steps/StepUserInfo';
 import StepPropertyDetails from './steps/StepPropertyDetails';
 import StepReview from './steps/StepReview';
+import WhatsAppFallbackModal from '../../components/WhatsAppFallbackModal';
 import { type ContactFormProps } from './types';
 
 export default function UniversalContactForm({ contactType, agentNames, agentWhatsApp }: ContactFormProps) {
@@ -56,15 +57,15 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                             <div className="flex items-center gap-2">
                                 <div
                                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${form.step > i + 1
-                                            ? 'bg-gruvbox-green text-gruvbox-bg0'
-                                            : form.step === i + 1
-                                                ? 'bg-gruvbox-blue text-gruvbox-bg0 ring-4 ring-gruvbox-blue/20'
-                                                : 'bg-gruvbox-bg2 text-gruvbox-fg/40'
+                                        ? 'bg-gruvbox-green text-gruvbox-bg0'
+                                        : form.step === i + 1
+                                            ? 'bg-gruvbox-blue text-gruvbox-bg0 ring-4 ring-gruvbox-blue/20'
+                                            : 'bg-gruvbox-bg2 text-gruvbox-fg/40'
                                         }`}
                                     role="img"
                                     aria-label={`${isUrdu ? 'مرحلہ' : 'Step'} ${i + 1}: ${label} — ${form.step > i + 1 ? (isUrdu ? 'مکمل' : 'Complete') :
-                                            form.step === i + 1 ? (isUrdu ? 'موجودہ' : 'Current') :
-                                                (isUrdu ? 'آنے والا' : 'Upcoming')
+                                        form.step === i + 1 ? (isUrdu ? 'موجودہ' : 'Current') :
+                                            (isUrdu ? 'آنے والا' : 'Upcoming')
                                         }`}
                                 >
                                     {form.step > i + 1 ? '✓' : i + 1}
@@ -140,6 +141,18 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                         />
                     )}
                 </div>
+
+                {/* WhatsApp fallback modal */}
+                {form.fallback && (
+                    <WhatsAppFallbackModal
+                        message={form.fallback.message}
+                        waUrl={form.fallback.waUrl}
+                        isUrdu={isUrdu}
+                        popupBlocked={form.fallback.popupBlocked}
+                        onConfirmSent={form.confirmFallbackSent}
+                        onClose={form.dismissFallback}
+                    />
+                )}
             </div>
         </div>
     );

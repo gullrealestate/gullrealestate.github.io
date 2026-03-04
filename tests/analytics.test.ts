@@ -79,4 +79,44 @@ describe('analytics', () => {
             expect(removeEventListener).toHaveBeenCalledWith('scroll', expect.any(Function));
         }
     });
+
+    it('scrubs PII keys before dispatch to gtag', () => {
+        trackEvent('test_pii', {
+            phone: '03001234567',
+            name: 'John Doe',
+            email: 'john@example.com',
+            action: 'click',
+            category: 'form',
+        });
+
+        const gtagMock = (globalThis as unknown as Record<string, unknown>).gtag as ReturnType<typeof vi.fn>;
+        const calledParams = gtagMock.mock.calls[0][2] as Record<string, unknown>;
+
+        // PII keys must be stripped
+        expect(calledParams).not.toHaveProperty('phone');
+        expect(calledParams).not.toHaveProperty('name');
+        expect(calledParams).not.toHaveProperty('email');
+
+        // Non-PII keys must pass through
+        expect(calledParams).toHaveProperty('action', 'click');
+        expect(calledParams).toHaveProperty('category', 'form');
+    });
+
+    it('scrubs PII keys case-insensitively', () => {
+        trackEvent('test_case', {
+            Phone: '123',
+            NAME: 'Test',
+            WhatsApp: '456',
+            label: 'safe',
+        });
+
+        const gtagMock = (globalThis as unknown as Record<string, unknown>).gtag as ReturnType<typeof vi.fn>;
+        const lastCall = gtagMock.mock.calls[gtagMock.mock.calls.length - 1];
+        const calledParams = lastCall[2] as Record<string, unknown>;
+
+        expect(calledParams).not.toHaveProperty('Phone');
+        expect(calledParams).not.toHaveProperty('NAME');
+        expect(calledParams).not.toHaveProperty('WhatsApp');
+        expect(calledParams).toHaveProperty('label', 'safe');
+    });
 });

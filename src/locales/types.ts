@@ -144,9 +144,6 @@ export type TranslationSchema = {
     contactChatAgent2: string;
     contactCallOffice: string;
 
-    // CSV Lead Export
-    exportLeads: string;
-    noLeadsToExport: string;
     landmarks: string[];
     rentBudgetLabel: string;
     rentBudgetPlaceholder: string;

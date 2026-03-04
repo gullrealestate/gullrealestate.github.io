@@ -47,4 +47,7 @@ export interface PersistedLead extends LeadData {
     timestamp: string;
     lang: string;
     source: string;
+    status: 'pending' | 'sent' | 'failed';
+    attempts: number;
+    messageSnapshot: string;
 }

@@ -3,6 +3,7 @@ import { type LeadData, type ContactType, type ValidationErrors } from '../types
 import { buildWhatsAppMessage, generateLeadId, buildWhatsAppUrl } from '../utils/whatsappBuilder';
 import { saveLead } from '../../../lib/leadPersistence';
 import { trackEvent } from '../../../lib/analytics';
+import { normalizePhone } from '../../../lib/phoneUtils';
 import { type TranslationSchema } from '../../../locales/types';
 import { setFunnelStage } from '../../../lib/funnelTracker';
 import { useLocation } from 'react-router-dom';
@@ -71,6 +72,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
     const [step, setStep] = useState(1);
     const [hasAcceptedFormPolicy, setHasAcceptedFormPolicy] = useState(false);
     const [errors, setErrors] = useState<ValidationErrors>({});
+    const [fallback, setFallback] = useState<{ message: string; waUrl: string; popupBlocked: boolean } | null>(null);
 
     const [formData, setFormData] = useState<LeadData>(() => {
         const draft = loadDraft();
@@ -129,8 +131,11 @@ export function useLeadForm(options: UseLeadFormOptions) {
         }
         if (!formData.phone.trim()) {
             newErrors.phone = isUrdu ? 'فون نمبر ضروری ہے' : 'Phone number is required';
-        } else if (!/^[\d+\-\s()]{7,15}$/.test(formData.phone.trim())) {
-            newErrors.phone = isUrdu ? 'درست فون نمبر درج کریں' : 'Enter a valid phone number';
+        } else {
+            const phoneResult = normalizePhone(formData.phone.trim());
+            if (!phoneResult.valid) {
+                newErrors.phone = isUrdu ? 'درست فون نمبر درج کریں' : 'Enter a valid phone number';
+            }
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -194,19 +199,15 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
         setFunnelStage('whatsapp_clicked', { lang, route: location.pathname });
 
-        // Persist lead
-        saveLead({
-            ...formData,
-            id: leadId,
-            agent: agentName,
-            timestamp: new Date().toISOString(),
-            lang,
-            source: `/${lang}/contact${contactType === 'ceo' ? 'CEO' : contactType === 'agent1' ? 'AgentA' : 'AgentB'}`,
-        });
+        // Normalize user phone for the WhatsApp message (agent number is already clean)
+        const phoneResult = normalizePhone(formData.phone.trim());
+        const normalizedFormData = phoneResult.valid
+            ? { ...formData, phone: phoneResult.e164 }
+            : formData;
 
-        // Build WhatsApp message
+        // Build WhatsApp message with normalized phone
         const message = buildWhatsAppMessage({
-            formData,
+            formData: normalizedFormData,
             contactType,
             agentName,
             isUrdu,
@@ -235,12 +236,52 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
         const url = buildWhatsAppUrl(agentWhatsApp, message);
 
+        // Attempt to open WhatsApp
+        const waWindow = window.open(url, '_blank');
+        const popupBlocked = waWindow === null;
+
+        // Persist lead with pending status — confirmed via fallback modal
+        saveLead({
+            ...normalizedFormData,
+            id: leadId,
+            agent: agentName,
+            timestamp: new Date().toISOString(),
+            lang,
+            source: `/${lang}/contact${contactType === 'ceo' ? 'CEO' : contactType === 'agent1' ? 'AgentA' : 'AgentB'}`,
+            status: 'pending',
+            attempts: 1,
+            messageSnapshot: message,
+        });
+
         // Clean up draft
         clearDraft();
 
-        // Open WhatsApp — this MUST always work regardless of persistence outcome
-        window.open(url, '_blank');
+        // Always show confirmation/fallback modal.
+        // Deep-link cancellation is undetectable (window.open returns
+        // a Window object even when user cancels the WhatsApp prompt),
+        // so we always let the user confirm or retry.
+        if (popupBlocked) {
+            trackEvent('whatsapp_fallback', {
+                category: 'conversion',
+                action: 'whatsapp_blocked',
+                label: `${contactType}_${agentName}`,
+            });
+        }
+        setFallback({ message, waUrl: url, popupBlocked });
     }, [formData, contactType, agentName, agentWhatsApp, isUrdu, lang, t, location.pathname]);
+
+    const dismissFallback = useCallback(() => {
+        setFallback(null);
+    }, []);
+
+    const confirmFallbackSent = useCallback(() => {
+        setFallback(null);
+        trackEvent('whatsapp_fallback_confirmed', {
+            category: 'conversion',
+            action: 'fallback_confirmed',
+            label: `${contactType}_${agentName}`,
+        });
+    }, [contactType, agentName]);
 
     return {
         step,
@@ -254,5 +295,8 @@ export function useLeadForm(options: UseLeadFormOptions) {
         submitStep2,
         confirmAndSend,
         goToStep,
+        fallback,
+        dismissFallback,
+        confirmFallbackSent,
     };
 }

@@ -3,8 +3,9 @@ import { type PersistedLead } from '../features/contact/types';
 const LEADS_KEY = 'gull_leads';
 
 /**
- * Save a lead to localStorage and optionally POST to a backend endpoint.
- * WhatsApp send is independent — this function never throws.
+ * Save a lead to localStorage for WhatsApp lead durability.
+ * Optionally POSTs sanitized data to a backend endpoint if configured.
+ * Never throws — WhatsApp send is independent of persistence.
  */
 export async function saveLead(lead: PersistedLead): Promise<void> {
     // 1. Always save to localStorage first

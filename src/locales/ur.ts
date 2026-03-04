@@ -193,9 +193,6 @@ export const ur = {
     contactChatAgent2: "ایجنٹ ۲ سے بات کریں",
     contactCallOffice: "آفس کال کریں",
 
-    // CSV Lead Export
-    exportLeads: "لیڈز ایکسپورٹ کریں (CSV)",
-    noLeadsToExport: "ابھی تک کوئی لیڈ نہیں۔",
     landmarks: [
         "مردان سٹی",
         "شیخ ملتون ٹاؤن",
