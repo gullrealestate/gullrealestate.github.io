@@ -7,7 +7,6 @@ import { useLeadForm } from './hooks/useLeadForm';
 import StepUserInfo from './steps/StepUserInfo';
 import StepPropertyDetails from './steps/StepPropertyDetails';
 import StepReview from './steps/StepReview';
-import WhatsAppFallbackModal from '../../components/WhatsAppFallbackModal';
 import { type ContactFormProps } from './types';
 
 export default function UniversalContactForm({ contactType, agentNames, agentWhatsApp }: ContactFormProps) {
@@ -142,17 +141,6 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                     )}
                 </div>
 
-                {/* WhatsApp fallback modal */}
-                {form.fallback && (
-                    <WhatsAppFallbackModal
-                        message={form.fallback.message}
-                        waUrl={form.fallback.waUrl}
-                        isUrdu={isUrdu}
-                        popupBlocked={form.fallback.popupBlocked}
-                        onConfirmSent={form.confirmFallbackSent}
-                        onClose={form.dismissFallback}
-                    />
-                )}
             </div>
         </div>
     );

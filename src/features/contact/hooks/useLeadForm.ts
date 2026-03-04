@@ -72,7 +72,6 @@ export function useLeadForm(options: UseLeadFormOptions) {
     const [step, setStep] = useState(1);
     const [hasAcceptedFormPolicy, setHasAcceptedFormPolicy] = useState(false);
     const [errors, setErrors] = useState<ValidationErrors>({});
-    const [fallback, setFallback] = useState<{ message: string; waUrl: string; popupBlocked: boolean } | null>(null);
 
     const [formData, setFormData] = useState<LeadData>(() => {
         const draft = loadDraft();
@@ -237,8 +236,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
         const url = buildWhatsAppUrl(agentWhatsApp, message);
 
         // Attempt to open WhatsApp
-        const waWindow = window.open(url, '_blank');
-        const popupBlocked = waWindow === null;
+        window.open(url, '_blank');
 
         // Persist lead with pending status — confirmed via fallback modal
         saveLead({
@@ -255,33 +253,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
         // Clean up draft
         clearDraft();
-
-        // Always show confirmation/fallback modal.
-        // Deep-link cancellation is undetectable (window.open returns
-        // a Window object even when user cancels the WhatsApp prompt),
-        // so we always let the user confirm or retry.
-        if (popupBlocked) {
-            trackEvent('whatsapp_fallback', {
-                category: 'conversion',
-                action: 'whatsapp_blocked',
-                label: `${contactType}_${agentName}`,
-            });
-        }
-        setFallback({ message, waUrl: url, popupBlocked });
     }, [formData, contactType, agentName, agentWhatsApp, isUrdu, lang, t, location.pathname]);
-
-    const dismissFallback = useCallback(() => {
-        setFallback(null);
-    }, []);
-
-    const confirmFallbackSent = useCallback(() => {
-        setFallback(null);
-        trackEvent('whatsapp_fallback_confirmed', {
-            category: 'conversion',
-            action: 'fallback_confirmed',
-            label: `${contactType}_${agentName}`,
-        });
-    }, [contactType, agentName]);
 
     return {
         step,
@@ -295,8 +267,5 @@ export function useLeadForm(options: UseLeadFormOptions) {
         submitStep2,
         confirmAndSend,
         goToStep,
-        fallback,
-        dismissFallback,
-        confirmFallbackSent,
     };
 }

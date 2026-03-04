@@ -151,52 +151,6 @@ describe('useLeadForm', () => {
         });
 
         expect(localStorage.removeItem).toHaveBeenCalledWith('gull_form_draft');
-        // Modal always shows for confirmation
-        expect(result.current.fallback).not.toBeNull();
-        expect(result.current.fallback?.popupBlocked).toBe(false);
-    });
-
-    it('shows fallback with popupBlocked when window.open returns null', () => {
-        vi.stubGlobal('open', vi.fn(() => null)); // returns null = blocked
-        const { result } = renderHook(() => useLeadForm(options), { wrapper });
-
-        act(() => {
-            result.current.confirmAndSend();
-        });
-
-        expect(result.current.fallback).not.toBeNull();
-        expect(result.current.fallback?.popupBlocked).toBe(true);
-        expect(result.current.fallback?.message).toBeDefined();
-        expect(result.current.fallback?.waUrl).toContain('whatsapp.com');
-    });
-
-    it('dismisses fallback on dismissFallback', () => {
-        vi.stubGlobal('open', vi.fn(() => ({})));
-        const { result } = renderHook(() => useLeadForm(options), { wrapper });
-
-        act(() => {
-            result.current.confirmAndSend();
-        });
-        expect(result.current.fallback).not.toBeNull();
-
-        act(() => {
-            result.current.dismissFallback();
-        });
-        expect(result.current.fallback).toBeNull();
-    });
-
-    it('clears fallback on confirmFallbackSent', () => {
-        vi.stubGlobal('open', vi.fn(() => ({})));
-        const { result } = renderHook(() => useLeadForm(options), { wrapper });
-
-        act(() => {
-            result.current.confirmAndSend();
-        });
-        expect(result.current.fallback).not.toBeNull();
-
-        act(() => {
-            result.current.confirmFallbackSent();
-        });
-        expect(result.current.fallback).toBeNull();
     });
 });
+
