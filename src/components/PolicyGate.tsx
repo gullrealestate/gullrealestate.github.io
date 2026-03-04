@@ -64,7 +64,7 @@ export default function PolicyGate({ children }: { children: React.ReactNode }) 
                                 {t.items.map((item, index) => (
                                     <li key={index} className="flex gap-4 items-start">
                                         <div className="mt-1.5 h-2 w-2 rounded-full bg-gruvbox-blue flex-shrink-0" />
-                                        <div className="text-gruvbox-fg/80 leading-relaxed">
+                                        <p className="text-gruvbox-fg/80">
                                             {typeof item === 'string' ? (
                                                 item
                                             ) : (
@@ -72,7 +72,7 @@ export default function PolicyGate({ children }: { children: React.ReactNode }) 
                                                     <strong className="text-gruvbox-fg">{item.label}</strong> {item.content}
                                                 </>
                                             )}
-                                        </div>
+                                        </p>
                                     </li>
                                 ))}
                             </ul>
