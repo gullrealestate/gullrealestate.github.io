@@ -28,12 +28,11 @@ export default function StepPropertyDetails({
 
     // Auto-reset propertyType if it becomes restricted after intent change
     useEffect(() => {
-        if (formData.intent === 'list' && formData.propertyType === t.plot) {
-            onFieldChange('propertyType', t.house);
-        } else if (formData.intent === 'rent' && formData.propertyType === t.house) {
-            onFieldChange('propertyType', t.commercial); // Default for rent if house is restricted
+        const plotRestrictedIntents = ['rent', 'list'];
+        if (plotRestrictedIntents.includes(formData.intent) && formData.propertyType === t.plot) {
+            onFieldChange('propertyType', t.house); // reset to House as safe default
         }
-    }, [formData.intent, formData.propertyType, t.plot, t.house, t.commercial, onFieldChange]);
+    }, [formData.intent, formData.propertyType, t.plot, t.house, onFieldChange]);
 
     const demandsLabel = (formData.intent === 'list' || formData.intent === 'sell') ? t.propertyDescription : t.demands;
     const demandsPlaceholder = (formData.intent === 'list' || formData.intent === 'sell') ? t.propertyDescriptionPlaceholder : t.demandsPlaceholder;
@@ -46,8 +45,11 @@ export default function StepPropertyDetails({
                     <select id="propertyType" name="propertyType" required value={formData.propertyType}
                         onChange={onInputChange} className={inputClass}>
                         <option value="" disabled>{t.selectType}</option>
-                        {formData.intent !== 'rent' && <option value={t.house}>{t.house}</option>}
-                        {formData.intent !== 'list' && <option value={t.plot}>{t.plot}</option>}
+                        <option value={t.house}>{t.house}</option>
+                        {/* Plot excluded for rent/list — only built properties (House, Commercial) are applicable */}
+                        {formData.intent !== 'rent' && formData.intent !== 'list' && (
+                            <option value={t.plot}>{t.plot}</option>
+                        )}
                         <option value={t.commercial}>{t.commercial}</option>
                     </select>
                 </div>
