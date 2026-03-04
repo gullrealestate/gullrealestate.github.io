@@ -24,7 +24,6 @@ export default function ListingDetailsForm({
             ? `bg-gruvbox-${color} border-gruvbox-${color} text-gruvbox-bg0 shadow-lg scale-105`
             : 'bg-gruvbox-bg2 border-gruvbox-bg2 text-gruvbox-fg hover:bg-gruvbox-bg0'}`;
 
-    const commonSizes = ['3', '5', '7', '10', '14', '20'];
 
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -47,28 +46,27 @@ export default function ListingDetailsForm({
                 {errors.ownershipType && <p className="text-gruvbox-red text-xs mt-1">{errors.ownershipType}</p>}
             </div>
 
-            {/* Marla Quick Picks */}
+            {/* Marla Input */}
             <div>
-                <label className={labelClass}>
+                <label htmlFor="marlas" className={labelClass}>
                     <div className="flex items-center gap-2">
                         <Ruler className="w-4 h-4 text-gruvbox-blue" />
                         {t.marlas}
                     </div>
                 </label>
-                <div className="flex flex-wrap gap-2 mb-3">
-                    {commonSizes.map(size => (
-                        <button type="button" key={size}
-                            onClick={() => onFieldChange('marlas', size)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${formData.marlas === size
-                                ? 'bg-gruvbox-blue text-gruvbox-bg0 border-gruvbox-blue scale-105 shadow-md'
-                                : 'bg-gruvbox-bg2 text-gruvbox-fg/60 border-gruvbox-bg2 hover:border-gruvbox-blue'
-                                }`}>
-                            {size === '20' ? (isUrdu ? '1 کنال' : '1 Kanal') : `${size}M`}
-                        </button>
-                    ))}
-                </div>
-                {formData.marlas && (
-                    <p className="text-xs text-gruvbox-fg/40 mb-2 italic">
+                <input
+                    type="text"
+                    id="marlas"
+                    name="marlas"
+                    required
+                    value={formData.marlas}
+                    onChange={onInputChange}
+                    className={inputClass}
+                    placeholder={t.marlasPlaceholder}
+                />
+                {errors.marlas && <p className="text-gruvbox-red text-xs mt-1">{errors.marlas}</p>}
+                {formData.marlas && !isNaN(parseFloat(formData.marlas)) && (
+                    <p className="text-xs text-gruvbox-fg/40 mt-2 italic">
                         ≈ {(parseFloat(formData.marlas) * 272.25).toLocaleString(undefined, { maximumFractionDigits: 0 })} {isUrdu ? 'مربع فٹ' : 'sq ft'}
                     </p>
                 )}
