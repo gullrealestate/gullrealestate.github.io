@@ -126,7 +126,7 @@ export function buildWhatsAppMessage(config: WhatsAppConfig): string {
 
         if (intent !== 'rent' && propertyType !== t.commercial) {
             if (contactType === 'ceo' || intent === 'buy' || intent === 'sell') {
-                message += `⚡ *Utilities:* ${utilities === 'electricity' ? 'Electricity' : 'Elec & Gas'}\n`;
+                message += `⚡ *Utilities:* ${utilities === 'electricity' ? 'Electricity' : 'Electricity & Gas'}\n`;
             }
         }
 
