@@ -147,4 +147,15 @@ export type TranslationSchema = {
     landmarks: string[];
     rentBudgetLabel: string;
     rentBudgetPlaceholder: string;
+
+    // Listing flow enhancements
+    residential: string;
+    propertyDescription: string;
+    propertyDescriptionPlaceholder: string;
+    listingNextStepsTitle: string;
+    listingNextStepsBody: string;
+    selectOwnership: string;
+    askingPricePlaceholder: string;
+    streetWidthPlaceholder: string;
+    mainRoadToggleHint: string;
 };

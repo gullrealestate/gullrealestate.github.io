@@ -50,7 +50,7 @@ export function getDefaultFormData(t: TranslationSchema, initialIntent: string |
         paymentMethod: 'cash',
         streetWidth: '',
         occupancyDate: '',
-        ownershipType: 'registry',
+        ownershipType: '',
         onMainRoad: false,
     };
 }
@@ -152,9 +152,6 @@ export function useLeadForm(options: UseLeadFormOptions) {
         if (!formData.budget.trim()) {
             newErrors.budget = isUrdu ? 'بجٹ ضروری ہے' : 'Budget is required';
         }
-        if (!formData.demands.trim()) {
-            newErrors.demands = isUrdu ? 'مطالبات ضروری ہیں' : 'Please describe your requirements';
-        }
         if (formData.intent === 'rent' && !formData.occupancyDate) {
             newErrors.occupancyDate = isUrdu ? 'قبضے کی تاریخ ضروری ہے' : 'Occupancy date is required';
         }
@@ -216,20 +213,22 @@ export function useLeadForm(options: UseLeadFormOptions) {
                 ceoTitle: t.ceoTitle,
                 agent1Title: t.agent1Title,
                 agent2Title: t.agent2Title,
-                commercial: t.commercial,
-                budgetLabel: t.budgetLabel,
-                rentBudgetLabel: t.rentBudgetLabel,
-                askingPrice: t.askingPrice,
-                furnished: t.furnished,
-                unfurnished: t.unfurnished,
                 cash: t.cash,
                 installment: t.installment,
                 plot: t.plot,
+                residential: t.residential,
+                budgetLabel: t.budgetLabel,
+                rentBudgetLabel: t.rentBudgetLabel,
+                askingPrice: t.askingPrice,
+                mainRoadLabel: t.mainRoadLabel,
+                furnished: t.furnished,
+                unfurnished: t.unfurnished,
+                demands: t.demands,
+                commercial: t.commercial,
                 registry: t.registry,
                 inteqal: t.inteqal,
                 allotment: t.allotment,
                 powerOfAttorney: t.powerOfAttorney,
-                mainRoadLabel: t.mainRoadLabel,
             },
         });
 
@@ -238,7 +237,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
         // Attempt to open WhatsApp
         window.open(url, '_blank');
 
-        // Persist lead with pending status — confirmed via fallback modal
+        // Persist lead with pending status
         saveLead({
             ...normalizedFormData,
             id: leadId,

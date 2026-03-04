@@ -210,5 +210,16 @@ export const ur = {
         "دیگر"
     ],
     rentBudgetLabel: "کرائے کا بجٹ",
-    rentBudgetPlaceholder: "مثال: 15 ہزار یا ضرورت کے مطابق"
+    rentBudgetPlaceholder: "مثال: 15 ہزار یا ضرورت کے مطابق",
+
+    // Listing flow enhancements
+    residential: "رہائشی",
+    propertyDescription: "جائیداد کی تفصیل",
+    propertyDescriptionPlaceholder: "مثلاً: کارنر پلاٹ، مین روڈ کے قریب، چار دیواری مکمل، بجلی پانی موجود",
+    listingNextStepsTitle: "📋 آگے کیا ہوگا؟",
+    listingNextStepsBody: "ہماری ٹیم آپ کی لسٹنگ کا جائزہ لے کر 24 گھنٹوں میں واٹس ایپ پر رابطہ کرے گی تاکہ تفصیلات کی تصدیق ہو اور آپ کی پراپرٹی تصدیق شدہ خریداروں تک پہنچائی جا سکے۔",
+    selectOwnership: "ملکیت کی قسم منتخب کریں",
+    askingPricePlaceholder: "مثال: 35 لاکھ، 1.2 کروڑ",
+    streetWidthPlaceholder: "مثال: 30",
+    mainRoadToggleHint: "گلی کی چوڑائی درج کرنے کے لیے بند کریں",
 };

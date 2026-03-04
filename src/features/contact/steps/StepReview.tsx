@@ -56,8 +56,10 @@ export default function StepReview({ formData, contactType, isUrdu, t, onEdit, o
                 )}
 
                 <div className="sm:col-span-2 space-y-1 bg-gruvbox-bg0/20 p-4 rounded-xl">
-                    <div className="text-xs uppercase tracking-wider text-gruvbox-blue font-bold">{t.demands}</div>
-                    <div className="text-base text-gruvbox-fg/90">{formData.demands}</div>
+                    <div className="text-xs uppercase tracking-wider text-gruvbox-blue font-bold">
+                        {formData.intent === 'list' || formData.intent === 'sell' ? t.propertyDescription : t.demands}
+                    </div>
+                    <div className="text-base text-gruvbox-fg/90">{formData.demands || (isUrdu ? 'نہیں دیا گیا' : 'Not provided')}</div>
                 </div>
             </div>
 

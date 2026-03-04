@@ -210,5 +210,16 @@ export const en = {
         "Other"
     ],
     rentBudgetLabel: "Monthly Rent Budget",
-    rentBudgetPlaceholder: "e.g. 15k or according to need"
+    rentBudgetPlaceholder: "e.g. 15k or according to need",
+
+    // Listing flow enhancements
+    residential: "Residential",
+    propertyDescription: "Property Description",
+    propertyDescriptionPlaceholder: "e.g. Corner plot, near main road, boundary wall completed, electricity available",
+    listingNextStepsTitle: "📋 What happens next?",
+    listingNextStepsBody: "Our team will personally review your listing and WhatsApp you within 24 hours to verify details and begin promoting your property to verified buyers.",
+    selectOwnership: "Select Ownership Type",
+    askingPricePlaceholder: "e.g. 35 Lakh, 1.2 Crore",
+    streetWidthPlaceholder: "e.g. 30",
+    mainRoadToggleHint: "Toggle off to enter street width",
 };

@@ -28,20 +28,22 @@ const translations = {
     ceoTitle: 'CEO',
     agent1Title: 'Rental Agent',
     agent2Title: 'Plot Agent',
-    commercial: 'Commercial',
-    budgetLabel: 'Budget',
-    rentBudgetLabel: 'Monthly Rent',
-    askingPrice: 'Asking Price',
-    furnished: 'Furnished',
-    unfurnished: 'Unfurnished',
     cash: 'Cash',
     installment: 'Installment',
     plot: 'Plot',
+    residential: 'Residential',
+    budgetLabel: 'Budget',
+    rentBudgetLabel: 'Monthly Rent',
+    askingPrice: 'Asking Price',
+    mainRoadLabel: 'Main Road',
+    furnished: 'Furnished',
+    unfurnished: 'Unfurnished',
+    demands: 'Demands',
+    commercial: 'Commercial',
     registry: 'Registry',
     inteqal: 'Inteqal',
     allotment: 'Allotment',
     powerOfAttorney: 'Power of Attorney',
-    mainRoadLabel: 'Main Road',
 };
 
 describe('buildWhatsAppMessage', () => {
@@ -117,10 +119,10 @@ describe('buildWhatsAppMessage', () => {
             translations,
         });
 
-        expect(msg).toContain('*Category:* Commercial');
         expect(msg).toContain('*Street Width:* 30 ft');
         expect(msg).toContain('*Ownership:* Registry');
         expect(msg).toContain('*Payment:* Cash');
+        expect(msg).not.toContain('*Category:*'); // Removed for listings
     });
 
     it('handles main road listing', () => {
@@ -210,7 +212,7 @@ describe('buildWhatsAppMessage', () => {
             translations,
         });
         expect(msg).toContain('لسٹنگ کروانے');
-        expect(msg).toContain(`${rlm}🏷️ *کیٹیگری:* Plot`); // from translations.plot
+        expect(msg).not.toContain('کیٹیگری'); // Removed for listings
         expect(msg).toContain(`${rlm}🛣️ *گلی:* 30 فٹ`);
         expect(msg).toContain(`${rlm}💳 *ادائیگی:* Cash`);
     });

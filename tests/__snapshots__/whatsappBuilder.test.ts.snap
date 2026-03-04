@@ -9,6 +9,7 @@ Dear *Asif Gull* (CEO), my name is *Ahmad Khan*. I am looking to buy property th
 📍 *Location:* Shamsi Road
 🏠 *Property Type:* House
 📐 *Area:* 10 Marlas
+🏷️ *Category:* Residential
 ⚡ *Utilities:* Electricity
 💰 *Budget:* 50 Lac
 📝 *Demands:* Corner house with garden
@@ -28,9 +29,10 @@ exports[`buildWhatsAppMessage > matches stable baseline snapshots (Regression Ch
 ‏📍 *مقام:* Shamsi Road
 ‏🏠 *نوعیت:* House
 ‏📐 *رقبہ:* 10 مرلے
+‏🏷️ *کیٹیگری:* Residential
 ‏⚡ *سہولیات:* بجلی
 ‏💰 *Budget:* 50 Lac
-‏📝 *مطالبات:* Corner house with garden
+‏📝 *Demands:* Corner house with garden
 ‏📞 *رابطہ نمبر:* 03001234567
 ‏🆔 *ریفرنس:* GRE-260301-120000
 ‏🌐 *زبان:* اردو
