@@ -5,10 +5,12 @@ const baseUrl = 'https://gullrealestate.github.io';
 const routes = [
     '/en',
     '/ur',
-    '/en/contact',
-    '/ur/contact',
-    '/en/contact/requirements',
-    '/ur/contact/requirements'
+    '/en/contactCEO',
+    '/ur/contactCEO',
+    '/en/contactAgentA',
+    '/ur/contactAgentA',
+    '/en/contactAgentB',
+    '/ur/contactAgentB',
 ];
 
 function generateSitemap() {
