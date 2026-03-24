@@ -1,80 +1,78 @@
-import { Send, Edit3 } from 'lucide-react';
 import { type LeadData, type ContactType } from '../types';
-import { type TranslationSchema } from '../../../locales/types';
+import { content } from '../../../content';
 
 interface StepReviewProps {
     formData: LeadData;
     contactType: ContactType;
-    isUrdu: boolean;
-    t: TranslationSchema;
     onEdit: () => void;
     onConfirm: () => void;
 }
 
 function ReviewField({ label, value }: { label: string; value: string }) {
+    if (!value) return null;
     return (
-        <div className="space-y-1">
-            <div className="text-xs uppercase tracking-wider text-gruvbox-blue font-bold">{label}</div>
-            <div className="text-lg font-medium text-gruvbox-fg">{value}</div>
+        <div className="flex justify-between items-center py-4 border-b border-ds-border">
+             <div className="text-ds-on-faint font-headline text-[10px] uppercase tracking-widest">{label}</div>
+             <div className="text-ds-on font-body text-sm text-right">{value}</div>
         </div>
     );
 }
 
-export default function StepReview({ formData, contactType, isUrdu, t, onEdit, onConfirm }: StepReviewProps) {
+export default function StepReview({ formData, contactType, onEdit, onConfirm }: StepReviewProps) {
     const priceLabel = formData.intent === 'rent'
-        ? t.rentBudgetLabel
-        : (formData.intent === 'buy' ? t.budgetLabel : t.askingPrice);
+        ? content.rentBudgetLabel
+        : (formData.intent === 'buy' ? content.budgetLabel : content.askingPrice);
 
     return (
-        <div className="space-y-8 relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-500" role="region" aria-label={isUrdu ? 'جائزہ' : 'Review'}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 bg-gruvbox-bg2/30 p-8 rounded-3xl border border-gruvbox-bg2">
-                <ReviewField label={t.fullName} value={formData.name} />
-                <ReviewField label={t.whatsappNumber} value={formData.phone} />
-                <ReviewField label={t.gender} value={formData.gender === 'male' ? t.male : t.female} />
-                <ReviewField label={t.propertyType} value={formData.propertyType} />
+        <div className="space-y-8 animate-[ds-fade-up_0.5s_ease-out]" role="region" aria-label="Review">
+            <div className="border border-ds-border bg-ds-surface rounded-none p-6">
+                <ReviewField label={content.fullName} value={formData.name} />
+                <ReviewField label={content.whatsappNumber} value={formData.phone} />
+                <ReviewField label={content.gender} value={formData.gender === 'male' ? content.male : content.female} />
+                <ReviewField label={content.propertyType} value={formData.propertyType} />
                 <ReviewField label={priceLabel} value={formData.budget} />
-                <ReviewField label={t.location} value={formData.location} />
-                <ReviewField label={t.marlas} value={formData.marlas} />
+                <ReviewField label={content.location} value={formData.location} />
+                <ReviewField label={content.marlas} value={formData.marlas} />
 
                 {formData.intent === 'rent' && (
                     <>
-                        <ReviewField label={t.bedrooms} value={formData.bedrooms} />
-                        <ReviewField label={t.furnishingLabel} value={formData.furnishing === 'furnished' ? t.furnished : t.unfurnished} />
-                        <ReviewField label={t.occupancyLabel} value={formData.occupancyDate} />
+                        <ReviewField label={content.bedrooms} value={formData.bedrooms} />
+                        <ReviewField label={content.furnishingLabel} value={formData.furnishing === 'furnished' ? content.furnished : content.unfurnished} />
+                        <ReviewField label={content.occupancyLabel} value={formData.occupancyDate} />
                     </>
                 )}
 
                 {formData.intent === 'list' && (
                     <>
-                        <ReviewField label={t.ownershipType} value={formData.ownershipType} />
-                        <ReviewField label={t.paymentLabel} value={formData.paymentMethod === 'cash' ? t.cash : t.installment} />
+                        <ReviewField label={content.ownershipType} value={formData.ownershipType} />
+                        <ReviewField label={content.paymentLabel} value={formData.paymentMethod === 'cash' ? content.cash : content.installment} />
                     </>
                 )}
 
                 {contactType === 'ceo' && formData.intent !== 'rent' && formData.intent !== 'list' && (
-                    <ReviewField label={t.utilities} value={formData.utilities === 'electricity' ? t.electricity : t.elecGas} />
+                    <ReviewField label={content.utilities} value={formData.utilities === 'electricity' ? content.electricity : content.elecGas} />
                 )}
 
-                <div className="sm:col-span-2 space-y-1 bg-gruvbox-bg0/20 p-4 rounded-xl">
-                    <div className="text-xs uppercase tracking-wider text-gruvbox-blue font-bold">
-                        {formData.intent === 'list' || formData.intent === 'sell' ? t.propertyDescription : t.demands}
-                    </div>
-                    <div className="text-base text-gruvbox-fg/90">{formData.demands || (isUrdu ? 'نہیں دیا گیا' : 'Not provided')}</div>
+                <div className="py-4 border-b border-ds-border flex flex-col items-start gap-2">
+                     <div className="text-ds-on-faint font-headline text-[10px] uppercase tracking-widest">
+                         {formData.intent === 'list' || formData.intent === 'sell' ? content.propertyDescription : content.demands}
+                     </div>
+                     <div className="text-ds-on font-body text-sm leading-relaxed text-left">
+                         {formData.demands || 'Not provided'}
+                     </div>
                 </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button onClick={onEdit}
-                    className="flex-1 bg-gruvbox-bg2 text-gruvbox-fg font-bold py-4 px-8 rounded-2xl border border-gruvbox-bg3 hover:bg-gruvbox-bg3 transition-all flex items-center justify-center gap-2"
-                    aria-label={t.editDetails}>
-                    <Edit3 className="h-5 w-5" />
-                    {t.editDetails}
+                    className="flex-1 border border-ds-border text-ds-on-dim font-headline font-bold uppercase text-xs tracking-[0.2em] px-8 py-4 hover:border-ds-border-strong hover:text-ds-on transition-all rounded-none text-center"
+                    aria-label={content.editDetails}>
+                    {content.editDetails}
                 </button>
                 <button onClick={onConfirm}
-                    className="flex-[2] bg-gruvbox-green text-gruvbox-bg0 font-extrabold text-lg py-4 px-8 rounded-2xl shadow-xl hover:bg-gruvbox-green/80 transition-all flex items-center justify-center gap-3"
-                    aria-label={t.confirmAndSend}>
-                    <Send className="h-6 w-6" />
-                    {t.confirmAndSend}
+                    className="flex-[2] bg-ds-primary text-ds-primary-dark font-headline font-bold uppercase text-xs tracking-[0.2em] px-10 py-4 hover:opacity-85 transition-opacity active:scale-[0.99] rounded-none text-center"
+                    aria-label={content.confirmAndSend}>
+                    {content.confirmAndSend}
                 </button>
             </div>
         </div>

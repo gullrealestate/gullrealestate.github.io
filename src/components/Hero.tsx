@@ -1,43 +1,41 @@
-// No longer using hooks for animation
+import { content } from '../content';
 
 interface HeroProps {
     onConsultClick: () => void;
-    isUrdu?: boolean;
-    translations?: {
-        heroTitle: string;
-        heroSub: string;
-        heroBtn: string;
-    };
 }
 
-export default function Hero({ onConsultClick, isUrdu, translations }: HeroProps) {
-    const title = translations?.heroTitle || 'Real Estate Agency in Mardan';
-    const subtitle = translations?.heroSub || (isUrdu ? 'سی ای او اور ماہر ایجنٹوں سے بات کریں۔' : 'Speak with CEO & Expert Agents.');
-
+export default function Hero({ onConsultClick }: HeroProps) {
     return (
-        <div className="relative h-[600px] flex items-center justify-center text-white" dir={isUrdu ? "rtl" : "ltr"}>
+        <div className="relative w-full h-[640px] sm:h-[700px] flex items-center justify-center overflow-hidden" dir="ltr">
             <div
                 className="absolute inset-0 bg-cover bg-center z-0"
                 style={{
                     backgroundImage: 'url("/images/hero-bg.webp")',
                 }}
             >
-                <div className="absolute inset-0 bg-black/50"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-ds-bg"></div>
             </div>
 
-            <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-                    {title}
+            <div className="absolute bottom-[-10%] left-[-5%] text-[20vw] font-serif italic text-ds-primary opacity-[0.04] z-0 pointer-events-none aria-hidden">
+                G
+            </div>
+
+            <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+                <span className="ds-anim-fade-in ds-delay-1 block text-ds-primary font-body font-semibold text-xs tracking-[0.3em] uppercase mb-6">
+                    Real Estate Agency in Mardan
+                </span>
+                <h1 className="font-serif italic font-bold text-5xl sm:text-6xl md:text-7xl leading-tight text-ds-on ds-anim-fade-up ds-delay-2">
+                    {content.heroTitle}
                 </h1>
-                <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-gray-200">
-                    {subtitle}
+                <p className="font-body font-light text-lg sm:text-xl text-ds-on-dim max-w-xl mx-auto mt-6 ds-anim-fade-up ds-delay-3">
+                    {content.heroSub}
                 </p>
                 <button
                     onClick={onConsultClick}
-                    className="bg-gruvbox-blue text-gruvbox-bg0 font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-gruvbox-orange transition-all transform hover:-translate-y-1"
-                    aria-label={isUrdu ? "مفت مشورہ حاصل کریں" : "Get Free Consultation"}
+                    className="inline-block mt-10 px-10 py-4 bg-ds-primary text-ds-primary-dark font-headline font-bold uppercase text-xs tracking-[0.2em] hover:opacity-90 transition-opacity ds-anim-fade-up ds-delay-4 rounded-none"
+                    aria-label="Contact Us"
                 >
-                    {translations?.heroBtn || 'Contact Us'}
+                    {content.heroBtn}
                 </button>
             </div>
         </div>

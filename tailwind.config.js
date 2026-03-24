@@ -1,29 +1,41 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: [
-        "./index.html",
-        "./src/**/*.{js,ts,jsx,tsx}",
-    ],
-    darkMode: 'class',
-    theme: {
-        extend: {
-            colors: {
-                gruvbox: {
-                    bg0: '#282828',
-                    bg1: '#3c3836',
-                    bg2: '#504945',
-                    fg: '#ebdbb2',
-                    gray: '#928374',
-                    red: '#cc241d',
-                    green: '#98971a',
-                    yellow: '#d79921',
-                    blue: '#458588',
-                    purple: '#b16286',
-                    aqua: '#689d6a',
-                    orange: '#d65d0e'
-                }
-            }
-        },
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        ds: {
+          bg:               '#0d0d0c',
+          surface:          '#111110',
+          'surface-low':    '#161615',
+          'surface-high':   '#1e1e1d',
+          'surface-highest':'#2a2a29',
+          border:           'rgba(146,209,212,0.08)',
+          'border-strong':  'rgba(146,209,212,0.2)',
+          on:               '#eae7e4',
+          'on-dim':         'rgba(234,231,228,0.55)',
+          'on-faint':       'rgba(234,231,228,0.3)',
+          primary:          '#92d1d4',
+          'primary-dark':   '#003739',
+          'primary-muted':  'rgba(146,209,212,0.12)',
+          secondary:        '#e9c176',
+          'secondary-dark': '#412d00',
+          'secondary-muted':'rgba(233,193,118,0.12)',
+          error:            '#f28b82',
+        }
+      },
+      fontFamily: {
+        headline: ['"Manrope"', 'sans-serif'],
+        serif:    ['"Playfair Display"', 'serif'],
+        body:     ['"Inter"', 'sans-serif'],
+      },
+      borderRadius: {
+        DEFAULT: '0px',
+        sm: '2px',
+        full: '9999px',
+      },
     },
-    plugins: [],
-}
+  },
+  plugins: [],
+};

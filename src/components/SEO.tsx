@@ -1,21 +1,19 @@
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from '../lib/i18n/useTranslation';
+import { content } from '../content';
 
 interface SEOProps {
     title: string;
     description: string;
-    lang: string;
-    isUrdu?: boolean;
+    lang?: string;
     canonical?: string;
     type?: 'website' | 'article' | 'localbusiness';
 }
 
-export default function SEO({ title, description, lang, isUrdu, canonical, type = 'website' }: SEOProps) {
-    const { t } = useTranslation();
-    const siteName = isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز | +15 سالہ تجربہ" : "Gull Real Estate & Builders | 15+ Years";
+export default function SEO({ title, description, canonical, type = 'website' }: SEOProps) {
+    const siteName = "Gull Real Estate & Builders | 15+ Years";
     const fullTitle = `${title} | ${siteName}`;
-    const url = `https://gullrealestate.github.io/${lang}${canonical || ''}`;
-    const ogImage = `https://gullrealestate.github.io/images/og-${lang}.png`;
+    const url = `https://gullrealestate.github.io${canonical || ''}`;
+    const ogImage = `https://gullrealestate.github.io/images/og-en.png`;
 
     // Base RealEstateAgent Schema with geo
     const baseSchema = {
@@ -60,7 +58,7 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
     const faqSchema = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": t.faqs.map(faq => ({
+        "mainEntity": content.faqs.map(faq => ({
             "@type": "Question",
             "name": faq.q,
             "acceptedAnswer": {
@@ -74,11 +72,11 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
     const howToSchema = {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": t.howItWorksTitle,
+        "name": content.howItWorksTitle,
         "step": [
-            { "@type": "HowToStep", "name": t.step1, "text": t.step1Desc },
-            { "@type": "HowToStep", "name": t.step2, "text": t.step2Desc },
-            { "@type": "HowToStep", "name": t.step3, "text": t.step3Desc }
+            { "@type": "HowToStep", "name": content.step1, "text": content.step1Desc },
+            { "@type": "HowToStep", "name": content.step2, "text": content.step2Desc },
+            { "@type": "HowToStep", "name": content.step3, "text": content.step3Desc }
         ]
     };
 
@@ -88,9 +86,9 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
         "@type": "OfferCatalog",
         "name": "Gull Real Estate Services",
         "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": t.buySellTitle, "description": t.buySellDesc } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": t.tenantTitle, "description": t.tenantDesc } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": t.landlordTitle, "description": t.landlordDesc } }
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": content.buySellTitle, "description": content.buySellDesc } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": content.tenantTitle, "description": content.tenantDesc } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": content.landlordTitle, "description": content.landlordDesc } }
         ]
     };
 
@@ -102,8 +100,8 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
             {
                 "@type": "ListItem",
                 "position": 1,
-                "name": isUrdu ? "ہوم" : "Home",
-                "item": `https://gullrealestate.github.io/${lang}`
+                "name": "Home",
+                "item": `https://gullrealestate.github.io`
             },
             ...(canonical && canonical !== '/' ? [{
                 "@type": "ListItem",
@@ -116,11 +114,10 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
 
     return (
         <Helmet>
-            <html lang={lang} dir={isUrdu ? 'rtl' : 'ltr'} />
+            <html lang="en" dir="ltr" />
             <title>{fullTitle}</title>
             <meta name="description" content={description} />
             <link rel="canonical" href={url} />
-            <meta name="google" content="notranslate" />
 
             {/* Open Graph */}
             <meta property="og:type" content={type === 'localbusiness' ? 'website' : type} />
@@ -129,12 +126,11 @@ export default function SEO({ title, description, lang, isUrdu, canonical, type 
             <meta property="og:url" content={url} />
             <meta property="og:site_name" content={siteName} />
             <meta property="og:image" content={ogImage} />
-            <meta property="og:locale" content={isUrdu ? 'ur_PK' : 'en_US'} />
+            <meta property="og:locale" content="en_US" />
 
             {/* Language Strategy */}
-            <link rel="alternate" hrefLang="en" href={`https://gullrealestate.github.io/en${canonical || ''}`} />
-            <link rel="alternate" hrefLang="ur" href={`https://gullrealestate.github.io/ur${canonical || ''}`} />
-            <link rel="alternate" hrefLang="x-default" href={`https://gullrealestate.github.io/en${canonical || ''}`} />
+            <link rel="alternate" hrefLang="en" href={`https://gullrealestate.github.io${canonical || ''}`} />
+            <link rel="alternate" hrefLang="x-default" href={`https://gullrealestate.github.io${canonical || ''}`} />
 
             {/* Structured Data */}
             <script type="application/ld+json">{JSON.stringify(baseSchema)}</script>

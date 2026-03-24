@@ -1,78 +1,67 @@
 import { MapPin, Phone } from 'lucide-react';
 import { useCallError } from '../context/CallErrorContext';
 
-interface FooterProps {
-    isUrdu?: boolean;
-}
-
-export default function Footer({ isUrdu }: FooterProps) {
+export default function Footer() {
     const { showCallError } = useCallError();
     return (
-        <footer className="bg-gruvbox-bg1 border-t border-gruvbox-bg2 text-gruvbox-fg pt-12 pb-8" dir={isUrdu ? "rtl" : "ltr"}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <footer className="bg-[#080807] border-t border-ds-border pt-16 pb-8" dir="ltr">
+            <div className="max-w-7xl mx-auto px-6 sm:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div className="text-start">
                         <div className="flex items-center gap-2 mb-4">
                             <img
                                 src="/images/logo.webp"
-                                alt={isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز مردان لوگو" : "GULL Real Estate and Builders Mardan Logo"}
+                                alt="GULL Real Estate and Builders Mardan Logo"
                                 className="h-10 w-auto"
                                 width="40"
                                 height="40"
                                 fetchPriority="high"
                                 decoding="sync"
                             />
-                            <span className="text-xl font-bold">{isUrdu ? "گل رئیل اسٹیٹ اینڈ بلڈرز" : "GULL Real Estate and Builders"}</span>
+                            <span className="font-headline font-extrabold text-ds-on text-lg uppercase tracking-tight">GULL Real Estate and Builders</span>
                         </div>
-                        <p className="text-gruvbox-fg/70 mb-4 leading-relaxed">
-                            {isUrdu
-                                ? "ہم ایک رئیل اسٹیٹ ایجنسی ہیں جو خرید و فروخت کی رہنمائی، کرائے کی مشاورت، اور کرایہ داروں کی تلاش میں مالکان کی مدد کرتی ہے۔"
-                                : "We are a real-estate agency helping clients with buy/sell guidance, rental consultation, and landlord support for tenant placement."}
-                        </p>
-                        <p className="text-gruvbox-fg/60 text-sm leading-relaxed">
-                            {isUrdu
-                                ? "مشاورتی اور سہولت کاری کی خدمات کے لیے ایجنسی فیس لاگو ہوتی ہے۔ پراپرٹی کے لین دین کی ادائیگیاں براہ راست کلائنٹس کرتے ہیں۔"
-                                : "Agency fee applies for advisory and facilitation services. Property transaction payments are made directly by clients."}
+                        <p className="font-body text-sm text-ds-on-faint leading-relaxed max-w-xs mt-3">
+                            We are a trusted property agency. We help you securely buy, sell, or rent houses and plots easily without any scams.
                         </p>
                     </div>
 
                     <div className="text-start md:text-end">
-                        <h3 className="text-lg font-semibold mb-4">{isUrdu ? "ایجنسی کی معلومات" : "Agency Information"}</h3>
+                        <h3 className="font-headline font-bold text-ds-secondary text-[10px] uppercase tracking-[0.25em] mb-5">Office Address & Contact</h3>
                         <div className="flex flex-col gap-3 items-start md:items-end">
                             <a
                                 href="https://maps.app.goo.gl/n5h9QsixjkC4SAbn7"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-gruvbox-fg/70 hover:text-gruvbox-blue transition-colors"
-                                aria-label={isUrdu ? "گوگل میپس پر لوکیشن دیکھیں" : "View location on Google Maps"}
+                                className="flex items-center gap-2 text-ds-on-dim hover:text-ds-primary text-sm transition-colors no-underline"
+                                aria-label="View location on Google Maps"
                             >
                                 <MapPin className="h-4 w-4" />
-                                <span>{isUrdu ? "شین گل پلازہ، صوابی روڈ، مردان، کے پی کے" : "Sheen Gull Plaza, Swabi Road, Mardan, KPK"}</span>
+                                <span>Sheen Gull Plaza, Swabi Road, Mardan, KPK</span>
                             </a>
-                            <div className="flex items-center gap-2 text-gruvbox-fg/70">
+                            <div className="flex items-center gap-2 text-ds-on-dim">
                                 <Phone className="h-4 w-4" />
                                 <button
                                     onClick={showCallError}
-                                    className="hover:text-gruvbox-red transition-colors font-medium underline decoration-dotted underline-offset-4"
+                                    className="hover:text-ds-error text-sm font-medium underline decoration-dotted underline-offset-4 transition-colors"
                                     dir="ltr"
-                                    aria-label={isUrdu ? "ایجنسی کو کال کریں" : "Call the agency"}
+                                    aria-label="Call the office"
                                 >
                                     0937 861777
                                 </button>
                             </div>
                             <a
                                 href="mailto:agul40160@gmail.com"
-                                className="mt-2 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-gruvbox-bg0 bg-gruvbox-blue hover:bg-gruvbox-blue/80 transition-colors shadow-sm"
+                                className="mt-4 inline-flex items-center justify-center px-5 py-2.5 border border-ds-border text-ds-primary font-headline font-bold uppercase text-[10px] tracking-widest hover:border-ds-primary transition-all rounded-none"
                             >
-                                <img src="/images/email.png" alt="Email" width="16" height="16" className={`h-4 w-4 ${isUrdu ? "ml-2" : "mr-2"}`} />
-                                {isUrdu ? "مسئلے کی اطلاع دیں" : "Report an Issue"}
+                                <img src="/images/email.png" alt="Email" width="16" height="16" className="h-4 w-4 mr-2" />
+                                Email Us / Report Issue
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div className="border-t border-gruvbox-bg2 pt-8 text-center text-gruvbox-gray text-sm">
-                    <p dir="ltr">&copy; 2023 - {new Date().getFullYear()} GULL Real Estate and Builders. All rights reserved.</p>
+                <div className="mt-12 pt-6 border-t border-ds-border text-center text-ds-on-faint text-xs font-body tracking-wide">
+                    <p dir="ltr">&copy; {new Date().getFullYear()} GULL Real Estate and Builders. All rights reserved.</p>
                 </div>
             </div>
         </footer>

@@ -4,7 +4,6 @@ import React, { Suspense, useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import { useTranslation } from './lib/i18n/useTranslation';
 import CallErrorModal from './components/CallErrorModal';
 import { AGENTS } from './config/contacts';
 import { CallErrorContext } from './context/CallErrorContext';
@@ -19,7 +18,6 @@ const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const UniversalContactForm = React.lazy(() => import('./features/contact/UniversalContactForm'));
 
 function Layout() {
-    const { isUrdu } = useTranslation();
     const location = useLocation();
     const [isCallModalOpen, setIsCallModalOpen] = useState(false);
 
@@ -39,11 +37,11 @@ function Layout() {
     return (
         <PolicyProvider>
             <CallErrorContext.Provider value={{ showCallError }}>
-                <div className="min-h-screen flex flex-col bg-gruvbox-bg0 transition-colors duration-300" dir={isUrdu ? "rtl" : "ltr"}>
+                <div className="min-h-screen flex flex-col bg-ds-bg transition-colors duration-300" dir="ltr">
                     <a href="#main-content" className="skip-link">
-                        {isUrdu ? 'مواد پر جائیں' : 'Skip to content'}
+                        Skip to content
                     </a>
-                    <Header isUrdu={isUrdu} currentPath={location.pathname} />
+                    <Header currentPath={location.pathname} />
                     <main className="flex-grow" id="main-content">
                         <Suspense fallback={<LoadingSpinner />}>
                             <Routes>
@@ -84,7 +82,7 @@ function Layout() {
                             </Routes>
                         </Suspense>
                     </main>
-                    <Footer isUrdu={isUrdu} />
+                    <Footer />
                     <CallErrorModal isOpen={isCallModalOpen} onClose={() => setIsCallModalOpen(false)} />
                 </div>
             </CallErrorContext.Provider>
@@ -98,8 +96,7 @@ function App() {
             <ErrorBoundary>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/:lang/*" element={<Layout />} />
-                        <Route path="*" element={<Navigate to="/en" replace />} />
+                        <Route path="/*" element={<Layout />} />
                     </Routes>
                 </BrowserRouter>
             </ErrorBoundary>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useTranslation } from '../../lib/i18n/useTranslation';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Building2, User, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { User, CheckCircle2, ArrowLeft } from 'lucide-react';
 import SEO from '../../components/SEO';
+import { content } from '../../content';
 import { useLeadForm } from './hooks/useLeadForm';
 import StepUserInfo from './steps/StepUserInfo';
 import StepPropertyDetails from './steps/StepPropertyDetails';
@@ -10,8 +10,7 @@ import StepReview from './steps/StepReview';
 import { type ContactFormProps } from './types';
 
 export default function UniversalContactForm({ contactType, agentNames, agentWhatsApp }: ContactFormProps) {
-    const { t, isUrdu, lang } = useTranslation();
-    const agentName = isUrdu ? agentNames.ur : agentNames.en;
+    const agentName = agentNames.en;
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const initialIntent = searchParams.get('intent');
@@ -20,84 +19,63 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
         contactType,
         agentName,
         agentWhatsApp,
-        isUrdu,
-        lang,
-        t,
         initialIntent,
     });
 
-    const stepLabels = [t.stepUserInfo, t.stepPropertyInfo, t.stepReview];
+    const stepLabels = [content.stepUserInfo, content.stepPropertyInfo, content.stepReview];
 
     return (
-        <div className="min-h-screen bg-gruvbox-bg0 pt-20 sm:pt-24 pb-8 sm:pb-20" dir={isUrdu ? 'rtl' : 'ltr'}>
+        <div className="min-h-screen bg-ds-bg pt-20 sm:pt-24 pb-16 px-4" dir="ltr">
             <SEO
-                title={`${isUrdu ? 'رابطہ' : 'Contact'} - ${agentName}`}
-                description={t.contactFormSub}
-                lang={lang}
-                isUrdu={isUrdu}
+                title={`Contact - ${agentName}`}
+                description={content.contactFormSub}
+                lang="en"
                 canonical={`/${contactType}`}
             />
 
-            <div className="max-w-3xl mx-auto px-4">
-                {/* Back button */}
+            <div className="max-w-2xl mx-auto">
                 <button
-                    onClick={() => form.step === 1 ? navigate(`/${lang}/contact`) : form.goToStep(form.step - 1)}
-                    className="flex items-center gap-2 text-gruvbox-blue hover:text-gruvbox-blue/80 transition-colors mb-8 font-medium group"
-                    aria-label={form.step === 1 ? t.backToContact : t.previousStep}
+                    onClick={() => form.step === 1 ? navigate('/contact') : form.goToStep(form.step - 1)}
+                    className="text-ds-primary font-headline font-bold text-xs uppercase tracking-widest flex gap-2 items-center hover:gap-3 transition-all mb-8"
+                    aria-label={form.step === 1 ? content.backToContact : content.previousStep}
                 >
-                    <ArrowLeft className={`h-4 w-4 transition-transform group-hover:-translate-x-1 ${isUrdu ? 'rotate-180 group-hover:translate-x-1' : ''}`} />
-                    {form.step === 1 ? t.backToContact : t.previousStep}
+                    <ArrowLeft className="h-4 w-4" />
+                    {form.step === 1 ? content.backToContact : content.previousStep}
                 </button>
 
-                {/* Step Progress Indicator */}
-                <nav aria-label={isUrdu ? 'فارم مراحل' : 'Form steps'} className="flex items-center justify-center gap-2 mb-8">
-                    {stepLabels.map((label, i) => (
-                        <React.Fragment key={i}>
-                            <div className="flex items-center gap-2">
-                                <div
-                                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${form.step > i + 1
-                                        ? 'bg-gruvbox-green text-gruvbox-bg0'
-                                        : form.step === i + 1
-                                            ? 'bg-gruvbox-blue text-gruvbox-bg0 ring-4 ring-gruvbox-blue/20'
-                                            : 'bg-gruvbox-bg2 text-gruvbox-fg/40'
-                                        }`}
-                                    role="img"
-                                    aria-label={`${isUrdu ? 'مرحلہ' : 'Step'} ${i + 1}: ${label} — ${form.step > i + 1 ? (isUrdu ? 'مکمل' : 'Complete') :
-                                        form.step === i + 1 ? (isUrdu ? 'موجودہ' : 'Current') :
-                                            (isUrdu ? 'آنے والا' : 'Upcoming')
-                                        }`}
-                                >
-                                    {form.step > i + 1 ? '✓' : i + 1}
-                                </div>
-                                <span className={`hidden sm:inline text-sm font-medium ${form.step === i + 1 ? 'text-gruvbox-fg' : 'text-gruvbox-fg/40'}`}>
-                                    {label}
+                <nav aria-label="Form steps" className="grid grid-cols-3 w-full border-b border-ds-border mb-10">
+                    {stepLabels.map((label, i) => {
+                        const isCurrent = form.step === i + 1;
+                        const isComplete = form.step > i + 1;
+                        const stateClass = isComplete
+                            ? 'border-ds-primary/40 text-ds-primary/60'
+                            : isCurrent
+                                ? 'border-ds-primary text-ds-primary'
+                                : 'border-transparent text-ds-on-faint';
+                        
+                        return (
+                            <div key={i} className={`py-3 border-b-2 -mb-[1px] transition-colors text-center ${stateClass}`}>
+                                <span className="font-headline font-bold text-[10px] uppercase tracking-widest">
+                                    0{i + 1} — {label}
                                 </span>
                             </div>
-                            {i < stepLabels.length - 1 && (
-                                <div className={`w-8 sm:w-16 h-0.5 ${form.step > i + 1 ? 'bg-gruvbox-green' : 'bg-gruvbox-bg2'}`} aria-hidden="true" />
-                            )}
-                        </React.Fragment>
-                    ))}
+                        );
+                    })}
                 </nav>
 
-                {/* Form Card */}
-                <div className="bg-gruvbox-bg1 border border-gruvbox-bg2 rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 rtl:right-auto rtl:left-0 p-8 opacity-[0.03] pointer-events-none" aria-hidden="true">
-                        <Building2 className="h-64 w-64 text-gruvbox-fg" />
-                    </div>
-
-                    <header className="mb-10 text-center relative z-10">
-                        <div className="bg-gruvbox-blue/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <div className="bg-ds-surface border border-ds-border p-8 md:p-12 shadow-2xl rounded-none relative">
+                    <header className="mb-10 text-center">
+                        <div className="bg-ds-primary-muted w-11 h-11 flex items-center justify-center mx-auto mb-5 rounded-none">
                             {form.step === 3
-                                ? <CheckCircle2 className="h-8 w-8 text-gruvbox-green" />
-                                : <User className="h-8 w-8 text-gruvbox-blue" />}
+                                ? <CheckCircle2 className="h-[22px] w-[22px] text-ds-primary" />
+                                : <User className="h-[22px] w-[22px] text-ds-primary" />}
                         </div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-gruvbox-fg mb-2">
-                            {form.step === 3 ? t.reviewTitle : t.contactFormTitle}
+                        <h1 className="font-headline font-bold text-2xl md:text-3xl text-ds-on mt-5 mb-1">
+                            {form.step === 3 ? content.reviewTitle : content.contactFormTitle}
                         </h1>
-                        <p className="text-gruvbox-blue font-bold text-lg mb-4">{agentName}</p>
-                        <p className="text-gruvbox-fg/60 max-w-lg mx-auto text-center">
-                            {form.step === 3 ? t.reviewSub : t.contactFormSub}
+                        <p className="text-ds-secondary font-headline font-bold text-base tracking-wide">{agentName}</p>
+                        <p className="text-ds-on-faint text-sm max-w-sm mx-auto mt-2">
+                            {form.step === 3 ? content.reviewSub : content.contactFormSub}
                         </p>
                     </header>
 
@@ -105,8 +83,6 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                         <StepUserInfo
                             formData={form.formData}
                             contactType={contactType}
-                            isUrdu={isUrdu}
-                            t={t}
                             errors={form.errors}
                             hasAcceptedFormPolicy={form.hasAcceptedFormPolicy}
                             onAcceptPolicy={form.setHasAcceptedFormPolicy}
@@ -120,8 +96,6 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                         <StepPropertyDetails
                             formData={form.formData}
                             contactType={contactType}
-                            isUrdu={isUrdu}
-                            t={t}
                             errors={form.errors}
                             onFieldChange={form.updateField}
                             onInputChange={form.handleInputChange}
@@ -133,14 +107,11 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                         <StepReview
                             formData={form.formData}
                             contactType={contactType}
-                            isUrdu={isUrdu}
-                            t={t}
                             onEdit={() => form.goToStep(1)}
                             onConfirm={form.confirmAndSend}
                         />
                     )}
                 </div>
-
             </div>
         </div>
     );

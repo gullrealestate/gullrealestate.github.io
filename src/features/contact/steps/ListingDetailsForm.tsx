@@ -1,166 +1,169 @@
-import { Ruler, Info, Scroll, CreditCard, MessageCircle, MapPin, DollarSign } from 'lucide-react';
-import { type LeadData, type ContactType, type ValidationErrors } from '../types';
-import { type TranslationSchema } from '../../../locales/types';
+import { type LeadData, type ValidationErrors } from '../types';
+import { content } from '../../../content';
 
 interface ListingDetailsFormProps {
     formData: LeadData;
-    contactType: ContactType;
-    isUrdu: boolean;
-    t: TranslationSchema;
     errors: ValidationErrors;
     onFieldChange: (name: keyof LeadData, value: string | boolean) => void;
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 
-const inputClass = 'w-full bg-gruvbox-bg2 border border-gruvbox-bg2 rounded-xl px-4 py-3 text-gruvbox-fg placeholder:text-gruvbox-fg/30 focus:outline-none focus:ring-2 focus:ring-gruvbox-blue transition-all';
-const labelClass = 'block text-sm font-semibold text-gruvbox-fg/70 mb-2';
+const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error, extra }: any) => {
+    const isFilled = value && value.length > 0;
+    return (
+        <div className="relative group pt-4">
+            <input
+                type={type}
+                id={id}
+                name={id}
+                required
+                value={value}
+                onChange={onChange}
+                className="peer block w-full px-0 py-3.5 bg-transparent border-0 border-b border-ds-border focus:outline-none focus:border-b focus:border-ds-primary text-ds-on text-base placeholder-transparent transition-colors duration-200"
+                placeholder={placeholder}
+            />
+            <label
+                htmlFor={id}
+                className={`absolute left-0 pointer-events-none transition-all duration-200 font-headline ${isFilled ? 'top-0 text-[10px] uppercase tracking-widest text-ds-on-dim font-bold' : 'top-7 text-sm text-ds-on-faint font-normal normal-case tracking-normal peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-ds-primary peer-focus:font-bold'}`}
+            >
+                {label}
+            </label>
+            <span className="absolute bottom-[-1px] left-0 h-px w-0 bg-ds-primary transition-all duration-300 group-focus-within:w-full" />
+            {error && <p className="text-ds-error text-xs font-body mt-1.5 flex gap-1 items-center" role="alert">{error}</p>}
+            {extra}
+        </div>
+    );
+};
+
+const SelectField = ({ id, label, value, onChange, options, placeholder, error }: any) => {
+    const isFilled = value && value.length > 0;
+    return (
+        <div className="relative group pt-4">
+            <select
+                id={id}
+                name={id}
+                required
+                value={value}
+                onChange={onChange}
+                className="peer block w-full px-0 py-3.5 bg-transparent border-0 border-b border-ds-border focus:outline-none focus:border-b focus:border-ds-primary text-ds-on text-base transition-colors duration-200 appearance-none rounded-none"
+            >
+                <option value="" disabled className="bg-ds-surface text-ds-on-faint">{placeholder}</option>
+                {options.map((opt: any) => (
+                    <option key={opt.value} value={opt.value} className="bg-ds-surface text-ds-on">{opt.label}</option>
+                ))}
+            </select>
+            <label
+                htmlFor={id}
+                className={`absolute left-0 pointer-events-none transition-all duration-200 font-headline ${isFilled ? 'top-0 text-[10px] uppercase tracking-widest text-ds-on-dim font-bold' : 'top-7 text-sm text-ds-on-faint font-normal normal-case tracking-normal peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-ds-primary peer-focus:font-bold'}`}
+            >
+                {label}
+            </label>
+            <span className="absolute bottom-[-1px] left-0 h-px w-0 bg-ds-primary transition-all duration-300 group-focus-within:w-full" />
+            {error && <p className="text-ds-error text-xs font-body mt-1.5 flex gap-1 items-center" role="alert">{error}</p>}
+        </div>
+    );
+};
 
 export default function ListingDetailsForm({
-    formData, isUrdu, t, errors,
+    formData, errors,
     onFieldChange, onInputChange
-}: Omit<ListingDetailsFormProps, 'contactType'>) {
-    const toggleBtn = (active: boolean, color = 'blue') =>
-        `px-4 py-3 rounded-xl text-sm font-bold border transition-all ${active
-            ? `bg-gruvbox-${color} border-gruvbox-${color} text-gruvbox-bg0 shadow-lg scale-105`
-            : 'bg-gruvbox-bg2 border-gruvbox-bg2 text-gruvbox-fg hover:bg-gruvbox-bg0'}`;
+}: ListingDetailsFormProps) {
+    const marlaExtra = formData.marlas && !isNaN(parseFloat(formData.marlas)) ? (
+         <p className="text-xs text-ds-on-faint mt-2 italic">
+             ≈ {(parseFloat(formData.marlas) * 272.25).toLocaleString(undefined, { maximumFractionDigits: 0 })} sq ft
+         </p>
+    ) : null;
 
+    const ownershipOptions = [
+        { value: 'registry', label: content.registry },
+        { value: 'inteqal', label: content.inteqal },
+        { value: 'allotment', label: content.allotment },
+        { value: 'powerOfAttorney', label: content.powerOfAttorney }
+    ];
 
     return (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* Ownership Type */}
-            <div>
-                <label htmlFor="ownershipType" className={labelClass}>
-                    <div className="flex items-center gap-2">
-                        <Scroll className="w-4 h-4 text-gruvbox-blue" />
-                        {t.ownershipType}
-                    </div>
-                </label>
-                <select id="ownershipType" name="ownershipType" required value={formData.ownershipType}
-                    onChange={onInputChange} className={inputClass}>
-                    <option value="" disabled>{t.selectOwnership}</option>
-                    <option value="registry">{t.registry}</option>
-                    <option value="inteqal">{t.inteqal}</option>
-                    <option value="allotment">{t.allotment}</option>
-                    <option value="powerOfAttorney">{t.powerOfAttorney}</option>
-                </select>
-                {errors.ownershipType && <p className="text-gruvbox-red text-xs mt-1">{errors.ownershipType}</p>}
-            </div>
+        <div className="space-y-8 animate-[ds-fade-up_0.5s_ease-out]">
+            <SelectField id="ownershipType" label={content.ownershipType} value={formData.ownershipType} onChange={onInputChange} options={ownershipOptions} placeholder={content.selectOwnership} error={errors.ownershipType} />
+            
+            <InputField id="marlas" label={content.marlas} value={formData.marlas} onChange={onInputChange} placeholder={content.marlasPlaceholder} error={errors.marlas} extra={marlaExtra} />
 
-            {/* Marla Input */}
-            <div>
-                <label htmlFor="marlas" className={labelClass}>
-                    <div className="flex items-center gap-2">
-                        <Ruler className="w-4 h-4 text-gruvbox-blue" />
-                        {t.marlas}
-                    </div>
-                </label>
-                <input
-                    type="text"
-                    id="marlas"
-                    name="marlas"
-                    required
-                    value={formData.marlas}
-                    onChange={onInputChange}
-                    className={inputClass}
-                    placeholder={t.marlasPlaceholder}
-                />
-                {errors.marlas && <p className="text-gruvbox-red text-xs mt-1">{errors.marlas}</p>}
-                {formData.marlas && !isNaN(parseFloat(formData.marlas)) && (
-                    <p className="text-xs text-gruvbox-fg/40 mt-2 italic">
-                        ≈ {(parseFloat(formData.marlas) * 272.25).toLocaleString(undefined, { maximumFractionDigits: 0 })} {isUrdu ? 'مربع فٹ' : 'sq ft'}
-                    </p>
-                )}
-            </div>
-
-            {/* Main Road Toggle */}
-            <div className="space-y-3">
-                <div className={`flex items-center justify-between bg-gruvbox-bg2 px-4 py-4 rounded-xl border transition-all cursor-pointer ${formData.onMainRoad ? 'border-gruvbox-blue' : 'border-gruvbox-bg2'}`}
+            <div className="space-y-4">
+                <div className={`flex items-center justify-between border-b py-4 cursor-pointer transition-colors ${formData.onMainRoad ? 'border-ds-primary' : 'border-ds-border'}`}
                     onClick={() => onFieldChange('onMainRoad', !formData.onMainRoad)}>
-                    <div className="flex items-center gap-4">
-                        <div className={`p-2 rounded-lg ${formData.onMainRoad ? 'bg-gruvbox-blue/20 text-gruvbox-blue' : 'bg-gruvbox-bg0 text-gruvbox-fg/40'}`}>
-                            <MapPin className="w-5 h-5" />
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-gruvbox-fg">{t.mainRoadLabel}</p>
-                            <p className="text-[10px] text-gruvbox-fg/40 uppercase tracking-wider">{t.mainRoadToggleHint}</p>
-                        </div>
+                    <div>
+                        <p className={`font-headline font-bold text-sm ${formData.onMainRoad ? 'text-ds-primary' : 'text-ds-on'}`}>{content.mainRoadLabel}</p>
+                        <p className={`text-[10px] uppercase tracking-wider mt-1 ${formData.onMainRoad ? 'text-ds-primary/70' : 'text-ds-on-faint'}`}>{content.mainRoadToggleHint}</p>
                     </div>
-                    <div className={`w-12 h-6 rounded-full transition-all relative ${formData.onMainRoad ? 'bg-gruvbox-blue' : 'bg-gruvbox-bg0/50'}`}>
-                        <div className={`w-4 h-4 bg-gruvbox-fg rounded-full absolute top-1 transition-all ${formData.onMainRoad ? 'left-7' : 'left-1'}`} />
+                    <div className={`w-10 h-5 rounded-none border border-ds-border flex items-center transition-colors relative ${formData.onMainRoad ? 'bg-ds-primary border-ds-primary' : 'bg-transparent'}`}>
+                        <div className={`w-3 h-3 rounded-none absolute transition-all ${formData.onMainRoad ? 'bg-ds-primary-dark translate-x-[22px]' : 'bg-ds-on-dim translate-x-1'}`} />
                     </div>
                 </div>
 
-                {/* Street Width (only if not on main road) */}
                 {!formData.onMainRoad && (
-                    <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                        <div className="relative">
+                    <div className="animate-[ds-fade-up_0.3s_ease-out]">
+                        <div className="relative group pt-4">
                             <input type="number" id="streetWidth" name="streetWidth"
                                 value={formData.streetWidth} onChange={onInputChange}
-                                className={`${inputClass} pr-12`} placeholder={t.streetWidthPlaceholder} />
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-gruvbox-blue/60 pointer-events-none">
+                                className="peer block w-full px-0 py-3.5 pr-12 bg-transparent border-0 border-b border-ds-border focus:outline-none focus:border-b focus:border-ds-primary text-ds-on text-base placeholder-transparent transition-colors duration-200" placeholder={content.streetWidthPlaceholder} />
+                            <label
+                                htmlFor="streetWidth"
+                                className={`absolute left-0 pointer-events-none transition-all duration-200 font-headline ${formData.streetWidth && formData.streetWidth.length > 0 ? 'top-0 text-[10px] uppercase tracking-widest text-ds-on-dim font-bold' : 'top-7 text-sm text-ds-on-faint font-normal normal-case tracking-normal peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-ds-primary peer-focus:font-bold'}`}
+                            >
+                                Street Width
+                            </label>
+                            <span className="absolute bottom-[-1px] left-0 h-px w-0 bg-ds-primary transition-all duration-300 group-focus-within:w-full" />
+                            <div className="absolute right-0 top-[30px] font-headline font-bold text-ds-on-dim pointer-events-none">
                                 ft
                             </div>
+                            {errors.streetWidth && <p className="text-ds-error text-xs font-body mt-1.5 flex gap-1 items-center" role="alert">{errors.streetWidth}</p>}
                         </div>
-                        {errors.streetWidth && <p className="text-gruvbox-red text-xs mt-1">{errors.streetWidth}</p>}
                     </div>
                 )}
             </div>
 
-            {/* Payment Method */}
-            <div>
-                <label className={labelClass}>
-                    <div className="flex items-center gap-2">
-                        <CreditCard className="w-4 h-4 text-gruvbox-green" />
-                        {t.paymentLabel}
-                    </div>
-                </label>
-                <div className="grid grid-cols-2 gap-3">
+            <div className="pt-2">
+                <label className="block font-headline font-bold text-[10px] uppercase tracking-widest text-ds-on-faint mb-3">{content.paymentLabel}</label>
+                <div className="grid grid-cols-2 gap-px bg-ds-border">
                     <button type="button" onClick={() => onFieldChange('paymentMethod', 'cash')}
-                        className={toggleBtn(formData.paymentMethod === 'cash', 'green')}>
-                        {t.cash}
+                        className={`py-3.5 transition-all rounded-none ${formData.paymentMethod === 'cash'
+                            ? 'bg-ds-primary text-ds-primary-dark font-headline font-bold uppercase text-[10px] tracking-widest'
+                            : 'bg-ds-surface text-ds-on-dim hover:bg-ds-surface-low font-headline font-bold uppercase text-[10px] tracking-widest'}`}>
+                        {content.cash}
                     </button>
                     <button type="button" onClick={() => onFieldChange('paymentMethod', 'installment')}
-                        className={toggleBtn(formData.paymentMethod === 'installment', 'green')}>
-                        {t.installment}
+                        className={`py-3.5 transition-all rounded-none ${formData.paymentMethod === 'installment'
+                            ? 'bg-ds-primary text-ds-primary-dark font-headline font-bold uppercase text-[10px] tracking-widest'
+                            : 'bg-ds-surface text-ds-on-dim hover:bg-ds-surface-low font-headline font-bold uppercase text-[10px] tracking-widest'}`}>
+                        {content.installment}
                     </button>
                 </div>
             </div>
 
-            {/* Asking Price */}
-            <div>
-                <label htmlFor="budget" className={labelClass}>
-                    <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-gruvbox-blue" />
-                        {t.askingPrice}
-                    </div>
+            <InputField id="budget" label={content.askingPrice} value={formData.budget} onChange={onInputChange} placeholder={content.askingPricePlaceholder} error={errors.budget} />
+
+            <div className="relative group pt-4">
+                <textarea
+                    id="demands"
+                    name="demands"
+                    rows={3}
+                    value={formData.demands}
+                    onChange={onInputChange}
+                    className="peer block w-full px-0 py-3.5 bg-transparent border-0 border-b border-ds-border focus:outline-none focus:border-b focus:border-ds-primary text-ds-on text-base placeholder-transparent transition-colors duration-200 resize-none"
+                    placeholder={content.propertyDescriptionPlaceholder}
+                />
+                <label
+                    htmlFor="demands"
+                    className={`absolute left-0 pointer-events-none transition-all duration-200 font-headline ${formData.demands && formData.demands.length > 0 ? 'top-0 text-[10px] uppercase tracking-widest text-ds-on-dim font-bold' : 'top-7 text-sm text-ds-on-faint font-normal normal-case tracking-normal peer-focus:top-0 peer-focus:text-[10px] peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-ds-primary peer-focus:font-bold'}`}
+                >
+                    {content.propertyDescription}
                 </label>
-                <input type="text" id="budget" name="budget" required value={formData.budget}
-                    onChange={onInputChange} className={inputClass} placeholder={t.askingPricePlaceholder} />
-                {errors.budget && <p className="text-gruvbox-red text-xs mt-1">{errors.budget}</p>}
+                <span className="absolute bottom-[-1px] left-0 h-px w-0 bg-ds-primary transition-all duration-300 group-focus-within:w-full" />
+                {errors.demands && <p className="text-ds-error text-xs font-body mt-1.5 flex gap-1 items-center" role="alert">{errors.demands}</p>}
             </div>
 
-            {/* Property Description */}
-            <div>
-                <label htmlFor="demands" className={labelClass}>
-                    <div className="flex items-center gap-2">
-                        <MessageCircle className="w-4 h-4 text-gruvbox-blue" />
-                        {t.propertyDescription}
-                    </div>
-                </label>
-                <textarea id="demands" name="demands" value={formData.demands}
-                    onChange={onInputChange} rows={3} className={`${inputClass} resize-none`}
-                    placeholder={t.propertyDescriptionPlaceholder} />
-            </div>
-
-            {/* Trust Builder */}
-            <div className="bg-gruvbox-blue/5 border border-gruvbox-blue/20 rounded-2xl p-5 flex gap-4">
-                <div className="bg-gruvbox-blue/20 p-2 h-fit rounded-lg text-gruvbox-blue mt-1">
-                    <Info className="w-5 h-5 font-bold" />
-                </div>
-                <div>
-                    <h4 className="text-gruvbox-blue font-bold text-sm mb-1">{t.listingNextStepsTitle}</h4>
-                    <p className="text-xs text-gruvbox-fg/60 leading-relaxed">{t.listingNextStepsBody}</p>
-                </div>
+            <div className="bg-ds-surface-low border border-ds-border p-5 rounded-none mt-8 border-l-[3px] border-l-ds-secondary">
+                <h4 className="text-ds-on font-headline font-bold text-sm mb-2">{content.listingNextStepsTitle}</h4>
+                <p className="text-ds-on-dim text-sm leading-relaxed">{content.listingNextStepsBody}</p>
             </div>
         </div>
     );

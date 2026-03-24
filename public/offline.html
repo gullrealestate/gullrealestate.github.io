@@ -1,67 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" style="background:#0d0d0c;color:#eae7e4;font-family:Manrope,sans-serif;">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Offline - Gull Real Estate</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #282828;
-            color: #ebdbb2;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 420px;
-        }
-
-        h1 {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            color: #ebdbb2cc;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        button {
-            background: #458588;
-            color: #282828;
-            border: none;
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 0.75rem;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #689d6a;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Offline — GULL Real Estate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
 </head>
-
-<body>
-    <div class="container">
-        <h1>You're Offline</h1>
-        <p>It looks like you've lost your internet connection. Please check your connection and try again.</p>
-        <button onclick="window.location.reload()">Try Again</button>
-    </div>
+<body style="min-height:100vh;display:flex;flex-direction:column;align-items:center;
+             justify-content:center;padding:2rem;text-align:center;gap:1.5rem;">
+  <div style="width:2px;height:48px;background:#92d1d4;margin:0 auto;"></div>
+  <h1 style="font-size:2.5rem;font-weight:800;letter-spacing:-0.02em;margin:0;">
+    You're offline.
+  </h1>
+  <p style="color:rgba(234,231,228,0.55);font-weight:300;font-size:1rem;
+            max-width:320px;line-height:1.7;margin:0;">
+    No internet connection detected. Please check your network and try again.
+  </p>
+  <a href="/"
+     style="margin-top:1rem;border:1px solid rgba(146,209,212,0.3);color:#92d1d4;
+            font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.2em;
+            padding:14px 32px;text-decoration:none;">
+    Try Again
+  </a>
+  <p style="position:absolute;bottom:2rem;color:rgba(234,231,228,0.2);
+            font-size:11px;letter-spacing:0.15em;text-transform:uppercase;">
+    GULL Real Estate &amp; Builders
+  </p>
 </body>
-
 </html>

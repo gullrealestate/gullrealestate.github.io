@@ -1,29 +1,19 @@
 import React from 'react';
-import { useTranslation } from '../lib/i18n/useTranslation';
 import { usePolicy } from '../context/PolicyContext';
-import { ShieldCheck, Info } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
+import { content } from '../content';
 import SEO from './SEO';
 
 export default function PolicyGate({ children }: { children: React.ReactNode }) {
     const { hasAcceptedPolicy, acceptPolicy } = usePolicy();
-    const { t, isUrdu, lang } = useTranslation();
 
     if (hasAcceptedPolicy) {
         return <>{children}</>;
     }
 
-    const translations = {
-        en: {
-            policyHeader: "Agency Policy & Liability",
-            agreeBtn: "I Have Carefully Read the Agency Policy",
-        },
-        ur: {
-            policyHeader: "ایجنسی پالیسی اور ذمہ داری",
-            agreeBtn: "میں نے ایجنسی کی پالیسی کو غور سے پڑھ لیا ہے",
-        }
-    };
-
-    const pt = isUrdu ? translations.ur : translations.en;
+    const policyHeader = "Agency Rules & Fees";
+    const overline = "Please Read Carefully";
+    const agreeBtn = "I Have Read and Agreed to the Rules";
 
     const handleAccept = () => {
         acceptPolicy();
@@ -31,64 +21,64 @@ export default function PolicyGate({ children }: { children: React.ReactNode }) 
     };
 
     return (
-        <div className="min-h-screen bg-gruvbox-bg0 pt-24 sm:pt-32 pb-12 sm:pb-20" dir={isUrdu ? "rtl" : "ltr"}>
+        <div className="min-h-screen bg-ds-bg pt-24 sm:pt-32 pb-20" dir="ltr">
             <SEO
-                title={pt.policyHeader}
-                description={t.description}
-                lang={lang}
-                isUrdu={isUrdu}
+                title={policyHeader}
+                description={content.description}
+                lang="en"
             />
 
-            <div className="max-w-4xl mx-auto px-4">
-                <article className="bg-gruvbox-bg1 border-2 border-gruvbox-blue/30 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 rtl:right-auto rtl:left-0 p-8 opacity-5">
-                        <ShieldCheck className="h-32 w-32 text-gruvbox-blue" />
-                    </div>
+            <div className="max-w-3xl mx-auto px-4">
+                <article className="bg-ds-surface border border-ds-border rounded-none p-10 md:p-14 shadow-2xl relative">
+                    <div className="absolute top-0 right-0 w-20 h-20 pointer-events-none before:content-[''] before:absolute before:top-0 before:right-0 before:w-full before:h-full before:border-t before:border-ds-primary-muted before:border-r" />
 
                     <div className="relative z-10">
-                        <header className="flex items-center gap-4 mb-8">
-                            <div className="bg-gruvbox-blue/20 p-3 rounded-2xl">
-                                <Info className="h-8 w-8 text-gruvbox-blue" />
+                        <header className="flex items-center mb-8">
+                            <div className="bg-ds-primary-muted w-12 h-12 flex items-center justify-center rounded-none flex-shrink-0">
+                                <ShieldCheck className="h-6 w-6 text-ds-primary" />
                             </div>
-                            <h2 className="text-2xl md:text-3xl font-bold text-gruvbox-fg">
-                                {pt.policyHeader}
+                            <h2 className="ml-4 font-headline font-bold text-2xl md:text-3xl text-ds-on">
+                                {policyHeader}
                             </h2>
                         </header>
 
-                        <div className={`space-y-6 ${isUrdu ? "text-right urdu-policy-text" : "text-left"}`}>
-                            <p className="text-lg text-gruvbox-fg/90 leading-relaxed font-medium">
-                                {t.description}
+                        <div className="space-y-6 text-left">
+                            <span className="block text-ds-secondary font-headline text-[10px] uppercase tracking-[0.25em] mb-5">
+                                {overline}
+                            </span>
+                            <p className="text-ds-on-dim leading-relaxed text-base">
+                                {content.description}
                             </p>
 
-                            <ul className="space-y-4 list-none">
-                                {t.items.map((item, index) => (
-                                    <li key={index} className="flex gap-4 items-start">
-                                        <div className="mt-1.5 h-2 w-2 rounded-full bg-gruvbox-blue flex-shrink-0" />
-                                        <p className="text-gruvbox-fg/80">
+                            <div className="space-y-4 pt-2">
+                                {content.items.map((item, index) => (
+                                    <div key={index} className="flex items-start">
+                                        <div className="mt-1.5 h-6 w-px bg-ds-primary-muted flex-shrink-0 mr-4" />
+                                        <p className="text-ds-on-dim text-sm leading-relaxed">
                                             {typeof item === 'string' ? (
                                                 item
                                             ) : (
                                                 <>
-                                                    <strong className="text-gruvbox-fg">{item.label}</strong> {item.content}
+                                                    <strong className="text-ds-on">{item.label}</strong> {item.content}
                                                 </>
                                             )}
                                         </p>
-                                    </li>
+                                    </div>
                                 ))}
-                            </ul>
+                            </div>
 
-                            <p className="text-sm text-gruvbox-fg/60 italic pt-4">
-                                {t.footer}
+                            <p className="text-ds-on-faint text-xs italic pt-4">
+                                {content.footer}
                             </p>
                         </div>
 
                         <footer className="mt-12">
                             <button
                                 onClick={handleAccept}
-                                className="w-full bg-gruvbox-blue text-gruvbox-bg0 font-extrabold text-lg py-5 px-8 rounded-2xl shadow-xl hover:bg-gruvbox-aqua transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3"
+                                className="w-full bg-ds-primary text-ds-primary-dark font-headline font-bold uppercase text-sm tracking-[0.15em] py-5 px-8 rounded-none hover:opacity-90 transition-opacity active:scale-[0.99] flex items-center justify-center gap-3"
                             >
-                                <ShieldCheck className="h-6 w-6" />
-                                {pt.agreeBtn}
+                                <ShieldCheck className="h-5 w-5" />
+                                {agreeBtn}
                             </button>
                         </footer>
                     </div>

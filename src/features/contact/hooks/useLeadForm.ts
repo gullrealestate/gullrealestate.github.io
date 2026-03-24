@@ -4,9 +4,9 @@ import { buildWhatsAppMessage, generateLeadId, buildWhatsAppUrl } from '../utils
 import { saveLead } from '../../../lib/leadPersistence';
 import { trackEvent } from '../../../lib/analytics';
 import { normalizePhone } from '../../../lib/phoneUtils';
-import { type TranslationSchema } from '../../../locales/types';
 import { setFunnelStage } from '../../../lib/funnelTracker';
 import { useLocation } from 'react-router-dom';
+import { content } from '../../../content';
 
 const DRAFT_KEY = 'gull_form_draft';
 
@@ -31,14 +31,14 @@ function clearDraft(): void {
     } catch { /* ignore */ }
 }
 
-export function getDefaultFormData(t: TranslationSchema, initialIntent: string | null): LeadData {
+export function getDefaultFormData(initialIntent: string | null): LeadData {
     return {
         name: '',
         phone: '',
         gender: 'male',
         budget: '',
         location: '',
-        propertyType: t.house,
+        propertyType: content.house,
         demands: '',
         intent: (initialIntent as LeadData['intent']) || 'buy',
         marlas: '',
@@ -59,14 +59,11 @@ interface UseLeadFormOptions {
     contactType: ContactType;
     agentName: string;
     agentWhatsApp: string;
-    isUrdu: boolean;
-    lang: string;
-    t: TranslationSchema;
     initialIntent: string | null;
 }
 
 export function useLeadForm(options: UseLeadFormOptions) {
-    const { contactType, agentName, agentWhatsApp, isUrdu, lang, t, initialIntent } = options;
+    const { contactType, agentName, agentWhatsApp, initialIntent } = options;
     const location = useLocation();
 
     const [step, setStep] = useState(1);
@@ -75,7 +72,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
     const [formData, setFormData] = useState<LeadData>(() => {
         const draft = loadDraft();
-        const defaults = getDefaultFormData(t, initialIntent);
+        const defaults = getDefaultFormData(initialIntent);
         if (draft) {
             return {
                 ...defaults,
@@ -94,8 +91,8 @@ export function useLeadForm(options: UseLeadFormOptions) {
     // Track form opened
     useEffect(() => {
         trackEvent('form_started', { category: 'form', action: 'opened', label: contactType });
-        setFunnelStage('form_started', { lang, route: location.pathname });
-    }, [contactType, lang, location.pathname]);
+        setFunnelStage('form_started', { lang: 'en', route: location.pathname });
+    }, [contactType, location.pathname]);
 
     // Persist draft on every change
     useEffect(() => {
@@ -126,41 +123,41 @@ export function useLeadForm(options: UseLeadFormOptions) {
     const validateStep1 = useCallback((): boolean => {
         const newErrors: ValidationErrors = {};
         if (!formData.name.trim()) {
-            newErrors.name = isUrdu ? 'نام ضروری ہے' : 'Name is required';
+            newErrors.name = 'Name is required';
         }
         if (!formData.phone.trim()) {
-            newErrors.phone = isUrdu ? 'فون نمبر ضروری ہے' : 'Phone number is required';
+            newErrors.phone = 'Phone number is required';
         } else {
             const phoneResult = normalizePhone(formData.phone.trim());
             if (!phoneResult.valid) {
-                newErrors.phone = isUrdu ? 'درست فون نمبر درج کریں' : 'Enter a valid phone number';
+                newErrors.phone = 'Enter a valid phone number';
             }
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    }, [formData.name, formData.phone, isUrdu]);
+    }, [formData.name, formData.phone]);
 
     /** Validate step 2 fields */
     const validateStep2 = useCallback((): boolean => {
         const newErrors: ValidationErrors = {};
         if (!formData.location) {
-            newErrors.location = isUrdu ? 'مقام منتخب کریں' : 'Please select a location';
+            newErrors.location = 'Please select a location';
         }
         if (!formData.marlas.trim()) {
-            newErrors.marlas = isUrdu ? 'رقبہ ضروری ہے' : 'Area is required';
+            newErrors.marlas = 'Area is required';
         }
         if (!formData.budget.trim()) {
-            newErrors.budget = isUrdu ? 'بجٹ ضروری ہے' : 'Budget is required';
+            newErrors.budget = 'Budget is required';
         }
         if (formData.intent === 'rent' && !formData.occupancyDate) {
-            newErrors.occupancyDate = isUrdu ? 'قبضے کی تاریخ ضروری ہے' : 'Occupancy date is required';
+            newErrors.occupancyDate = 'Occupancy date is required';
         }
         if (formData.intent === 'list' && !formData.onMainRoad && !formData.streetWidth.trim()) {
-            newErrors.streetWidth = isUrdu ? 'گلی کی چوڑائی ضروری ہے' : 'Street width is required';
+            newErrors.streetWidth = 'Street width is required';
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
-    }, [formData, isUrdu]);
+    }, [formData]);
 
     const goToStep = useCallback((targetStep: number) => {
         setStep(targetStep);
@@ -170,19 +167,19 @@ export function useLeadForm(options: UseLeadFormOptions) {
         e.preventDefault();
         if (validateStep1()) {
             trackEvent('step_completed', { category: 'form', action: 'step_1_completed', label: contactType });
-            setFunnelStage('step_2', { lang, route: location.pathname });
+            setFunnelStage('step_2', { lang: 'en', route: location.pathname });
             setStep(2);
         }
-    }, [validateStep1, contactType, lang, location.pathname]);
+    }, [validateStep1, contactType, location.pathname]);
 
     const submitStep2 = useCallback((e: React.FormEvent) => {
         e.preventDefault();
         if (validateStep2()) {
             trackEvent('step_completed', { category: 'form', action: 'step_2_completed', label: contactType });
-            setFunnelStage('review', { lang, route: location.pathname });
+            setFunnelStage('review', { lang: 'en', route: location.pathname });
             setStep(3);
         }
-    }, [validateStep2, contactType, lang, location.pathname]);
+    }, [validateStep2, contactType, location.pathname]);
 
     const confirmAndSend = useCallback(() => {
         const leadId = generateLeadId();
@@ -193,7 +190,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
             label: `${contactType}_${agentName}`,
         });
 
-        setFunnelStage('whatsapp_clicked', { lang, route: location.pathname });
+        setFunnelStage('whatsapp_clicked', { lang: 'en', route: location.pathname });
 
         // Normalize user phone for the WhatsApp message (agent number is already clean)
         const phoneResult = normalizePhone(formData.phone.trim());
@@ -206,30 +203,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
             formData: normalizedFormData,
             contactType,
             agentName,
-            isUrdu,
             leadId,
-            lang,
-            translations: {
-                ceoTitle: t.ceoTitle,
-                agent1Title: t.agent1Title,
-                agent2Title: t.agent2Title,
-                cash: t.cash,
-                installment: t.installment,
-                plot: t.plot,
-                residential: t.residential,
-                budgetLabel: t.budgetLabel,
-                rentBudgetLabel: t.rentBudgetLabel,
-                askingPrice: t.askingPrice,
-                mainRoadLabel: t.mainRoadLabel,
-                furnished: t.furnished,
-                unfurnished: t.unfurnished,
-                demands: t.demands,
-                commercial: t.commercial,
-                registry: t.registry,
-                inteqal: t.inteqal,
-                allotment: t.allotment,
-                powerOfAttorney: t.powerOfAttorney,
-            },
         });
 
         const url = buildWhatsAppUrl(agentWhatsApp, message);
@@ -243,8 +217,8 @@ export function useLeadForm(options: UseLeadFormOptions) {
             id: leadId,
             agent: agentName,
             timestamp: new Date().toISOString(),
-            lang,
-            source: `/${lang}/contact${contactType === 'ceo' ? 'CEO' : contactType === 'agent1' ? 'AgentA' : 'AgentB'}`,
+            lang: 'en',
+            source: `/contact${contactType === 'ceo' ? 'CEO' : contactType === 'agent1' ? 'AgentA' : 'AgentB'}`,
             status: 'pending',
             attempts: 1,
             messageSnapshot: message,
@@ -252,7 +226,7 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
         // Clean up draft
         clearDraft();
-    }, [formData, contactType, agentName, agentWhatsApp, isUrdu, lang, t, location.pathname]);
+    }, [formData, contactType, agentName, agentWhatsApp, location.pathname]);
 
     return {
         step,

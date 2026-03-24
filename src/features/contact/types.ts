@@ -25,7 +25,7 @@ export type ContactType = 'ceo' | 'agent1' | 'agent2';
 
 export interface ContactFormProps {
     contactType: ContactType;
-    agentNames: { en: string; ur: string };
+    agentNames: { en: string };
     agentWhatsApp: string;
 }
 
@@ -33,8 +33,6 @@ export interface StepProps {
     formData: LeadData;
     onFieldChange: (name: keyof LeadData, value: string) => void;
     contactType: ContactType;
-    isUrdu: boolean;
-    translations: Record<string, unknown>;
 }
 
 /** Validation error map keyed by field name */

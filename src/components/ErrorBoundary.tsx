@@ -25,16 +25,16 @@ export default class ErrorBoundary extends React.Component<
     render() {
         if (this.state.hasError) {
             return (
-                <div className="min-h-screen bg-gruvbox-bg0 flex items-center justify-center px-4">
-                    <div className="bg-gruvbox-bg1 rounded-[2rem] p-10 max-w-lg text-center border border-gruvbox-red/30 shadow-2xl">
-                        <div className="bg-gruvbox-red/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <div className="min-h-screen bg-ds-bg flex items-center justify-center px-4">
+                    <div className="bg-ds-surface rounded-none p-10 max-w-lg text-center border border-ds-error/30 shadow-2xl">
+                        <div className="bg-ds-error/20 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-6">
                             <span className="text-3xl">⚠️</span>
                         </div>
-                        <h1 className="text-2xl font-bold text-gruvbox-fg mb-4">Something went wrong</h1>
-                        <p className="text-gruvbox-fg/70 mb-6">An unexpected error occurred. Please refresh the page to try again.</p>
+                        <h1 className="text-2xl font-headline font-bold text-ds-on mb-4">Something went wrong</h1>
+                        <p className="text-ds-on-faint mb-6 font-body">An unexpected error occurred. Please refresh the page to try again.</p>
                         <button
                             onClick={() => window.location.reload()}
-                            className="bg-gruvbox-blue text-gruvbox-bg0 font-bold py-3 px-8 rounded-xl hover:bg-gruvbox-aqua transition-all"
+                            className="bg-ds-primary text-ds-primary-dark font-headline font-bold uppercase tracking-widest text-[10px] py-4 px-8 rounded-none hover:opacity-90 transition-opacity active:scale-[0.99]"
                         >
                             Refresh Page
                         </button>
