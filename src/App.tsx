@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import React, { Suspense, useState, useEffect } from 'react';
 import Header from './components/Header';
@@ -41,7 +41,7 @@ function Layout() {
                     <a href="#main-content" className="skip-link">
                         Skip to content
                     </a>
-                    <Header currentPath={location.pathname} />
+                    <Header />
                     <main className="flex-grow" id="main-content">
                         <Suspense fallback={<LoadingSpinner />}>
                             <Routes>

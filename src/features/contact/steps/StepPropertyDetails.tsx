@@ -14,7 +14,15 @@ interface StepPropertyDetailsProps {
     onSubmit: (e: React.FormEvent) => void;
 }
 
-const SelectField = ({ id, label, value, onChange, options, placeholder, error }: any) => {
+const SelectField = ({ id, label, value, onChange, options, placeholder, error }: {
+    id: string;
+    label: string;
+    value: string;
+    onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>;
+    options: { value: string; label: string }[];
+    placeholder?: string;
+    error?: string;
+}) => {
     const isFilled = value && value.length > 0;
     return (
         <div className="relative group pt-4">
@@ -27,7 +35,7 @@ const SelectField = ({ id, label, value, onChange, options, placeholder, error }
                 className="peer block w-full px-0 py-3.5 bg-transparent border-0 border-b border-ds-border focus:outline-none focus:border-b focus:border-ds-primary text-ds-on text-base transition-colors duration-200 appearance-none rounded-none"
             >
                 <option value="" disabled className="bg-ds-surface text-ds-on-faint">{placeholder}</option>
-                {options.map((opt: any) => (
+                {options.map((opt: { value: string; label: string }) => (
                     <option key={opt.value} value={opt.value} className="bg-ds-surface text-ds-on">{opt.label}</option>
                 ))}
             </select>

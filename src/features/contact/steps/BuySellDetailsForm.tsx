@@ -10,7 +10,16 @@ interface BuySellDetailsFormProps {
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 
-const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error, extra }: any) => {
+const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error, extra }: { 
+    id: string; 
+    label: string; 
+    value: string; 
+    onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>; 
+    placeholder?: string; 
+    type?: string; 
+    error?: string; 
+    extra?: React.ReactNode 
+}) => {
     const isFilled = value && value.length > 0;
     return (
         <div className="relative group pt-4">

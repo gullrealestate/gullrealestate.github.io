@@ -8,7 +8,17 @@ interface RentDetailsFormProps {
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
 }
 
-const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error, extra, min }: any) => {
+const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error, extra, min }: { 
+    id: string; 
+    label: string; 
+    value: string; 
+    onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>; 
+    placeholder?: string; 
+    type?: string; 
+    error?: string; 
+    extra?: React.ReactNode;
+    min?: string;
+}) => {
     const isFilled = value && value.length > 0;
     return (
         <div className="relative group pt-4">

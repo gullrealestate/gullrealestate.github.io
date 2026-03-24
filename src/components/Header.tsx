@@ -1,11 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-interface HeaderProps {
-    currentPath: string;
-}
-
-export default function Header({ currentPath }: HeaderProps) {
+export default function Header() {
     const [scrollPct, setScrollPct] = useState(0);
 
     useEffect(() => {

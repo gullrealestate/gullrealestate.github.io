@@ -8,12 +8,11 @@ async function prerender() {
     const port = 3000;
     const distPath = path.join(__dirname, 'dist');
     const routes = [
-        '/en',
-        '/en/contact',
-        '/en/contact/requirements',
-        '/ur',
-        '/ur/contact',
-        '/ur/contact/requirements'
+        '/',
+        '/contact',
+        '/contactCEO',
+        '/contactAgentA',
+        '/contactAgentB'
     ];
 
     app.use(express.static(distPath));

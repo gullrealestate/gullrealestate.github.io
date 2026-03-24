@@ -13,7 +13,15 @@ interface StepUserInfoProps {
     onSubmit: (e: React.FormEvent) => void;
 }
 
-const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error }: any) => {
+const InputField = ({ id, label, value, onChange, placeholder, type = 'text', error }: { 
+    id: string; 
+    label: string; 
+    value: string; 
+    onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>; 
+    placeholder?: string; 
+    type?: string; 
+    error?: string; 
+}) => {
     const isFilled = value && value.length > 0;
     return (
         <div className="relative group pt-4">

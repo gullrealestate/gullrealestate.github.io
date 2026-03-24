@@ -24,38 +24,13 @@ const baseFormData: LeadData = {
     onMainRoad: false,
 };
 
-const translations = {
-    ceoTitle: 'CEO',
-    agent1Title: 'Rental Agent',
-    agent2Title: 'Plot Agent',
-    cash: 'Cash',
-    installment: 'Installment',
-    plot: 'Plot',
-    residential: 'Residential',
-    budgetLabel: 'Budget',
-    rentBudgetLabel: 'Monthly Rent',
-    askingPrice: 'Asking Price',
-    mainRoadLabel: 'Main Road',
-    furnished: 'Furnished',
-    unfurnished: 'Unfurnished',
-    demands: 'Demands',
-    commercial: 'Commercial',
-    registry: 'Registry',
-    inteqal: 'Inteqal',
-    allotment: 'Allotment',
-    powerOfAttorney: 'Power of Attorney',
-};
-
 describe('buildWhatsAppMessage', () => {
     it('produces deterministic output for buy intent (English)', () => {
         const msg = buildWhatsAppMessage({
             formData: baseFormData,
             contactType: 'ceo',
             agentName: 'Asif Gull',
-            isUrdu: false,
             leadId: 'GRE-260301-120000',
-            lang: 'en',
-            translations,
         });
 
         expect(msg).toContain('Assalam-o-Alaikum!');
@@ -71,34 +46,12 @@ describe('buildWhatsAppMessage', () => {
         expect(msg).toContain('*Utilities:* Electricity');
     });
 
-    it('produces deterministic output for buy intent (Urdu)', () => {
-        const msg = buildWhatsAppMessage({
-            formData: { ...baseFormData, gender: 'female' },
-            contactType: 'ceo',
-            agentName: 'آصف گل',
-            isUrdu: true,
-            leadId: 'GRE-260301-120000',
-            lang: 'ur',
-            translations,
-        });
-
-        expect(msg).toContain('*گل رئیل اسٹیٹ اینڈ بلڈرز، مردان*');
-        expect(msg).toContain('*آصف گل*');
-        expect(msg).toContain('رہی'); // female suffix
-        expect(msg).toContain('چاہتی'); // female want suffix
-        expect(msg).toContain('خریدنے');
-        expect(msg).toContain('*ریفرنس:* GRE-260301-120000');
-    });
-
     it('includes rent-specific fields for rent intent', () => {
         const msg = buildWhatsAppMessage({
             formData: { ...baseFormData, intent: 'rent', occupancyDate: '2026-04-01' },
             contactType: 'agent1',
             agentName: 'Agent A',
-            isUrdu: false,
             leadId: 'GRE-260301-120000',
-            lang: 'en',
-            translations,
         });
 
         expect(msg).toContain('*Bedrooms:* 3');
@@ -113,15 +66,12 @@ describe('buildWhatsAppMessage', () => {
             formData: { ...baseFormData, intent: 'list', streetWidth: '30', plotCategory: 'commercial' },
             contactType: 'agent1',
             agentName: 'Agent A',
-            isUrdu: false,
             leadId: 'GRE-260301-120000',
-            lang: 'en',
-            translations,
         });
 
         expect(msg).toContain('*Street Width:* 30 ft');
         expect(msg).toContain('*Ownership:* Registry');
-        expect(msg).toContain('*Payment:* Cash');
+        expect(msg).toContain('*Payment:* Full Cash');
         expect(msg).not.toContain('*Category:*'); // Removed for listings
     });
 
@@ -130,13 +80,10 @@ describe('buildWhatsAppMessage', () => {
             formData: { ...baseFormData, intent: 'list', onMainRoad: true, ownershipType: 'inteqal' },
             contactType: 'ceo',
             agentName: 'CEO',
-            isUrdu: false,
             leadId: 'GRE-123',
-            lang: 'en',
-            translations,
         });
 
-        expect(msg).toContain('*Road:* Main Road');
+        expect(msg).toContain('*Road:* Is it on the Main Road?');
         expect(msg).toContain('*Ownership:* Inteqal');
         expect(msg).not.toContain('*Street Width:*');
     });
@@ -146,23 +93,17 @@ describe('buildWhatsAppMessage', () => {
             formData: { ...baseFormData, intent: 'list' },
             contactType: 'ceo',
             agentName: 'Asif Gull',
-            isUrdu: false,
             leadId: 'GRE-123',
-            lang: 'en',
-            translations,
         });
         expect(msg).toContain('list property');
     });
 
-    it('does not include utilities for commercial property', () => {
+    it('does not include utilities for commercial property ("Shop / Plaza")', () => {
         const msg = buildWhatsAppMessage({
-            formData: { ...baseFormData, propertyType: 'Commercial' },
+            formData: { ...baseFormData, propertyType: 'Shop / Plaza' },
             contactType: 'ceo',
             agentName: 'Test',
-            isUrdu: false,
             leadId: 'GRE-260301-120000',
-            lang: 'en',
-            translations,
         });
 
         expect(msg).not.toContain('*Utilities:*');
@@ -173,63 +114,12 @@ describe('buildWhatsAppMessage', () => {
             formData: baseFormData,
             contactType: 'ceo' as const,
             agentName: 'Asif Gull',
-            isUrdu: false,
             leadId: 'GRE-260301-120000',
-            lang: 'en',
-            translations,
         };
 
         const msg1 = buildWhatsAppMessage(config);
         const msg2 = buildWhatsAppMessage(config);
         expect(msg1).toBe(msg2);
-    });
-
-    it('handles Urdu rent intent coverage', () => {
-        const rlm = '\u200F';
-        const msg = buildWhatsAppMessage({
-            formData: { ...baseFormData, intent: 'rent', occupancyDate: '2026-01-01', bedrooms: '2', bathrooms: '1' },
-            contactType: 'agent1',
-            agentName: 'ٹیسٹ ایجنٹ',
-            isUrdu: true,
-            leadId: 'GRE-123',
-            lang: 'ur',
-            translations,
-        });
-        expect(msg).toContain('کرایہ پر لینے');
-        expect(msg).toContain(`${rlm}🛏️ *کمرے:* 2`);
-        expect(msg).toContain(`${rlm}📅 *قبضہ درکار:* 2026-01-01`);
-    });
-
-    it('handles Urdu list intent coverage', () => {
-        const rlm = '\u200F';
-        const msg = buildWhatsAppMessage({
-            formData: { ...baseFormData, intent: 'list', propertyType: 'Plot', streetWidth: '30', plotCategory: 'residential' },
-            contactType: 'agent1',
-            agentName: 'ٹیسٹ ایجنٹ',
-            isUrdu: true,
-            leadId: 'GRE-123',
-            lang: 'ur',
-            translations,
-        });
-        expect(msg).toContain('لسٹنگ کروانے');
-        expect(msg).not.toContain('کیٹیگری'); // Removed for listings
-        expect(msg).toContain(`${rlm}🛣️ *گلی:* 30 فٹ`);
-        expect(msg).toContain(`${rlm}💳 *ادائیگی:* Cash`);
-    });
-
-    it('handles Urdu main road listing', () => {
-        const rlm = '\u200F';
-        const msg = buildWhatsAppMessage({
-            formData: { ...baseFormData, intent: 'list', onMainRoad: true, ownershipType: 'powerOfAttorney' },
-            contactType: 'agent1',
-            agentName: 'ٹیسٹ ایجنٹ',
-            isUrdu: true,
-            leadId: 'GRE-123',
-            lang: 'ur',
-            translations,
-        });
-        expect(msg).toContain(`${rlm}🛣️ *روڈ:* Main Road`);
-        expect(msg).toContain(`${rlm}📜 *ملکیت:* Power of Attorney`);
     });
 
     it('matches stable baseline snapshots (Regression Check)', () => {
@@ -238,24 +128,9 @@ describe('buildWhatsAppMessage', () => {
             formData: baseFormData,
             contactType: 'ceo',
             agentName: 'Asif Gull',
-            isUrdu: false,
             leadId: 'GRE-260301-120000',
-            lang: 'en',
-            translations,
         });
         expect(msgEn).toMatchSnapshot('en-whatsapp');
-
-        // UR Snapshot
-        const msgUr = buildWhatsAppMessage({
-            formData: baseFormData,
-            contactType: 'ceo',
-            agentName: 'آصف گل',
-            isUrdu: true,
-            leadId: 'GRE-260301-120000',
-            lang: 'ur',
-            translations,
-        });
-        expect(msgUr).toMatchSnapshot('ur-whatsapp');
     });
 });
 
@@ -296,7 +171,7 @@ describe('buildWhatsAppUrl', () => {
     });
 
     it('preserves emoji as literal Unicode and encodes ASCII specials', () => {
-        const msg = '📍 *Location:* مردان\n🏠 House & 💰 50 Lac';
+        const msg = '📍 *Location:* Mardan\n🏠 House & 💰 50 Lac';
         const url = buildWhatsAppUrl('923001234567', msg);
 
         // Emoji must appear as literal Unicode, NOT percent-encoded
@@ -304,8 +179,7 @@ describe('buildWhatsAppUrl', () => {
         expect(url).toContain('🏠');
         expect(url).toContain('💰');
 
-        // Urdu text must appear as literal Unicode
-        expect(url).toContain('مردان');
+        expect(url).toContain('Mardan');
 
         // ASCII specials must be percent-encoded
         expect(url).toContain('%20');   // space

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { User, CheckCircle2, ArrowLeft } from 'lucide-react';
 import SEO from '../../components/SEO';

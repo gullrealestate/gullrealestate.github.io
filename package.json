@@ -1,7 +1,7 @@
 {
   "name": "gullrealestateandbuilders",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.35.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "all": "npm run lint && npm run test && npm run test:coverage && npm run build"
   },
   "dependencies": {
     "libphonenumber-js": "^1.12.38",
