@@ -2,7 +2,6 @@ export interface Agent {
     id: string;
     name: {
         en: string;
-        ur: string;
     };
     role: string;
     whatsapp: string;
@@ -13,8 +12,7 @@ export const AGENTS: Record<string, Agent> = {
     ceo: {
         id: 'ceo',
         name: {
-            en: 'Asif Gull',
-            ur: 'آصف گل'
+            en: 'Asif Gull'
         },
         role: 'Consultation & Strategy',
         whatsapp: '923149393930',
@@ -22,8 +20,7 @@ export const AGENTS: Record<string, Agent> = {
     agent1: {
         id: 'agent1',
         name: {
-            en: 'Syed Ateeq ur Rahman',
-            ur: 'سید عتیق الرحمن'
+            en: 'Syed Ateeq ur Rahman'
         },
         role: 'Rental & Listings',
         whatsapp: '923149624277',
@@ -31,8 +28,7 @@ export const AGENTS: Record<string, Agent> = {
     agent2: {
         id: 'agent2',
         name: {
-            en: 'Mian Abdul Haq',
-            ur: 'میاں عبدالحق'
+            en: 'Mian Abdul Haq'
         },
         role: 'Plot Sales',
         whatsapp: '923142121370',
@@ -43,27 +39,24 @@ export type IntentType = 'buy' | 'rent' | 'list';
 
 export interface IntentConfig {
     id: IntentType;
-    label: {
-        en: string;
-        ur: string;
-    };
+    label: string;
     defaultAgentId: string;
 }
 
 export const INTENTS: IntentConfig[] = [
     {
         id: 'buy',
-        label: { en: 'Buy Property', ur: 'پراپرٹی خریدیں' },
+        label: 'Buy Property',
         defaultAgentId: 'ceo',
     },
     {
         id: 'rent',
-        label: { en: 'Rent Property', ur: 'کرایہ پر لیں' },
+        label: 'Rent Property',
         defaultAgentId: 'agent1',
     },
     {
         id: 'list',
-        label: { en: 'List a Property', ur: 'پراپرٹی لسٹ کریں' },
+        label: 'List a Property',
         defaultAgentId: 'agent1',
     }
 ];
