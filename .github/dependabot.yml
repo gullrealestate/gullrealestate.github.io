@@ -9,19 +9,60 @@ updates:
       time: "06:00"
       timezone: "Asia/Karachi"
     open-pull-requests-limit: 10
+
+    # Prevent automated PRs for major breaking version updates across all packages
+    # Major updates (e.g., TypeScript 5 -> 7, Vite 7 -> 8, Vitest 4 -> 5) require manual, coordinated refactoring
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
     groups:
-      dev-dependencies:
+      # Tightly coupled Vitest ecosystem (keeps core runner and @vitest/* coverage plugins in identical lockstep)
+      vitest:
         patterns:
-          - "@types/*"
+          - "vitest"
+          - "@vitest/*"
+
+      # Tightly coupled Vite ecosystem (keeps bundler core and official plugins in sync)
+      vite:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+
+      # Tightly coupled ESLint and TypeScript-ESLint toolchain
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@eslint/*"
           - "@typescript-eslint/*"
-          - "eslint*"
-          - "vitest*"
-          - "@testing-library/*"
-      production-dependencies:
+          - "typescript-eslint"
+
+      # React Testing Library ecosystem
+      testing-library:
         patterns:
-          - "react*"
-          - "lucide-react"
-          - "libphonenumber-js"
+          - "@testing-library/*"
+
+      # TypeScript compiler and ambient type definitions
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+
+      # Production runtime dependencies
+      production-dependencies:
+        dependency-type: "production"
+        patterns:
+          - "*"
+
+      # Development dependencies fallback for minor & patch updates
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
 
   # Maintain GitHub Actions workflow dependencies
   - package-ecosystem: "github-actions"
@@ -32,3 +73,8 @@ updates:
       time: "06:00"
       timezone: "Asia/Karachi"
     open-pull-requests-limit: 5
+
+    # Prevent breaking major updates for GitHub Actions
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
