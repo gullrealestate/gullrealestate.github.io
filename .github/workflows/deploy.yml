@@ -39,7 +39,7 @@ jobs:
         run: devenv version
 
       - name: Install dependencies
-        run: devenv shell -- npm ci --legacy-peer-deps
+        run: devenv shell -- npm ci
 
       - name: Lint
         run: devenv shell -- npm run lint
@@ -50,7 +50,7 @@ jobs:
       - name: Build
         run: |
           # Build includes tsc, vite build, prerender, and sitemap generation
-          devenv shell -- npm run build --legacy-peer-deps
+          devenv shell -- npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
