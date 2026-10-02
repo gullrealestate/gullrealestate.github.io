@@ -44,7 +44,7 @@
     "jsdom": "^28.1.0",
     "postcss": "^8.5.3",
     "puppeteer": "^24.37.5",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.1",
     "terser": "^5.46.0",
     "typescript": "^5.7.3",
