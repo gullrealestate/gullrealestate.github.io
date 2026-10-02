@@ -234,4 +234,24 @@ export const content = {
     askingPricePlaceholder: "e.g. 35 Lakh, 1.2 Crore",
     streetWidthPlaceholder: "e.g. 30",
     mainRoadToggleHint: "Turn off if it's not on the main road",
+
+    // Step 4 Success / Confirmation Strings
+    stepSuccess: "Inquiry Sent",
+    successTitle: "Inquiry Generated Successfully",
+    successSub: "Your details have been prepared for direct delivery to WhatsApp.",
+    leadReference: "Lead Reference ID",
+    openWhatsAppBtn: "Open WhatsApp Now",
+    copyMessageBtn: "Copy Message to Clipboard",
+    messageCopied: "Message copied to clipboard!",
+    startNewInquiry: "Start Another Inquiry",
+    assignedAgent: "Assigned Representative",
+    agentPhoneLabel: "WhatsApp / Direct Phone",
+    callOfficeFallback: "Direct Office Line",
+
+    // Admin Lead Vault
+    adminLeadVault: "Admin Lead Vault",
+    adminLeadVaultDesc: "Locally archived inquiries for emergency recovery.",
+    exportCsv: "Export Leads as CSV",
+    noSavedLeads: "No leads currently stored in local cache.",
+    closeVault: "Close Vault",
 };

@@ -7,6 +7,7 @@ import { useLeadForm } from './hooks/useLeadForm';
 import StepUserInfo from './steps/StepUserInfo';
 import StepPropertyDetails from './steps/StepPropertyDetails';
 import StepReview from './steps/StepReview';
+import StepSuccess from './steps/StepSuccess';
 import { type ContactFormProps } from './types';
 
 export default function UniversalContactForm({ contactType, agentNames, agentWhatsApp }: ContactFormProps) {
@@ -22,7 +23,12 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
         initialIntent,
     });
 
-    const stepLabels = [content.stepUserInfo, content.stepPropertyInfo, content.stepReview];
+    const stepLabels = [
+        content.stepUserInfo,
+        content.stepPropertyInfo,
+        content.stepReview,
+        content.stepSuccess,
+    ];
 
     return (
         <div className="min-h-screen bg-ds-bg pt-20 sm:pt-24 pb-16 px-4" dir="ltr">
@@ -35,15 +41,15 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
 
             <div className="max-w-2xl mx-auto">
                 <button
-                    onClick={() => form.step === 1 ? navigate('/contact') : form.goToStep(form.step - 1)}
-                    className="text-ds-primary font-headline font-bold text-xs uppercase tracking-widest flex gap-2 items-center hover:gap-3 transition-all mb-8"
-                    aria-label={form.step === 1 ? content.backToContact : content.previousStep}
+                    onClick={() => (form.step === 1 || form.step === 4 ? navigate('/contact') : form.goToStep(form.step - 1))}
+                    className="text-ds-primary font-headline font-bold text-xs uppercase tracking-widest flex gap-2 items-center hover:gap-3 transition-all mb-8 cursor-pointer"
+                    aria-label={form.step === 1 || form.step === 4 ? content.backToContact : content.previousStep}
                 >
                     <ArrowLeft className="h-4 w-4" />
-                    {form.step === 1 ? content.backToContact : content.previousStep}
+                    {form.step === 1 || form.step === 4 ? content.backToContact : content.previousStep}
                 </button>
 
-                <nav aria-label="Form steps" className="grid grid-cols-3 w-full border-b border-ds-border mb-10">
+                <nav aria-label="Form steps" className="grid grid-cols-4 w-full border-b border-ds-border mb-10">
                     {stepLabels.map((label, i) => {
                         const isCurrent = form.step === i + 1;
                         const isComplete = form.step > i + 1;
@@ -55,7 +61,7 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                         
                         return (
                             <div key={i} className={`py-3 border-b-2 -mb-[1px] transition-colors text-center ${stateClass}`}>
-                                <span className="font-headline font-bold text-[10px] uppercase tracking-widest">
+                                <span className="font-headline font-bold text-[10px] uppercase tracking-widest truncate block px-1">
                                     0{i + 1} — {label}
                                 </span>
                             </div>
@@ -64,20 +70,22 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                 </nav>
 
                 <div className="bg-ds-surface border border-ds-border p-8 md:p-12 shadow-2xl rounded-none relative">
-                    <header className="mb-10 text-center">
-                        <div className="bg-ds-primary-muted w-11 h-11 flex items-center justify-center mx-auto mb-5 rounded-none">
-                            {form.step === 3
-                                ? <CheckCircle2 className="h-[22px] w-[22px] text-ds-primary" />
-                                : <User className="h-[22px] w-[22px] text-ds-primary" />}
-                        </div>
-                        <h1 className="font-headline font-bold text-2xl md:text-3xl text-ds-on mt-5 mb-1">
-                            {form.step === 3 ? content.reviewTitle : content.contactFormTitle}
-                        </h1>
-                        <p className="text-ds-secondary font-headline font-bold text-base tracking-wide">{agentName}</p>
-                        <p className="text-ds-on-faint text-sm max-w-sm mx-auto mt-2">
-                            {form.step === 3 ? content.reviewSub : content.contactFormSub}
-                        </p>
-                    </header>
+                    {form.step !== 4 && (
+                        <header className="mb-10 text-center">
+                            <div className="bg-ds-primary-muted w-11 h-11 flex items-center justify-center mx-auto mb-5 rounded-none">
+                                {form.step === 3
+                                    ? <CheckCircle2 className="h-[22px] w-[22px] text-ds-primary" />
+                                    : <User className="h-[22px] w-[22px] text-ds-primary" />}
+                            </div>
+                            <h1 className="font-headline font-bold text-2xl md:text-3xl text-ds-on mt-5 mb-1">
+                                {form.step === 3 ? content.reviewTitle : content.contactFormTitle}
+                            </h1>
+                            <p className="text-ds-secondary font-headline font-bold text-base tracking-wide">{agentName}</p>
+                            <p className="text-ds-on-faint text-sm max-w-sm mx-auto mt-2">
+                                {form.step === 3 ? content.reviewSub : content.contactFormSub}
+                            </p>
+                        </header>
+                    )}
 
                     {form.step === 1 && (
                         <StepUserInfo
@@ -109,6 +117,17 @@ export default function UniversalContactForm({ contactType, agentNames, agentWha
                             contactType={contactType}
                             onEdit={() => form.goToStep(1)}
                             onConfirm={form.confirmAndSend}
+                        />
+                    )}
+
+                    {form.step === 4 && form.submittedLead && (
+                        <StepSuccess
+                            leadId={form.submittedLead.id}
+                            agentName={agentName}
+                            agentWhatsApp={agentWhatsApp}
+                            whatsAppUrl={form.submittedLead.url}
+                            message={form.submittedLead.message}
+                            onReset={form.resetForm}
                         />
                     )}
                 </div>

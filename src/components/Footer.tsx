@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { MapPin, Phone } from 'lucide-react';
 import { useCallError } from '../context/CallErrorContext';
+import AdminLeadVaultModal from './AdminLeadVaultModal';
 
 export default function Footer() {
     const { showCallError } = useCallError();
+    const [isVaultOpen, setIsVaultOpen] = useState(false);
+
     return (
         <footer className="bg-[#080807] border-t border-ds-border pt-16 pb-8" dir="ltr">
             <div className="max-w-7xl mx-auto px-6 sm:px-8">
@@ -60,10 +64,20 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-12 pt-6 border-t border-ds-border text-center text-ds-on-faint text-xs font-body tracking-wide">
+                <div className="mt-12 pt-6 border-t border-ds-border flex flex-col sm:flex-row items-center justify-between gap-4 text-ds-on-faint text-xs font-body tracking-wide">
                     <p dir="ltr">&copy; {new Date().getFullYear()} GULL Real Estate and Builders. All rights reserved.</p>
+                    <button
+                        type="button"
+                        onClick={() => setIsVaultOpen(true)}
+                        className="text-[11px] text-ds-on-faint/60 hover:text-ds-primary flex items-center gap-1 transition-colors cursor-pointer"
+                        aria-label="Open Admin Lead Vault"
+                    >
+                        <span>Lead Vault</span>
+                    </button>
                 </div>
             </div>
+
+            <AdminLeadVaultModal isOpen={isVaultOpen} onClose={() => setIsVaultOpen(false)} />
         </footer>
     );
 }

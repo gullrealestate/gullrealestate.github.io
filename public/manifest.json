@@ -2,10 +2,12 @@
     "name": "Gull Real Estate & Builders",
     "short_name": "Gull RE",
     "description": "Real estate agency in Mardan, KPK — property buying, selling, and rentals",
-    "start_url": "/en",
+    "start_url": "/",
     "display": "standalone",
-    "background_color": "#282828",
-    "theme_color": "#458588",
+    "orientation": "portrait",
+    "categories": ["business", "real estate"],
+    "background_color": "#0d0d0c",
+    "theme_color": "#14b8a6",
     "lang": "en",
     "icons": [
         {

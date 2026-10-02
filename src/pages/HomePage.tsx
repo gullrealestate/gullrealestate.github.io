@@ -4,12 +4,13 @@ import { Helmet } from 'react-helmet-async';
 import Hero from '../components/Hero';
 import { content } from '../content';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { trackEvent } from '../lib/analytics';
 import { setFunnelStage } from '../lib/funnelTracker';
 
 export default function HomePage() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [openFaq, setOpenFaq] = useState<number | null>(null);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ export default function HomePage() {
     const handleConsultClick = () => {
         trackEvent('cta_click', { category: 'conversion', action: 'hero_cta', label: 'contact' });
         setFunnelStage('cta_clicked', { lang: 'en', route: location.pathname });
-        window.location.href = '/contact';
+        navigate('/contact');
     };
 
     return (
@@ -228,15 +229,55 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* Geographic SEO Sections (Hidden from visible UI) */}
-            <div id="locations" className="hidden" aria-hidden="true">
-                {content.citySections.map((city) => (
-                    <div key={city.id} id={city.id}>
-                        <h2>{city.title}</h2>
-                        <p>{city.content}</p>
+            {/* Regional KPK Real Estate Guidance */}
+            <section id="locations" className="py-20 bg-ds-surface border-t border-ds-border">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-ds-primary-muted border border-ds-primary/20 text-ds-primary text-xs font-headline font-bold uppercase tracking-widest mb-4">
+                            <MapPin className="h-3.5 w-3.5" />
+                            KPK Regional Network
+                        </div>
+                        <h2 className="text-3xl sm:text-4xl font-headline font-bold text-ds-on uppercase tracking-wider">
+                            Regional Property Guidance
+                        </h2>
+                        <p className="text-ds-on-faint text-sm sm:text-base mt-4 font-body leading-relaxed">
+                            Serving verified buyers, sellers, and tenants with physical presence and verified local networks across Khyber Pakhtunkhwa.
+                        </p>
                     </div>
-                ))}
-            </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {content.citySections.map((city) => (
+                            <div
+                                key={city.id}
+                                id={city.id}
+                                className="bg-ds-surface-low border border-ds-border p-8 flex flex-col justify-between hover:border-ds-primary/40 transition-colors group"
+                            >
+                                <div>
+                                    <div className="w-10 h-10 bg-ds-surface-high border border-ds-border flex items-center justify-center mb-6 text-ds-primary group-hover:border-ds-primary/40 transition-colors">
+                                        <MapPin className="h-5 w-5" />
+                                    </div>
+                                    <h3 className="text-xl font-headline font-bold text-ds-on mb-3">
+                                        {city.title}
+                                    </h3>
+                                    <p className="text-sm text-ds-on-faint leading-relaxed font-body">
+                                        {city.content}
+                                    </p>
+                                </div>
+                                <div className="mt-6 pt-4 border-t border-ds-border/60 flex items-center justify-between text-xs font-headline">
+                                    <span className="text-ds-secondary uppercase tracking-wider font-semibold">Active Corridor</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => navigate('/contact')}
+                                        className="text-ds-primary hover:underline font-bold uppercase tracking-wider cursor-pointer"
+                                    >
+                                        Inquire &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
             <section id="fees" className="py-24 bg-ds-surface border-t border-ds-border">
                 <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

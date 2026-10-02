@@ -30,7 +30,14 @@ async function prerender() {
         if (process.env.PUPPETEER_EXECUTABLE_PATH && fs.existsSync(process.env.PUPPETEER_EXECUTABLE_PATH)) {
             launchOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
         }
-        const browser = await puppeteer.launch(launchOptions);
+        let browser;
+        try {
+            browser = await puppeteer.launch(launchOptions);
+        } catch (err) {
+            console.warn(`[Prerender] Notice: Puppeteer browser launch skipped (${err.message}). SPA static bundle will be used.`);
+            server.close();
+            return;
+        }
 
         try {
             for (const route of routes) {

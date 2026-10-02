@@ -142,7 +142,7 @@ describe('useLeadForm', () => {
         expect(result.current.formData.name).toBe('Draft User');
     });
 
-    it('clears draft after sending (window.open succeeds)', () => {
+    it('clears draft after sending and advances to step 4', () => {
         vi.stubGlobal('open', vi.fn(() => ({}))); // returns truthy = success
         const { result } = renderHook(() => useLeadForm(options), { wrapper });
 
@@ -151,6 +151,109 @@ describe('useLeadForm', () => {
         });
 
         expect(localStorage.removeItem).toHaveBeenCalledWith('gull_form_draft');
+        expect(result.current.step).toBe(4);
+        expect(result.current.submittedLead).not.toBeNull();
+        expect(result.current.submittedLead?.id).toMatch(/^GRE-\d{6}-\d{6}$/);
+
+        // Test resetForm
+        act(() => {
+            result.current.resetForm();
+        });
+        expect(result.current.step).toBe(1);
+        expect(result.current.submittedLead).toBeNull();
+    });
+
+    it('validates invalid phone number format in step 1', () => {
+        const { result } = renderHook(() => useLeadForm(options), { wrapper });
+
+        act(() => {
+            result.current.updateField('name', 'John');
+            result.current.updateField('phone', '123'); // Invalid phone
+        });
+
+        act(() => {
+            result.current.submitStep1({ preventDefault: () => { } } as React.FormEvent);
+        });
+
+        expect(result.current.step).toBe(1);
+        expect(result.current.errors.phone).toBe('Enter a valid phone number');
+
+        // Test clearing error on update
+        act(() => {
+            result.current.updateField('phone', '03001234567');
+        });
+        expect(result.current.errors.phone).toBeUndefined();
+    });
+
+    it('validates rent and listing specific fields in step 2', () => {
+        const rentOptions = { ...options, initialIntent: 'rent' };
+        const { result } = renderHook(() => useLeadForm(rentOptions), { wrapper });
+
+        act(() => {
+            result.current.updateField('name', 'John');
+            result.current.updateField('phone', '03001234567');
+        });
+        act(() => {
+            result.current.submitStep1({ preventDefault: () => { } } as React.FormEvent);
+        });
+
+        act(() => {
+            result.current.updateField('location', 'Mardan');
+            result.current.updateField('marlas', '5');
+            result.current.updateField('budget', '30k');
+            result.current.updateField('occupancyDate', '');
+        });
+        act(() => {
+            result.current.submitStep2({ preventDefault: () => { } } as React.FormEvent);
+        });
+
+        expect(result.current.step).toBe(2);
+        expect(result.current.errors.occupancyDate).toBe('Occupancy date is required');
+    });
+
+    it('validates streetWidth requirement for off-main listing in step 2', () => {
+        const listOptions = { ...options, initialIntent: 'list' };
+        const { result } = renderHook(() => useLeadForm(listOptions), { wrapper });
+
+        act(() => {
+            result.current.updateField('name', 'John');
+            result.current.updateField('phone', '03001234567');
+        });
+        act(() => {
+            result.current.submitStep1({ preventDefault: () => { } } as React.FormEvent);
+        });
+
+        act(() => {
+            result.current.updateField('location', 'Mardan');
+            result.current.updateField('marlas', '5');
+            result.current.updateField('budget', '30k');
+            result.current.updateField('onMainRoad', false);
+            result.current.updateField('streetWidth', '');
+        });
+        act(() => {
+            result.current.submitStep2({ preventDefault: () => { } } as React.FormEvent);
+        });
+
+        expect(result.current.step).toBe(2);
+        expect(result.current.errors.streetWidth).toBe('Street width is required');
+    });
+
+    it('handles agent1 and agent2 routing and window.open exceptions cleanly', () => {
+        vi.stubGlobal('open', vi.fn(() => { throw new Error('Blocked popup'); }));
+        const agentOptions = {
+            ...options,
+            contactType: 'agent1' as const,
+            agentName: 'Agent Ateeq',
+            agentWhatsApp: '923001112233',
+        };
+        const { result } = renderHook(() => useLeadForm(agentOptions), { wrapper });
+
+        act(() => {
+            result.current.confirmAndSend();
+        });
+
+        expect(result.current.step).toBe(4);
+        expect(result.current.submittedLead?.url).toContain('923001112233');
     });
 });
 

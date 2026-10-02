@@ -62,11 +62,18 @@ interface UseLeadFormOptions {
     initialIntent: string | null;
 }
 
+export interface SubmittedLeadInfo {
+    id: string;
+    url: string;
+    message: string;
+}
+
 export function useLeadForm(options: UseLeadFormOptions) {
     const { contactType, agentName, agentWhatsApp, initialIntent } = options;
     const location = useLocation();
 
     const [step, setStep] = useState(1);
+    const [submittedLead, setSubmittedLead] = useState<SubmittedLeadInfo | null>(null);
     const [hasAcceptedFormPolicy, setHasAcceptedFormPolicy] = useState(false);
     const [errors, setErrors] = useState<ValidationErrors>({});
 
@@ -209,7 +216,11 @@ export function useLeadForm(options: UseLeadFormOptions) {
         const url = buildWhatsAppUrl(agentWhatsApp, message);
 
         // Attempt to open WhatsApp
-        window.open(url, '_blank');
+        try {
+            window.open(url, '_blank');
+        } catch {
+            // Handled via Step 4 fallback
+        }
 
         // Persist lead with pending status
         saveLead({
@@ -226,10 +237,22 @@ export function useLeadForm(options: UseLeadFormOptions) {
 
         // Clean up draft
         clearDraft();
+
+        // Advance to Step 4 Success/Confirmation screen
+        setSubmittedLead({ id: leadId, url, message });
+        setStep(4);
     }, [formData, contactType, agentName, agentWhatsApp, location.pathname]);
+
+    const resetForm = useCallback(() => {
+        setFormData(getDefaultFormData(initialIntent));
+        setErrors({});
+        setSubmittedLead(null);
+        setStep(1);
+    }, [initialIntent]);
 
     return {
         step,
+        submittedLead,
         formData,
         errors,
         hasAcceptedFormPolicy,
@@ -240,5 +263,6 @@ export function useLeadForm(options: UseLeadFormOptions) {
         submitStep2,
         confirmAndSend,
         goToStep,
+        resetForm,
     };
 }

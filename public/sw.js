@@ -1,12 +1,14 @@
 /// <reference lib="webworker" />
 
-const CACHE_NAME = 'gull-re-v1';
+const CACHE_NAME = 'gull-re-v2';
 const OFFLINE_URL = '/offline.html';
 
 const PRECACHE_URLS = [
     '/',
-    '/en',
-    '/ur',
+    '/contact',
+    '/contactCEO',
+    '/contactAgentA',
+    '/contactAgentB',
     '/images/logo.webp',
     OFFLINE_URL,
 ];

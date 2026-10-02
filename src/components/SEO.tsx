@@ -37,15 +37,41 @@ export default function SEO({ title, description, canonical, type = 'website' }:
             "latitude": 34.1989,
             "longitude": 72.0442
         },
-        "areaServed": {
-            "@type": "GeoCircle",
-            "geoMidpoint": {
-                "@type": "GeoCoordinates",
-                "latitude": 34.1989,
-                "longitude": 72.0442
+        "areaServed": [
+            {
+                "@type": "City",
+                "name": "Mardan"
             },
-            "geoRadius": "50000"
-        },
+            {
+                "@type": "City",
+                "name": "Peshawar"
+            },
+            {
+                "@type": "City",
+                "name": "Nowshera"
+            },
+            {
+                "@type": "City",
+                "name": "Swat"
+            },
+            {
+                "@type": "City",
+                "name": "Abbottabad"
+            },
+            {
+                "@type": "AdministrativeArea",
+                "name": "Khyber Pakhtunkhwa"
+            },
+            {
+                "@type": "GeoCircle",
+                "geoMidpoint": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 34.1989,
+                    "longitude": 72.0442
+                },
+                "geoRadius": "75000"
+            }
+        ],
         "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
