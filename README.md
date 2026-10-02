@@ -50,7 +50,7 @@ npm run dev
 npm test; npm run test:coverage
 
 # Build for production
-npm run build --legacy-peer-deps
+npm run build
 
 # Deploy to GitHub Pages
 npm run deploy

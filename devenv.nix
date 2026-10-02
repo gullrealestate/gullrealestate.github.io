@@ -7,7 +7,6 @@
     package = pkgs.nodejs_24;
     npm.enable = true;
   };
-  languages.typescript.enable = true;
 
   # Helpful developer scripts matching package.json workflows
   scripts = {
@@ -25,7 +24,7 @@
     echo "  Node: $(node --version) | NPM: $(npm --version)"
     echo "===================================================="
     if [ ! -d "node_modules" ]; then
-      echo ">> node_modules not found. Run: npm ci --legacy-peer-deps"
+      echo ">> node_modules not found. Run: npm ci"
     fi
   '';
 }
